@@ -10,9 +10,20 @@ import SwiftUI
 
 @main
 struct TravelBuddyApp: App {
+	@State private var hasCompletedOnboarding = UserDefaultsManager.shared.hasSeenOnboarding
+
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+			if hasCompletedOnboarding {
+				ContentView()
+			} else {
+				OnboardingView {
+					// Onboarding als abgeschlossen markieren
+					UserDefaultsManager.shared.hasSeenOnboarding = true
+					hasCompletedOnboarding = true
+				}
+				.transition(.opacity)
+			}
 		}
 		.modelContainer(for: [Trip.self, PackItem.self])
 	}

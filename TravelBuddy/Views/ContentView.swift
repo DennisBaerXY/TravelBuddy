@@ -19,11 +19,11 @@ struct ContentView: View {
 						
 							.resizable()
 							.aspectRatio(contentMode: .fit)
-							.frame(width: 60, height: 60)
+							.frame(width: 120, height: 120)
 							.cornerRadius(12)
 						Text("no.trips.planned")
-							.font(.title2)
-							.fontWeight(.medium)
+							.font(.title)
+							.fontWeight(.bold)
 						
 						Text("add.trip.tip")
 							.multilineTextAlignment(.center)
@@ -33,8 +33,10 @@ struct ContentView: View {
 						Button("create.first.trip") {
 							showingAddTrip = true
 						}
-						.buttonStyle(.borderedProminent)
-						.padding(.top)
+						.padding(.horizontal, 20)
+						.padding(.vertical, 15)
+						.background(Capsule().fill(.tripBuddyPrimary))
+						.foregroundColor(.tripBuddyText)
 					}
 					.padding()
 				} else {
@@ -62,8 +64,9 @@ struct ContentView: View {
 							Image(systemName: "plus")
 								.font(.title2)
 								.fontWeight(.semibold)
+								.frame(width: 20, height: 20)
 								.padding()
-								.background(Color.blue)
+								.background(Color.tripBuddyPrimary)
 								.foregroundColor(.white)
 								.clipShape(Circle())
 								.shadow(radius: 4)

@@ -623,6 +623,9 @@
         }
       }
     },
+    "Starten" : {
+
+    },
     "to_date" : {
       "localizations" : {
         "de" : {
@@ -752,6 +755,12 @@
           }
         }
       }
+    },
+    "Überspringen" : {
+
+    },
+    "Weiter" : {
+
     },
     "what_do_you_plan" : {
       "localizations" : {
