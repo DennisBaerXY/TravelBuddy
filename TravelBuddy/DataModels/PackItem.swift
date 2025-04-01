@@ -9,13 +9,17 @@ import Foundation
 import SwiftData
 
 @Model
-class PackItem {
-	var id: UUID
-	var name: String
-	var category: String
-	var isPacked: Bool
-	var isEssential: Bool
-	var quantity: Int
+final class PackItem {
+	// Entferne .unique-Constraint für die ID
+	var id = UUID()
+	var name: String = ""
+	var category: String = ItemCategory.other.rawValue
+	var isPacked: Bool = false
+	var isEssential: Bool = false
+	var quantity: Int = 1
+	// Behalte die inverse Beziehung
+	@Relationship var trip: Trip?
+	var modificationDate = Date()
 
 	init(
 		name: String,
@@ -30,9 +34,13 @@ class PackItem {
 		self.isPacked = isPacked
 		self.isEssential = isEssential
 		self.quantity = quantity
+		self.modificationDate = Date()
 	}
 
-	// Hilfsmethode für Enum-Konvertierung
+	func update() {
+		modificationDate = Date()
+	}
+
 	var categoryEnum: ItemCategory {
 		ItemCategory(rawValue: category) ?? .other
 	}

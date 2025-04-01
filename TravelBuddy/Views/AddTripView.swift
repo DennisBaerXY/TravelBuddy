@@ -266,11 +266,20 @@ struct AddTripView: View {
 		// Reise in SwiftData speichern
 		modelContext.insert(newTrip)
 		
+		// Initialisiere die packingItems-Array, falls sie null ist
+		if newTrip.packingItems == nil {
+			newTrip.packingItems = []
+		}
+		
 		// Packliste hinzufügen
 		for item in packingItems {
 			modelContext.insert(item)
-			newTrip.packingItems.append(item)
+			
+			newTrip.packingItems?.append(item) // Sichere Unwrapping mit ?
 		}
+		
+		// Setze modificationDate für CloudKit
+		newTrip.update()
 		
 		try? modelContext.save()
 		dismiss()

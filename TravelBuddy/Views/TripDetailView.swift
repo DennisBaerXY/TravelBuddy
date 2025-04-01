@@ -10,45 +10,49 @@ struct TripDetailView: View {
 	@State private var showingAddItem = false
 	@State private var searchText = ""
 	@State private var showingCompletionAlert = false
-			
-	var filteredItems: [PackItem] {
-		var items = trip.packingItems
 				
+	var filteredItems: [PackItem] {
+		// Sichere Unwrapping der optionalen packingItems
+		guard let items = trip.packingItems else { return [] }
+					
+		var filteredItems = items
+					
 		// Nach Kategorie filtern
 		if let category = selectedCategory {
-			items = items.filter { $0.category == category }
+			filteredItems = filteredItems.filter { $0.category == category }
 		}
-				
+					
 		// Nach Suchtext filtern
 		if !searchText.isEmpty {
-			items = items.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+			filteredItems = filteredItems.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
 		}
-				
+					
 		// Sortierung: Unerledigte vor erledigten
-		return items.sorted { !$0.isPacked && $1.isPacked }
-	}
-		
-	// Prüfen, ob alle Elemente abgehakt sind und die Liste nicht leer ist
-	var allItemsCompleted: Bool {
-		!trip.packingItems.isEmpty && trip.packingItems.allSatisfy { $0.isPacked }
+		return filteredItems.sorted { ($0.isPacked) == false && ($1.isPacked) == true }
 	}
 			
+	// Prüfen, ob alle Elemente abgehakt sind und die Liste nicht leer ist
+	var allItemsCompleted: Bool {
+		guard let items = trip.packingItems, !items.isEmpty else { return false }
+		return items.allSatisfy { $0.isPacked }
+	}
+				
 	var body: some View {
 		ZStack {
 			ScrollView {
 				VStack(alignment: .leading, spacing: 20) {
 					// Header
 					tripHeader
-							
+								
 					// Suchleiste
 					searchBar
-							
+								
 					// Kategorie-Filter
 					categoryFilter
-							
+								
 					// Packliste
 					packingList
-						
+							
 					// Hinweis, wenn Reise abgeschlossen ist
 					if trip.isCompleted {
 						completedBanner
@@ -56,9 +60,9 @@ struct TripDetailView: View {
 				}
 				.padding(.bottom)
 			}
-				
+					
 			// Schwebender Button zum Abschließen der Liste
-			if allItemsCompleted && !trip.isCompleted {
+			if allItemsCompleted && !(trip.isCompleted) {
 				VStack {
 					Spacer()
 					Button(action: {
@@ -82,7 +86,7 @@ struct TripDetailView: View {
 		.navigationTitle(trip.name)
 		.toolbar {
 			ToolbarItem(placement: .navigationBarTrailing) {
-				if !trip.isCompleted {
+				if !(trip.isCompleted) {
 					Button(action: {
 						showingAddItem = true
 					}) {
@@ -94,7 +98,21 @@ struct TripDetailView: View {
 		.sheet(isPresented: $showingAddItem) {
 			AddItemView { newItem in
 				modelContext.insert(newItem)
-				trip.packingItems.append(newItem)
+					
+				// Inverse Beziehung für CloudKit setzen
+				newItem.trip = trip
+					
+				// packingItems-Array initialisieren, falls es null ist
+				if trip.packingItems == nil {
+					trip.packingItems = []
+				}
+					
+				// Element zur Packliste hinzufügen
+				trip.packingItems?.append(newItem)
+					
+				// modificationDate für CloudKit aktualisieren
+				trip.update()
+					
 				try? modelContext.save()
 			}
 		}
@@ -107,7 +125,7 @@ struct TripDetailView: View {
 			Text("Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?")
 		}
 	}
-		
+			
 	var completedBanner: some View {
 		VStack {
 			HStack {
@@ -126,15 +144,17 @@ struct TripDetailView: View {
 		}
 		.padding(.horizontal)
 	}
-		
+			
 	func markTripAsCompleted() {
 		// Reise als abgeschlossen markieren
 		trip.isCompleted = true
+			
+		// modificationDate für CloudKit aktualisieren
+		trip.update()
+			
 		try? modelContext.save()
-			
-		// Optional: Du könntest hier zu einer anderen Ansicht navigieren oder andere Aktionen ausführen
 	}
-			
+				
 	var tripHeader: some View {
 		VStack(alignment: .leading, spacing: 12) {
 			// Reiseziel und Datum
@@ -142,34 +162,34 @@ struct TripDetailView: View {
 				Image(systemName: "location")
 					.foregroundColor(.tripBuddyPrimary)
 					.font(.subheadline)
-						
+							
 				Text(trip.destination)
 					.font(.headline)
-						
+							
 				Spacer()
-						
+							
 				Image(systemName: "calendar")
 					.foregroundColor(.tripBuddyPrimary)
 					.font(.subheadline)
-						
-				Text("\(trip.startDate.formatted(date: .abbreviated, time: .omitted)) - \(trip.endDate.formatted(date: .abbreviated, time: .omitted))")
+							
+				Text("\(trip.startDate.formatted(date: .abbreviated, time: .omitted)) - \(trip.endDate.formatted(date: .abbreviated, time: .omitted)) ")
 					.font(.subheadline)
 			}
-					
+						
 			// Fortschrittsbalken
 			VStack(alignment: .leading, spacing: 4) {
 				HStack {
 					Text("\(Int(trip.packingProgress * 100))% ")
 						.font(.headline)
 						.foregroundColor(progressColor(for: trip.packingProgress))
-							
+								
 					Spacer()
-							
-					Text("\(trip.packingItems.filter { $0.isPacked }.count)/\(trip.packingItems.count) items_count")
+								
+					Text("\((trip.packingItems?.filter { $0.isPacked }.count ?? 0))/\(trip.packingItems?.count ?? 0) items_count")
 						.font(.caption)
 						.foregroundColor(.secondary)
 				}
-						
+							
 				ProgressView(value: trip.packingProgress)
 					.progressViewStyle(LinearProgressViewStyle(tint: progressColor(for: trip.packingProgress)))
 			}
@@ -182,15 +202,15 @@ struct TripDetailView: View {
 		)
 		.padding(.horizontal)
 	}
-			
+				
 	var searchBar: some View {
 		HStack {
 			Image(systemName: "magnifyingglass")
 				.foregroundColor(.secondary)
-					
+						
 			TextField("search_placeholder", text: $searchText)
 				.textFieldStyle(PlainTextFieldStyle())
-				
+					
 			if !searchText.isEmpty {
 				Button(action: {
 					searchText = ""
@@ -205,7 +225,7 @@ struct TripDetailView: View {
 		.cornerRadius(10)
 		.padding(.horizontal)
 	}
-			
+				
 	var categoryFilter: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
 			HStack(spacing: 8) {
@@ -215,7 +235,7 @@ struct TripDetailView: View {
 				) {
 					selectedCategory = nil
 				}
-						
+							
 				ForEach(ItemCategory.allCases, id: \.self) { category in
 					CategoryFilterButton(
 						title: category.localizedName,
@@ -229,7 +249,7 @@ struct TripDetailView: View {
 			.padding(.horizontal)
 		}
 	}
-			
+				
 	var packingList: some View {
 		VStack(spacing: 12) {
 			if filteredItems.isEmpty {
@@ -239,19 +259,24 @@ struct TripDetailView: View {
 			} else {
 				ForEach(filteredItems) { item in
 					PackItemRow(item: item) { updatedItem in
-						if !trip.isCompleted {
-							if let index = trip.packingItems.firstIndex(where: { $0.id == updatedItem.id }) {
-								trip.packingItems[index].isPacked = updatedItem.isPacked
+						if !(trip.isCompleted) {
+							if let index = trip.packingItems?.firstIndex(where: { $0.id == updatedItem.id }) {
+								trip.packingItems?[index].isPacked = updatedItem.isPacked
+									
+								// modificationDate für CloudKit aktualisieren
+								trip.packingItems?[index].update()
+								trip.update()
+									
 								try? modelContext.save()
 							}
 						}
 					}
 					.contentShape(Rectangle()) // Stellt sicher, dass die gesamte Zeile klickbar ist
-					.disabled(trip.isCompleted)
+				
 					.opacity(trip.isCompleted ? 0.8 : 1.0)
-					
+						
 					.contextMenu {
-						if !trip.isCompleted {
+						if !(trip.isCompleted) {
 							Button(role: .destructive, action: {
 								deleteItem(item)
 							}) {
@@ -261,10 +286,10 @@ struct TripDetailView: View {
 					}
 				}
 			}
-				
+					
 		}.padding(.horizontal)
 	}
-			
+				
 	func progressColor(for value: Double) -> Color {
 		if value < 0.3 {
 			return .tripBuddyAlert
@@ -274,11 +299,15 @@ struct TripDetailView: View {
 			return .tripBuddySuccess
 		}
 	}
-			
+				
 	func deleteItem(_ item: PackItem) {
-		if !trip.isCompleted {
-			trip.packingItems.removeAll { $0.id == item.id }
+		if !(trip.isCompleted) {
+			trip.packingItems?.removeAll { $0.id == item.id }
 			modelContext.delete(item)
+				
+			// modificationDate für CloudKit aktualisieren
+			trip.update()
+				
 			try? modelContext.save()
 		}
 	}

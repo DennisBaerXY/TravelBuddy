@@ -12,11 +12,28 @@
       },
       "shouldTranslate" : false
     },
+    "%@ - %@ " : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ - %2$@ "
+          }
+        }
+      }
+    },
     "%lld" : {
       "shouldTranslate" : false
     },
     "%lld Gegenstände" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld items"
+          }
+        }
+      }
     },
     "%lld/%lld items_count" : {
       "localizations" : {
@@ -25,11 +42,17 @@
             "state" : "translated",
             "value" : "%1$lld/%2$lld gepackt"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld/%2$lld packed"
+          }
         }
       }
     },
     "%lld%% " : {
-
+      "shouldTranslate" : false
     },
     "×" : {
       "localizations" : {
@@ -43,17 +66,62 @@
       "shouldTranslate" : false
     },
     "Abbrechen" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
     },
     "Abgeschlossen" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        }
+      }
     },
     "Abschließen" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete"
+          }
+        }
+      }
     },
     "accommodation_airbnb" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Airbnb"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Airbnb"
@@ -68,12 +136,24 @@
             "state" : "translated",
             "value" : "Apartment"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apartment"
+          }
         }
       }
     },
     "accommodation_camping" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camping"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Camping"
@@ -88,12 +168,24 @@
             "state" : "translated",
             "value" : "Bei Freunden"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Friends"
+          }
         }
       }
     },
     "accommodation_hostel" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hostel"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hostel"
@@ -108,12 +200,24 @@
             "state" : "translated",
             "value" : "Hotel"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hotel"
+          }
         }
       }
     },
     "activities_and_details" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activities & Details"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activities & Details"
@@ -128,6 +232,12 @@
             "state" : "translated",
             "value" : "Strand"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beach"
+          }
         }
       }
     },
@@ -137,6 +247,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geschäftlich"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Business"
           }
         }
       }
@@ -148,6 +264,12 @@
             "state" : "translated",
             "value" : "Wandern"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiking"
+          }
         }
       }
     },
@@ -158,12 +280,24 @@
             "state" : "translated",
             "value" : "Entspannen"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relaxing"
+          }
         }
       }
     },
     "activity_sightseeing" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sightseeing"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sightseeing"
@@ -178,6 +312,12 @@
             "state" : "translated",
             "value" : "Skifahren"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skiing"
+          }
         }
       }
     },
@@ -187,6 +327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sport"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sports"
           }
         }
       }
@@ -198,6 +344,12 @@
             "state" : "translated",
             "value" : "Schwimmen"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swimming"
+          }
         }
       }
     },
@@ -207,6 +359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add"
           }
         }
       }
@@ -218,6 +376,12 @@
             "state" : "translated",
             "value" : "Tippe auf das Plus-Symbol, um deine erste Reise zu planen."
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the plus or the button to plan your first trip."
+          }
         }
       }
     },
@@ -228,11 +392,24 @@
             "state" : "translated",
             "value" : "Alle"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
         }
       }
     },
     "Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All packed! 🎉 Do you want to mark the trip as completed?"
+          }
+        }
+      }
     },
     "back" : {
       "localizations" : {
@@ -240,6 +417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zurück"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "back"
           }
         }
       }
@@ -251,6 +434,12 @@
             "state" : "translated",
             "value" : "Geschäftsreise"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Business Trip"
+          }
         }
       }
     },
@@ -260,6 +449,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
           }
         }
       }
@@ -271,6 +466,12 @@
             "state" : "translated",
             "value" : "Kategorie"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
         }
       }
     },
@@ -280,6 +481,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Accessoires"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accessories"
           }
         }
       }
@@ -291,6 +498,12 @@
             "state" : "translated",
             "value" : "Kleidung"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clothing"
+          }
         }
       }
     },
@@ -300,6 +513,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dokumente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Documents"
           }
         }
       }
@@ -311,6 +530,12 @@
             "state" : "translated",
             "value" : "Elektronik"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Electronics"
+          }
         }
       }
     },
@@ -320,6 +545,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Medikamente"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medication"
           }
         }
       }
@@ -331,6 +562,12 @@
             "state" : "translated",
             "value" : "Sonstiges"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other"
+          }
         }
       }
     },
@@ -340,6 +577,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toilettenartikel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toiletries"
           }
         }
       }
@@ -351,6 +594,12 @@
             "state" : "translated",
             "value" : "Klima"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Climate"
+          }
         }
       }
     },
@@ -360,6 +609,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kalt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cold"
           }
         }
       }
@@ -371,6 +626,12 @@
             "state" : "translated",
             "value" : "Kühl"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chilly"
+          }
         }
       }
     },
@@ -380,6 +641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Heiß"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hot"
           }
         }
       }
@@ -391,12 +658,24 @@
             "state" : "translated",
             "value" : "Gemäßigt"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moderate"
+          }
         }
       }
     },
     "climate_warm" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warm"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Warm"
@@ -411,6 +690,12 @@
             "state" : "translated",
             "value" : "Packliste erstellen"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Packing List"
+          }
         }
       }
     },
@@ -420,6 +705,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erste Reise erstellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create First Trip"
           }
         }
       }
@@ -431,6 +722,12 @@
             "state" : "translated",
             "value" : "Löschen"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "delete"
+          }
         }
       }
     },
@@ -440,6 +737,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reiseziel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destination"
           }
         }
       }
@@ -451,6 +754,12 @@
             "state" : "translated",
             "value" : "z.B. Rom, Italien"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. Rome, Italy"
+          }
         }
       }
     },
@@ -461,11 +770,24 @@
             "state" : "translated",
             "value" : "Details"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
         }
       }
     },
     "Diese Reise wurde abgeschlossen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Trip has been completed"
+          }
+        }
+      }
     },
     "essential" : {
       "localizations" : {
@@ -473,6 +795,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unverzichtbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Essential"
           }
         }
       }
@@ -484,6 +812,12 @@
             "state" : "translated",
             "value" : "Von"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From"
+          }
         }
       }
     },
@@ -493,6 +827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wie reist du?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How do you travel?"
           }
         }
       }
@@ -504,6 +844,12 @@
             "state" : "translated",
             "value" : "Gegenstand"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Item"
+          }
         }
       }
     },
@@ -514,12 +860,24 @@
             "state" : "translated",
             "value" : "Meine Reisen"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Trips"
+          }
         }
       }
     },
     "name" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Name"
@@ -534,6 +892,12 @@
             "state" : "translated",
             "value" : "Neuer Gegenstand"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Item"
+          }
         }
       }
     },
@@ -543,6 +907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Reise"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Trip"
           }
         }
       }
@@ -554,6 +924,12 @@
             "state" : "translated",
             "value" : "Weiter"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
         }
       }
     },
@@ -563,6 +939,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keine Gegenstände"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Items"
           }
         }
       }
@@ -574,6 +956,12 @@
             "state" : "translated",
             "value" : "Keine Reisen geplant"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Trips Planned"
+          }
         }
       }
     },
@@ -583,6 +971,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anzahl Personen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number of People"
           }
         }
       }
@@ -594,11 +988,24 @@
             "state" : "translated",
             "value" : "Weitere Details"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other Details"
+          }
         }
       }
     },
     "Packliste komplett" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Packinglist complete"
+          }
+        }
+      }
     },
     "quantity_count: %lld" : {
       "localizations" : {
@@ -607,11 +1014,24 @@
             "state" : "translated",
             "value" : "Anzahl: %lld"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quantity: %lld"
+          }
         }
       }
     },
     "Reise abschließen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete Trip"
+          }
+        }
+      }
     },
     "search_placeholder" : {
       "localizations" : {
@@ -620,11 +1040,24 @@
             "state" : "translated",
             "value" : "Gegenstände suchen…"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search items…"
+          }
         }
       }
     },
     "Starten" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        }
+      }
     },
     "to_date" : {
       "localizations" : {
@@ -632,6 +1065,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bis"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To"
           }
         }
       }
@@ -643,6 +1082,12 @@
             "state" : "translated",
             "value" : "Transport & Unterkunft"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transport & Accomodation"
+          }
         }
       }
     },
@@ -653,12 +1098,24 @@
             "state" : "translated",
             "value" : "Fahrrad"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bicycle"
+          }
         }
       }
     },
     "transport_bus" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bus"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bus"
@@ -673,6 +1130,12 @@
             "state" : "translated",
             "value" : "Auto"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Car"
+          }
         }
       }
     },
@@ -682,6 +1145,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zu Fuß"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On Foot"
           }
         }
       }
@@ -693,6 +1162,12 @@
             "state" : "translated",
             "value" : "Flugzeug"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plane"
+          }
         }
       }
     },
@@ -702,6 +1177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schiff"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ship"
           }
         }
       }
@@ -713,6 +1194,12 @@
             "state" : "translated",
             "value" : "Zug"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Train"
+          }
         }
       }
     },
@@ -722,6 +1209,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reisezeitraum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Travel Dates"
           }
         }
       }
@@ -733,6 +1226,12 @@
             "state" : "translated",
             "value" : "Reisedetails"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip Details"
+          }
         }
       }
     },
@@ -742,6 +1241,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reisename"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip Name"
           }
         }
       }
@@ -753,14 +1258,34 @@
             "state" : "translated",
             "value" : "z.B. Sommerurlaub Italien"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e.g. Summer Vacation"
+          }
         }
       }
     },
     "Überspringen" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        }
+      }
     },
     "Weiter" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
     },
     "what_do_you_plan" : {
       "localizations" : {
@@ -768,6 +1293,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Was hast du vor?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What do you plan to do?"
           }
         }
       }
@@ -778,6 +1309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wo übernachtest du?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where do you stay? "
           }
         }
       }

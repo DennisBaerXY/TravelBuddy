@@ -25,6 +25,6 @@ struct TravelBuddyApp: App {
 				.transition(.opacity)
 			}
 		}
-		.modelContainer(for: [Trip.self, PackItem.self])
+		.modelContainer(for: [Trip.self, PackItem.self], inMemory: false)
 	}
 }
