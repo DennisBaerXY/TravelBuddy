@@ -14,7 +14,6 @@ struct TravelBuddyApp: App {
 		WindowGroup {
 			ContentView()
 		}
-		.modelContainer(for: PackingList.self)
-		.modelContainer(for: Item.self)
+		.modelContainer(for: [Trip.self, PackItem.self])
 	}
 }

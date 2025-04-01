@@ -1,84 +1,104 @@
-//
-//  ContentView.swift
-//  TravelBuddy
-//
-//  Created by Dennis Bär on 08.03.25.
-//
-
 import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-	@Environment(\.modelContext) var modelContext
-	@Query var packingLists: [PackingList]
-	@State private var path = [PackingList]()
+	@Environment(\.modelContext) private var modelContext
+	@Query(sort: [
+		SortDescriptor(\Trip.isCompleted, order: .forward),
+		SortDescriptor(\Trip.createdAt, order: .reverse)
+	]) private var trips: [Trip]
+	@State private var showingAddTrip = false
+	@State private var isPremiumUser = false
+	
 	var body: some View {
-		NavigationStack(path: $path) {
-			if packingLists.isEmpty {
-				VStack(alignment: .center) {
-					Spacer()
-					Text("Lets start by creating your first packing list!")
-
-					NavigationLink(destination: CreateNewPackingList(packingList: PackingList())) {
-						Text("Create a new Packing List")
-							.font(.headline)
-							.foregroundColor(.white)
-							.padding(.horizontal, 30)
-							.padding(.vertical, 12)
-							.background(Color.accentColor)
-							.cornerRadius(10)
+		NavigationStack {
+			ZStack {
+				if trips.isEmpty {
+					VStack(spacing: 20) {
+						Image("AppIconLogo")
+						
+							.resizable()
+							.aspectRatio(contentMode: .fit)
+							.frame(width: 60, height: 60)
+							.cornerRadius(12)
+						Text("no.trips.planned")
+							.font(.title2)
+							.fontWeight(.medium)
+						
+						Text("add.trip.tip")
+							.multilineTextAlignment(.center)
+							.foregroundColor(.secondary)
+							.padding(.horizontal)
+						
+						Button("create.first.trip") {
+							showingAddTrip = true
+						}
+						.buttonStyle(.borderedProminent)
+						.padding(.top)
 					}
+					.padding()
+				} else {
+					List {
+						ForEach(trips) { trip in
+							NavigationLink(destination: TripDetailView(trip: trip)) {
+								TripCardView(trip: trip)
+							}
+							.listRowSeparator(.hidden)
+						}
+						.onDelete(perform: deleteTrip)
+					}
+					.listStyle(.plain)
+						
+					.padding(.vertical)
+				}
+				
+				VStack {
 					Spacer()
+					HStack {
+						Spacer()
+						Button(action: {
+							showingAddTrip = true
+						}) {
+							Image(systemName: "plus")
+								.font(.title2)
+								.fontWeight(.semibold)
+								.padding()
+								.background(Color.blue)
+								.foregroundColor(.white)
+								.clipShape(Circle())
+								.shadow(radius: 4)
+						}
+						.padding()
+					}
 				}
 			}
-			List {
-				ForEach(packingLists) { packingList in
-					NavigationLink(destination: ListView(packingList: packingList)) {
-						Text(packingList.name)
-					}
-				}
-				.onDelete(perform: deleteList)
-			}
-			.navigationTitle("Travel Buddy")
+			.navigationTitle("my.trips")
 			.toolbar {
 				ToolbarItem(placement: .navigationBarTrailing) {
-					NavigationLink(destination: CreateNewPackingList(packingList: PackingList())) {
-						Label("Add new", systemImage: "plus.circle.fill")
-							.symbolRenderingMode(.multicolor)
+					Button(action: {
+						// Zeige Benutzereinstellungen/Premium-Upgrade
+						presentPremiumUpgrade()
+					}) {
+						Image(systemName: isPremiumUser ? "star.fill" : "star")
+							.foregroundColor(isPremiumUser ? .yellow : .gray)
 					}
 				}
 			}
-		}
-	}
-
-	func deleteList(offsets: IndexSet) {
-		withAnimation {
-			offsets.map { packingLists[$0] }.forEach(modelContext.delete)
-			do {
-				try modelContext.save()
-			} catch {
-				print("Error beim löschen von Packungslisten: \(error.localizedDescription)")
+			.sheet(isPresented: $showingAddTrip) {
+				AddTripView()
 			}
 		}
 	}
-}
-
-#Preview("Filled") {
-	let config = ModelConfiguration(isStoredInMemoryOnly: true)
-	let container = try! ModelContainer(for: PackingList.self, configurations: config)
-
-	for i in 1 ... 10 {
-		container.mainContext.insert(PackingList(name: "Test \(i)"))
+	
+	func deleteTrip(_ indexes: IndexSet) {
+		for index in indexes {
+			let trip = trips[index]
+			modelContext.delete(trip)
+		}
 	}
-
-	return ContentView()
-		.modelContainer(container)
-}
-
-#Preview("Empty") {
-	let config = ModelConfiguration(isStoredInMemoryOnly: true)
-	let container = try! ModelContainer(for: PackingList.self, configurations: config)
-
-	return ContentView()
-		.modelContainer(container)
+	
+	func presentPremiumUpgrade() {
+		// Hier würde in der vollständigen App der Premium-Kauf-Flow starten
+		isPremiumUser.toggle() // Nur für Demo-Zwecke
+	}
 }
