@@ -67,6 +67,7 @@ struct PackItemRow: View {
 		.padding(.vertical, 10)
 		.padding(.horizontal, 12)
 		.background(
+<<<<<<< HEAD
 			RoundedRectangle(cornerRadius: 12)
 				.fill(backgroundForItem)
 		)
@@ -127,3 +128,14 @@ struct PackItemRow: View {
 		}
 	}
 }
+=======
+			RoundedRectangle(cornerRadius: 10)
+				.fill(item.isPacked ? Color(.systemGray6) : Color(.systemBackground))
+		)
+		.overlay(
+			RoundedRectangle(cornerRadius: 10)
+				.stroke(Color.gray.opacity(0.2), lineWidth: 1)
+		)
+	}
+}
+>>>>>>> 6716cd52c7846dc314a6d50efaa04beaa0c83b27

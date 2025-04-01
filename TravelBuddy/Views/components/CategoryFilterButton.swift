@@ -13,7 +13,6 @@ struct CategoryFilterButton: View {
 	var iconName: String? = nil
 	let isSelected: Bool
 	let action: () -> Void
-
 	var body: some View {
 		Button(action: action) {
 			HStack {
@@ -21,7 +20,6 @@ struct CategoryFilterButton: View {
 					Image(systemName: iconName)
 						.font(.caption)
 				}
-
 				Text(title)
 					.font(.subheadline)
 			}
