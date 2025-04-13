@@ -12,18 +12,18 @@
       },
       "shouldTranslate" : false
     },
-    "%@ - %@ " : {
+    "%lld" : {
+      "shouldTranslate" : false
+    },
+    "%lld / %lld %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ - %2$@ "
+            "value" : "%1$lld / %2$lld %3$@"
           }
         }
       }
-    },
-    "%lld" : {
-      "shouldTranslate" : false
     },
     "%lld Gegenstände" : {
       "localizations" : {
@@ -35,7 +35,18 @@
         }
       }
     },
+    "%lld/%lld %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld %3$@"
+          }
+        }
+      }
+    },
     "%lld/%lld items_count" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -51,10 +62,18 @@
         }
       }
     },
-    "%lld%% " : {
-      "shouldTranslate" : false
+    "%lld%% %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld%% %2$@"
+          }
+        }
+      }
     },
     "×" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -65,7 +84,11 @@
       },
       "shouldTranslate" : false
     },
+    "×%lld" : {
+
+    },
     "Abbrechen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -109,6 +132,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Complete"
+          }
+        }
+      }
+    },
+    "accommodation" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterkunft"
           }
         }
       }
@@ -209,18 +242,38 @@
         }
       }
     },
+    "activities" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivitäten"
+          }
+        }
+      }
+    },
     "activities_and_details" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activities & Details"
+            "value" : "Aktivitäten & Details"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Activities & Details"
+          }
+        }
+      }
+    },
+    "activities_and_details_prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was planst du & weitere Infos?"
           }
         }
       }
@@ -369,6 +422,9 @@
         }
       }
     },
+    "add_item_label" : {
+
+    },
     "add.trip.tip" : {
       "localizations" : {
         "de" : {
@@ -402,11 +458,22 @@
       }
     },
     "Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "All packed! 🎉 Do you want to mark the trip as completed?"
+          }
+        }
+      }
+    },
+    "already_packed_section_header" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bereits Gepackt"
           }
         }
       }
@@ -651,6 +718,16 @@
         }
       }
     },
+    "climate_info_popover_text" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Auswahl des Klimas hilft uns, passende Kleidungsvorschläge für deine Packliste zu generieren."
+          }
+        }
+      }
+    },
     "climate_moderate" : {
       "localizations" : {
         "de" : {
@@ -682,6 +759,21 @@
           }
         }
       }
+    },
+    "complete_button" : {
+
+    },
+    "complete_trip_alert_message" : {
+
+    },
+    "complete_trip_alert_title" : {
+
+    },
+    "complete_trip_button" : {
+
+    },
+    "completed_trip_banner" : {
+
     },
     "create_list" : {
       "localizations" : {
@@ -780,6 +872,7 @@
       }
     },
     "Diese Reise wurde abgeschlossen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -804,6 +897,9 @@
           }
         }
       }
+    },
+    "Fortschritt: %lld%%" : {
+
     },
     "from_date" : {
       "localizations" : {
@@ -849,6 +945,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Item"
+          }
+        }
+      }
+    },
+    "items_count" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gegenstände"
+          }
+        }
+      }
+    },
+    "items_packed_short" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gepackt"
           }
         }
       }
@@ -917,6 +1033,46 @@
         }
       }
     },
+    "new_trip_step1_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reisedetails"
+          }
+        }
+      }
+    },
+    "new_trip_step2_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transport & Unterkunft"
+          }
+        }
+      }
+    },
+    "new_trip_step3_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivitäten & Details"
+          }
+        }
+      }
+    },
+    "new_trip_step4_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überprüfen"
+          }
+        }
+      }
+    },
     "next" : {
       "localizations" : {
         "de" : {
@@ -933,7 +1089,18 @@
         }
       }
     },
+    "no" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nein"
+          }
+        }
+      }
+    },
     "no_items" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -949,7 +1116,24 @@
         }
       }
     },
+    "no_items_in_category" : {
+
+    },
+    "no_items_in_list" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Packliste ist noch leer. Füge Gegenstände hinzu!"
+          }
+        }
+      }
+    },
+    "no_search_results" : {
+
+    },
     "no.trips.planned" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -964,6 +1148,12 @@
           }
         }
       }
+    },
+    "no.trips.planned.title" : {
+
+    },
+    "none" : {
+
     },
     "number_of_people" : {
       "localizations" : {
@@ -997,6 +1187,9 @@
         }
       }
     },
+    "packed" : {
+
+    },
     "Packliste komplett" : {
       "localizations" : {
         "en" : {
@@ -1024,11 +1217,22 @@
       }
     },
     "Reise abschließen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Complete Trip"
+          }
+        }
+      }
+    },
+    "review_prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fast geschafft! Bitte überprüfe deine Angaben:"
           }
         }
       }
@@ -1048,6 +1252,53 @@
           }
         }
       }
+    },
+    "Sort by" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortieren nach"
+          }
+        }
+      }
+    },
+    "sort_ascending" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufsteigend (A -> Z)"
+          }
+        }
+      }
+    },
+    "sort_by_name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Namen"
+          }
+        }
+      }
+    },
+    "sort_by_picker_label" : {
+
+    },
+    "sort_descending" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Absteigend (Z -> A)"
+          }
+        }
+      }
+    },
+    "sort_options_label" : {
+
     },
     "Starten" : {
       "localizations" : {
@@ -1075,6 +1326,19 @@
         }
       }
     },
+    "to_pack_section_header %lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu packen (%lld)"
+          }
+        }
+      }
+    },
+    "transport" : {
+
+    },
     "transport_and_accommodation" : {
       "localizations" : {
         "de" : {
@@ -1087,6 +1351,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Transport & Accomodation"
+          }
+        }
+      }
+    },
+    "transport_and_accommodation_prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wie reist du & wo übernachtest du?"
           }
         }
       }
@@ -1235,6 +1509,16 @@
         }
       }
     },
+    "trip_details_prompt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erzähl mir von deiner Reise"
+          }
+        }
+      }
+    },
     "trip_name" : {
       "localizations" : {
         "de" : {
@@ -1273,6 +1557,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skip"
+          }
+        }
+      }
+    },
+    "validation_missing_destination" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wohin soll die Reise gehen?"
+          }
+        }
+      }
+    },
+    "validation_missing_transport" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte wähle mindestens ein Transportmittel."
+          }
+        }
+      }
+    },
+    "validation_missing_trip_name" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitte gib deiner Reise einen Namen."
           }
         }
       }
@@ -1318,6 +1632,9 @@
           }
         }
       }
+    },
+    "yes" : {
+
     }
   },
   "version" : "1.0"

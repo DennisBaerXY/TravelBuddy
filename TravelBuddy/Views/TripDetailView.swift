@@ -1,4 +1,4 @@
-// TripDetailView.swift
+// TravelBuddy/Views/TripDetailView.swift
 import SwiftData
 import SwiftUI
 
@@ -6,309 +6,390 @@ struct TripDetailView: View {
 	@Environment(\.modelContext) private var modelContext
 	@Environment(\.dismiss) private var dismiss
 	@Bindable var trip: Trip
-	@State private var selectedCategory: String? = nil
-	@State private var showingAddItem = false
+
+	// MARK: - State Variables
+
+	@State private var selectedCategoryFilter: ItemCategory? = nil
 	@State private var searchText = ""
+	@State private var showingAddItem = false
 	@State private var showingCompletionAlert = false
-				
-	var filteredItems: [PackItem] {
-		// Sichere Unwrapping der optionalen packingItems
-		guard let items = trip.packingItems else { return [] }
-					
-		var filteredItems = items
-					
-		// Nach Kategorie filtern
-		if let category = selectedCategory {
-			filteredItems = filteredItems.filter { $0.category == category }
+	@State private var currentSortOption: SortOption = .name // Use global enum
+	@State private var currentSortOrder: SortOrder = .ascending // Use global enum
+
+	// Haptic Feedback Generator (Moved from subviews)
+	private let generalFeedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+
+	// MARK: - Computed Properties for Filtering/Sorting
+
+	private var filteredAndGroupedItems: (toPack: [ItemCategory: [PackItem]], packed: [ItemCategory: [PackItem]]) {
+		guard let allItems = trip.packingItems else { return (toPack: [:], packed: [:]) }
+
+		let filtered = allItems.filter { item in
+			let matchesSearch = searchText.isEmpty || item.name.localizedCaseInsensitiveContains(searchText)
+			let matchesCategory = selectedCategoryFilter == nil || item.categoryEnum == selectedCategoryFilter
+			return matchesSearch && matchesCategory
 		}
-					
-		// Nach Suchtext filtern
-		if !searchText.isEmpty {
-			filteredItems = filteredItems.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
-		}
-					
-		// Sortierung: Unerledigte vor erledigten
-		return filteredItems.sorted { ($0.isPacked) == false && ($1.isPacked) == true }
+
+		let itemsToPack = filtered.filter { !$0.isPacked }
+		let packedItems = filtered.filter { $0.isPacked }
+
+		// Group and sort items within each category
+		let groupedToPack = Dictionary(grouping: itemsToPack, by: { $0.categoryEnum })
+			.mapValues { $0.sorted(by: itemSortComparator) }
+
+		let groupedPacked = Dictionary(grouping: packedItems, by: { $0.categoryEnum })
+			.mapValues { $0.sorted(by: itemSortComparator) }
+
+		return (toPack: groupedToPack, packed: groupedPacked)
 	}
-			
-	// Prüfen, ob alle Elemente abgehakt sind und die Liste nicht leer ist
-	var allItemsCompleted: Bool {
+
+	// Sort comparator based on current state
+	private func itemSortComparator(item1: PackItem, item2: PackItem) -> Bool {
+		let orderMultiplier: Double = (currentSortOrder == .ascending) ? 1.0 : -1.0
+		var comparisonResult: ComparisonResult = .orderedSame
+
+		switch currentSortOption {
+		case .name:
+			comparisonResult = item1.name.localizedCaseInsensitiveCompare(item2.name)
+			// Add other sort cases here if needed
+		}
+
+		// Apply sort order
+		return comparisonResult == .orderedAscending && orderMultiplier == 1.0 ||
+			comparisonResult == .orderedDescending && orderMultiplier == -1.0
+	}
+
+	// Categories actually present in the original trip data
+	private var categoriesPresentInTrip: [ItemCategory] {
+		guard let allItems = trip.packingItems else { return [] }
+		let uniqueCategories = Set(allItems.map { $0.categoryEnum })
+		return ItemCategory.allCases.filter { uniqueCategories.contains($0) }
+	}
+
+	// Categories to display in sections after filtering
+	private var categoriesToShowInSections: [ItemCategory] {
+		let categoriesInToPack = Set(filteredAndGroupedItems.toPack.keys)
+		let categoriesInPacked = Set(filteredAndGroupedItems.packed.keys)
+		let allRelevantCategories = categoriesInToPack.union(categoriesInPacked)
+		return ItemCategory.allCases.filter { allRelevantCategories.contains($0) }
+	}
+
+	// Check if all *original* items are packed
+	var allOriginalItemsCompleted: Bool {
 		guard let items = trip.packingItems, !items.isEmpty else { return false }
 		return items.allSatisfy { $0.isPacked }
 	}
-				
+
+	// MARK: - Body
+
 	var body: some View {
 		ZStack {
+			Color.tripBuddyBackground.ignoresSafeArea()
+
 			ScrollView {
-				VStack(alignment: .leading, spacing: 20) {
-					// Header
-					tripHeader
-								
-					// Suchleiste
+				VStack(alignment: .leading, spacing: 15) {
+					TripDetailHeaderView(trip: trip) // Use extracted header view
 					searchBar
-								
-					// Kategorie-Filter
-					categoryFilter
-								
-					// Packliste
-					packingList
-							
-					// Hinweis, wenn Reise abgeschlossen ist
-					if trip.isCompleted {
-						completedBanner
-					}
+					categoryFilterButtons
+					packingListSectionsView
+						.padding(.top) // Add some space before the list sections
 				}
-				.padding(.bottom)
+				.padding(.bottom, 80) // Space for floating button
 			}
-					
-			// Schwebender Button zum Abschließen der Liste
-			if allItemsCompleted && !(trip.isCompleted) {
-				VStack {
-					Spacer()
-					Button(action: {
-						showingCompletionAlert = true
-					}) {
-						HStack {
-							Image(systemName: "checkmark.circle.fill")
-							Text("Reise abschließen")
-						}
-						.font(.headline)
-						.padding()
-						.background(Color.green)
-						.foregroundColor(.white)
-						.cornerRadius(30)
-						.shadow(radius: 4)
-					}
-					.padding(.bottom, 20)
-				}
-			}
+
+			// Floating Buttons / Banners
+			floatingActionContent
 		}
 		.navigationTitle(trip.name)
-		.toolbar {
-			ToolbarItem(placement: .navigationBarTrailing) {
-				if !(trip.isCompleted) {
-					Button(action: {
-						showingAddItem = true
-					}) {
-						Image(systemName: "plus")
+		.toolbar { ToolbarItemGroup(placement: .navigationBarTrailing) {
+			// Sort Menu
+			Menu {
+				Picker("sort_by_picker_label", selection: $currentSortOption) {
+					ForEach(SortOption.allCases) { option in
+						Text(option.localizedName).tag(option)
 					}
 				}
-			}
-		}
-		.sheet(isPresented: $showingAddItem) {
-			AddItemView { newItem in
-				modelContext.insert(newItem)
-					
-				// Inverse Beziehung für CloudKit setzen
-				newItem.trip = trip
-					
-				// packingItems-Array initialisieren, falls es null ist
-				if trip.packingItems == nil {
-					trip.packingItems = []
+
+				Button {
+					currentSortOrder.toggle() // Use the toggle helper from the enum
+				} label: {
+					Label(sortOrderLabelKey, systemImage: sortOrderIconName)
 				}
-					
-				// Element zur Packliste hinzufügen
-				trip.packingItems?.append(newItem)
-					
-				// modificationDate für CloudKit aktualisieren
-				trip.update()
-					
-				try? modelContext.save()
+
+			} label: {
+				Label("sort_options_label", systemImage: "line.3.horizontal.decrease.circle")
+					.foregroundColor(isSortingActive ? .tripBuddyAccent : .primary) // Highlight if sorting is active
 			}
-		}
-		.alert("Reise abschließen", isPresented: $showingCompletionAlert) {
-			Button("Abbrechen", role: .cancel) {}
-			Button("Abschließen") {
-				markTripAsCompleted()
+
+			// Add Item Button (only if trip is not completed)
+			if !trip.isCompleted {
+				Button {
+					showingAddItem = true
+				} label: {
+					Label("add_item_label", systemImage: "plus")
+				}
 			}
+		} } // Use extracted toolbar content
+		.sheet(isPresented: $showingAddItem) { addItemSheet }
+		.alert("complete_trip_alert_title", isPresented: $showingCompletionAlert) {
+			completionAlertButtons
 		} message: {
-			Text("Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?")
+			Text("complete_trip_alert_message")
+		}
+		// Apply animations to list changes
+		.animation(.default, value: categoriesToShowInSections)
+		.animation(.default, value: filteredAndGroupedItems.toPack)
+		.animation(.default, value: filteredAndGroupedItems.packed)
+		.animation(.default, value: currentSortOption)
+		.animation(.default, value: currentSortOrder)
+		.onAppear {
+			generalFeedbackGenerator.prepare() // Prepare haptics
 		}
 	}
-			
-	var completedBanner: some View {
-		VStack {
-			HStack {
-				Image(systemName: "checkmark.seal.fill")
-					.foregroundColor(.green)
-				Text("Diese Reise wurde abgeschlossen")
-					.font(.headline)
-					.foregroundColor(.green)
-				Spacer()
-			}
-			.padding()
-			.background(
-				RoundedRectangle(cornerRadius: 10)
-					.fill(Color.green.opacity(0.1))
-			)
-		}
-		.padding(.horizontal)
-	}
-			
-	func markTripAsCompleted() {
-		// Reise als abgeschlossen markieren
-		trip.isCompleted = true
-			
-		// modificationDate für CloudKit aktualisieren
-		trip.update()
-			
-		try? modelContext.save()
-	}
-				
-	var tripHeader: some View {
-		VStack(alignment: .leading, spacing: 12) {
-			// Reiseziel und Datum
-			HStack {
-				Image(systemName: "location")
-					.foregroundColor(.tripBuddyPrimary)
-					.font(.subheadline)
-							
-				Text(trip.destination)
-					.font(.headline)
-							
-				Spacer()
-							
-				Image(systemName: "calendar")
-					.foregroundColor(.tripBuddyPrimary)
-					.font(.subheadline)
-							
-				Text("\(trip.startDate.formatted(date: .abbreviated, time: .omitted)) - \(trip.endDate.formatted(date: .abbreviated, time: .omitted)) ")
-					.font(.subheadline)
-			}
-						
-			// Fortschrittsbalken
-			VStack(alignment: .leading, spacing: 4) {
-				HStack {
-					Text("\(Int(trip.packingProgress * 100))% ")
-						.font(.headline)
-						.foregroundColor(progressColor(for: trip.packingProgress))
-								
-					Spacer()
-								
-					Text("\((trip.packingItems?.filter { $0.isPacked }.count ?? 0))/\(trip.packingItems?.count ?? 0) items_count")
-						.font(.caption)
-						.foregroundColor(.secondary)
-				}
-							
-				ProgressView(value: trip.packingProgress)
-					.progressViewStyle(LinearProgressViewStyle(tint: progressColor(for: trip.packingProgress)))
-			}
-		}
-		.padding()
-		.background(
-			RoundedRectangle(cornerRadius: 16)
-				.fill(Color.tripBuddyCard)
-				.shadow(color: Color.tripBuddyText.opacity(0.1), radius: 5, x: 0, y: 2)
-		)
-		.padding(.horizontal)
-	}
-				
-	var searchBar: some View {
+
+	// MARK: - Subviews (Computed Properties)
+
+	private var searchBar: some View {
 		HStack {
-			Image(systemName: "magnifyingglass")
-				.foregroundColor(.secondary)
-						
-			TextField("search_placeholder", text: $searchText)
+			Image(systemName: "magnifyingglass").foregroundColor(.secondary)
+			TextField(String(localized: "search_placeholder"), text: $searchText)
 				.textFieldStyle(PlainTextFieldStyle())
-					
+				.submitLabel(.search) // Keep submit label
+
 			if !searchText.isEmpty {
-				Button(action: {
-					searchText = ""
-				}) {
-					Image(systemName: "xmark.circle.fill")
-						.foregroundColor(.secondary)
+				Button { searchText = "" } label: {
+					Image(systemName: "xmark.circle.fill").foregroundColor(.secondary)
 				}
+				.buttonStyle(.plain)
+				.transition(.opacity.combined(with: .scale)) // Add transition
 			}
 		}
 		.padding(10)
-		.background(Color(.systemGray6))
+		.background(Color.tripBuddyCard)
 		.cornerRadius(10)
 		.padding(.horizontal)
+		.animation(.easeInOut, value: searchText.isEmpty) // Animate clear button
 	}
-				
-	var categoryFilter: some View {
+
+	private var categoryFilterButtons: some View {
 		ScrollView(.horizontal, showsIndicators: false) {
 			HStack(spacing: 8) {
-				CategoryFilterButton(
-					title: String(localized: "all_items"),
-					isSelected: selectedCategory == nil
-				) {
-					selectedCategory = nil
+				CategoryFilterButton(title: String(localized: "all_items"), isSelected: selectedCategoryFilter == nil) {
+					withAnimation { selectedCategoryFilter = nil }
 				}
-							
-				ForEach(ItemCategory.allCases, id: \.self) { category in
-					CategoryFilterButton(
-						title: category.localizedName,
-						iconName: category.iconName,
-						isSelected: selectedCategory == category.rawValue
-					) {
-						selectedCategory = category.rawValue
+				// Use categories *present in the trip* for filter buttons
+				ForEach(categoriesPresentInTrip, id: \.self) { category in
+					CategoryFilterButton(title: category.localizedName, iconName: category.iconName, isSelected: selectedCategoryFilter == category) {
+						withAnimation { selectedCategoryFilter = category }
 					}
 				}
 			}
 			.padding(.horizontal)
 		}
 	}
-				
-	var packingList: some View {
-		VStack(spacing: 12) {
-			if filteredItems.isEmpty {
-				Text("no_items")
-					.foregroundColor(.secondary)
-					.padding(.vertical, 40)
-			} else {
-				ForEach(filteredItems) { item in
-					PackItemRow(item: item) { updatedItem in
-						if !(trip.isCompleted) {
-							if let index = trip.packingItems?.firstIndex(where: { $0.id == updatedItem.id }) {
-								trip.packingItems?[index].isPacked = updatedItem.isPacked
-									
-								// modificationDate für CloudKit aktualisieren
-								trip.packingItems?[index].update()
-								trip.update()
-									
-								try? modelContext.save()
-							}
-						}
-					}
-					.contentShape(Rectangle()) // Stellt sicher, dass die gesamte Zeile klickbar ist
-				
-					.opacity(trip.isCompleted ? 0.8 : 1.0)
-						
-					.contextMenu {
-						if !(trip.isCompleted) {
-							Button(role: .destructive, action: {
-								deleteItem(item)
-							}) {
-								Label("delete", systemImage: "trash")
-							}
-						}
+
+	private var packingListSectionsView: some View {
+		let itemsData = filteredAndGroupedItems
+		let categoriesToDisplay = categoriesToShowInSections
+
+		return VStack(alignment: .leading, spacing: 25) {
+			// --- Section: To Pack ---
+			if !itemsData.toPack.isEmpty {
+				sectionHeader(titleKey: "to_pack_section_header \(itemsData.toPack.reduce(0) { $0 + $1.value.count })", color: .tripBuddyPrimary)
+
+				ForEach(categoriesToDisplay, id: \.self) { category in
+					if let items = itemsData.toPack[category], !items.isEmpty {
+						// Use extracted component
+						CollapsibleCategorySection(
+							category: category,
+							items: items,
+							isInitiallyExpanded: true,
+							isTripCompleted: trip.isCompleted,
+							onUpdate: handleItemUpdate,
+							onDelete: handleItemDelete
+						)
 					}
 				}
 			}
-					
-		}.padding(.horizontal)
+
+			// --- Section: Already Packed ---
+			if !itemsData.packed.isEmpty {
+				Divider().padding(.horizontal)
+				// Use extracted component
+				CollapsiblePackedSection(
+					categories: categoriesToDisplay,
+					groupedPackedItems: itemsData.packed,
+					isTripCompleted: trip.isCompleted,
+					onUpdate: handleItemUpdate,
+					onDelete: handleItemDelete,
+					isExpanded: false // Start collapsed
+				)
+			}
+
+			// --- Fallback Views ---
+			if itemsData.toPack.isEmpty, itemsData.packed.isEmpty {
+				noResultsView
+			}
+		}
 	}
-				
-	func progressColor(for value: Double) -> Color {
-		if value < 0.3 {
-			return .tripBuddyAlert
-		} else if value < 0.7 {
-			return .tripBuddyAccent
+
+	private var noResultsView: some View {
+		VStack(spacing: 15) { // Add spacing
+			Image(systemName: "archivebox") // Different icon?
+				.font(.system(size: 40)) // Larger icon
+				.foregroundColor(.tripBuddyTextSecondary.opacity(0.7))
+			Text(noResultsTextKey)
+				.foregroundColor(.tripBuddyTextSecondary)
+				.multilineTextAlignment(.center)
+				.padding(.horizontal, 40) // Ensure text wraps nicely
+		}
+		.padding(.vertical, 50) // More vertical padding
+		.frame(maxWidth: .infinity)
+	}
+
+	private var noResultsTextKey: LocalizedStringKey {
+		if !searchText.isEmpty {
+			return "no_search_results"
+		} else if selectedCategoryFilter != nil {
+			return "no_items_in_category"
 		} else {
-			return .tripBuddySuccess
+			return "no_items_in_list" // All items are packed or list is empty
 		}
 	}
-				
-	func deleteItem(_ item: PackItem) {
-		if !(trip.isCompleted) {
-			trip.packingItems?.removeAll { $0.id == item.id }
-			modelContext.delete(item)
-				
-			// modificationDate für CloudKit aktualisieren
-			trip.update()
-				
-			try? modelContext.save()
+
+	private var floatingActionContent: some View {
+		VStack {
+			Spacer()
+			if allOriginalItemsCompleted && !trip.isCompleted {
+				completeTripButton
+					.transition(.scale.combined(with: .opacity))
+			} else if trip.isCompleted {
+				completedBanner
+					.transition(.scale.combined(with: .opacity))
+			}
 		}
+		.padding(.bottom, 30)
+		.animation(.spring(response: 0.4, dampingFraction: 0.6), value: allOriginalItemsCompleted)
+		.animation(.default, value: trip.isCompleted)
+	}
+
+	private var completeTripButton: some View {
+		Button {
+			showingCompletionAlert = true
+		} label: {
+			Label("complete_trip_button", systemImage: "checkmark.circle.fill")
+		}
+		.buttonStyle(TripBuddyFilledButtonStyle()) // Use a defined style
+		.padding(.horizontal, 50) // Make button wider
+	}
+
+	private var completedBanner: some View {
+		HStack {
+			Image(systemName: "checkmark.seal.fill")
+			Text("completed_trip_banner")
+		}
+		.font(.headline)
+		.foregroundColor(.tripBuddyText) // Use white text on colored banner
+		.padding()
+		.frame(maxWidth: .infinity) // Take full width
+		.background(Color.tripBuddySuccess)
+		.cornerRadius(20)
+		.padding(.horizontal, 30) // Padding around banner
+	}
+
+	// MARK: - Toolbar
+
+	// Helper for Sort Order Button
+	private var sortOrderLabelKey: LocalizedStringKey {
+		currentSortOrder == .ascending ? "sort_ascending" : "sort_descending"
+	}
+
+	private var sortOrderIconName: String {
+		currentSortOrder == .ascending ? "arrow.up.square" : "arrow.down.square"
+	}
+
+	private var isSortingActive: Bool {
+		currentSortOption != .name || currentSortOrder != .ascending
+	}
+
+	// MARK: - Sheets and Alerts
+
+	private var addItemSheet: some View {
+		// Pass only the necessary callback, not the whole trip
+		AddItemView { newItem in
+			addItemToTrip(newItem)
+		}
+	}
+
+	@ViewBuilder
+	private var completionAlertButtons: some View {
+		Button("cancel", role: .cancel) {}
+		Button("complete_button") {
+			markTripAsCompleted()
+		}
+	}
+
+	// MARK: - Helper Views
+
+	private func sectionHeader(titleKey: LocalizedStringKey, color: Color) -> some View {
+		Text(titleKey)
+			.font(.title3.weight(.semibold))
+			.foregroundColor(color)
+			.padding(.horizontal)
+	}
+
+	// MARK: - Data Handling Actions
+
+	private func handleItemUpdate(_ updatedItem: PackItem) {
+		guard !trip.isCompleted else { return }
+
+		// Find the index of the item to update
+		if let index = trip.packingItems?.firstIndex(where: { $0.id == updatedItem.id }) {
+			// Update the item directly within the @Bindable trip's array
+			trip.packingItems?[index].isPacked = updatedItem.isPacked
+			trip.packingItems?[index].update() // Update modification date if needed
+			trip.update() // Update trip's modification date
+			// Note: Explicit save might not be needed with @Bindable + SwiftData autosave
+			// but can be added if issues arise: try? modelContext.save()
+		}
+	}
+
+	private func handleItemDelete(_ itemToDelete: PackItem) {
+		guard !trip.isCompleted else { return }
+		generalFeedbackGenerator.impactOccurred() // Use the central generator
+
+		// Remove from the @Bindable array first (triggers UI update)
+		trip.packingItems?.removeAll { $0.id == itemToDelete.id }
+
+		// Then delete from the model context
+		modelContext.delete(itemToDelete)
+
+		trip.update() // Update trip's modification date
+		// try? modelContext.save() // Optional explicit save
+	}
+
+	private func addItemToTrip(_ newItem: PackItem) {
+		// Item is already created by AddItemView, just needs to be linked and saved
+		modelContext.insert(newItem) // Insert into context
+		newItem.trip = trip // Set relationship
+
+		// Ensure packingItems array is initialized
+		if trip.packingItems == nil {
+			trip.packingItems = []
+		}
+		trip.packingItems?.append(newItem)
+
+		trip.update() // Update trip's modification date
+		// try? modelContext.save() // Optional explicit save
+	}
+
+	private func markTripAsCompleted() {
+		trip.isCompleted = true
+		trip.update()
+		// try? modelContext.save() // Optional explicit save
 	}
 }
+
+// MARK: - Preview (Optional: Update Preview)
+
+// struct TripDetailView_Previews: PreviewProvider { ... }
