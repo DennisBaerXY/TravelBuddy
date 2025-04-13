@@ -12,20 +12,21 @@ struct PackItemRow: View {
 			// Checkbox mit verbesserten Zuständen
 			ZStack {
 				Circle()
-					.stroke(checkboxColor, lineWidth: 2)
-					.frame(width: 24, height: 24)
-				
+					.stroke(checkboxColor.opacity(0.8), lineWidth: 1.5) // Thinner stroke
+					.frame(width: 26, height: 26)
+					  
 				if item.isPacked {
 					Circle()
-						.fill(checkboxColor)
+						.fill(checkboxColor.opacity(0.8)) // Slightly transparent for softness
 						.frame(width: 18, height: 18)
-					
+						  
 					Image(systemName: "checkmark")
-						.font(.system(size: 12, weight: .bold))
+						.font(.system(size: 12, weight: .medium)) // Less bold
 						.foregroundColor(.white)
 				}
 			}
-			
+			.animation(.easeInOut(duration: 0.4), value: item.isPacked) // Slower, more soothing animation
+				  
 			VStack(alignment: .leading, spacing: 4) {
 				HStack {
 					if item.isEssential {
@@ -64,31 +65,30 @@ struct PackItemRow: View {
 				}
 			}
 		}
-		.padding(.vertical, 10)
-		.padding(.horizontal, 12)
+		.padding(.vertical, 12) // More padding
+		.padding(.horizontal, 16)
 		.background(
-			RoundedRectangle(cornerRadius: 12)
+			RoundedRectangle(cornerRadius: 16) // More rounded
 				.fill(backgroundForItem)
 		)
 		.overlay(
-			RoundedRectangle(cornerRadius: 12)
-				.stroke(borderForItem, lineWidth: 1)
+			RoundedRectangle(cornerRadius: 16)
+				.stroke(borderForItem, lineWidth: 0.8) // Thinner stroke
 		)
-		// Die gesamte Zeile klickbar machen
+		// Add a gentle shadow
+		.shadow(color: Color.tripBuddyText.opacity(0.05), radius: 3, x: 0, y: 1)
 		.contentShape(Rectangle())
+		// Gentle pulse animation when tapped
 		.onTapGesture {
-			// Animations-Sequenz beim Abhaken
-			withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
-				// Kleiner visueller Effekt beim Tippen
-				offset = 5
+			withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+				// Gentler visual effect
+				offset = 3
 			}
-			
-			// Kurze Verzögerung für besseres Feedback
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-				withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+			   
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+				withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
 					offset = 0
-					
-					// Status umschalten
+					   
 					let updatedItem = item
 					updatedItem.isPacked.toggle()
 					onUpdate(updatedItem)

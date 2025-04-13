@@ -10,15 +10,16 @@ import SwiftUI
 struct TripBuddyButtonStyle: ButtonStyle {
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label
-			.padding(.horizontal, 20)
-			.padding(.vertical, 12)
+			.padding(.horizontal, 24) // Slightly more padding
+			.padding(.vertical, 14) // Slightly more padding
 			.background(
-				RoundedRectangle(cornerRadius: 20)
-					.fill(configuration.isPressed ? Color.tripBuddyPrimary.opacity(0.8) : Color.tripBuddyPrimary)
+				RoundedRectangle(cornerRadius: 25) // More rounded corners
+					.fill(configuration.isPressed ? Color.tripBuddyPrimary.opacity(0.7) : Color.tripBuddyPrimary)
 			)
 			.foregroundColor(.white)
-			.font(.system(size: 16, weight: .semibold))
-			.scaleEffect(configuration.isPressed ? 0.97 : 1)
-			.animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+			.font(.system(size: 16, weight: .medium)) // Less bold for a softer look
+			.scaleEffect(configuration.isPressed ? 0.98 : 1)
+			.animation(.easeInOut(duration: 0.3), value: configuration.isPressed) // Slower, more fluid animation
+			.shadow(color: Color.tripBuddyPrimary.opacity(0.2), radius: 4, x: 0, y: 2) // Subtle shadow
 	}
 }

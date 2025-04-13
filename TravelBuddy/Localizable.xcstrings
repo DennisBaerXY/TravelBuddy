@@ -51,9 +51,6 @@
         }
       }
     },
-    "%lld%% " : {
-      "shouldTranslate" : false
-    },
     "×" : {
       "localizations" : {
         "de" : {
@@ -66,6 +63,7 @@
       "shouldTranslate" : false
     },
     "Abbrechen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -374,12 +372,12 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tippe auf das Plus-Symbol, um deine erste Reise zu planen."
+            "value" : "Entspannt reisen beginnt mit guter Planung. Starte jetzt und lass TravelBuddy dir helfen."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Tap the plus or the button to plan your first trip."
           }
         }
@@ -402,6 +400,7 @@
       }
     },
     "Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -410,6 +409,12 @@
           }
         }
       }
+    },
+    "Alles gepackt! 🎉 Möchtest du die Reise als abgeschlossen markieren?" : {
+
+    },
+    "Als fertig markieren" : {
+
     },
     "back" : {
       "localizations" : {
@@ -780,6 +785,7 @@
       }
     },
     "Diese Reise wurde abgeschlossen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -954,12 +960,12 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keine Reisen geplant"
+            "value" : "Bereit für dein nächstes Abenteuer"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "No Trips Planned"
           }
         }
@@ -1033,6 +1039,9 @@
         }
       }
     },
+    "Reise erfolgreich abgeschlossen! Gute Reise!" : {
+
+    },
     "search_placeholder" : {
       "localizations" : {
         "de" : {
@@ -1048,6 +1057,9 @@
           }
         }
       }
+    },
+    "Später erledigen" : {
+
     },
     "Starten" : {
       "localizations" : {

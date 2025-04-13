@@ -233,7 +233,7 @@ struct OnboardingPageView: View {
 		}
 		.padding()
 		.onAppear {
-			withAnimation(.easeOut(duration: 0.6)) {
+			withAnimation(.easeOut(duration: 0.7)) {
 				isAnimating = true
 			}
 		}

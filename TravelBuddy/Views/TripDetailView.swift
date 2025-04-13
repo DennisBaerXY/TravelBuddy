@@ -117,12 +117,12 @@ struct TripDetailView: View {
 			}
 		}
 		.alert("Reise abschließen", isPresented: $showingCompletionAlert) {
-			Button("Abbrechen", role: .cancel) {}
-			Button("Abschließen") {
+			Button("Später erledigen", role: .cancel) {} // More relaxed wording
+			Button("Als fertig markieren") { // Positive framing
 				markTripAsCompleted()
 			}
 		} message: {
-			Text("Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?")
+			Text("Alles gepackt! 🎉 Möchtest du die Reise als abgeschlossen markieren?")
 		}
 	}
 			
@@ -130,16 +130,16 @@ struct TripDetailView: View {
 		VStack {
 			HStack {
 				Image(systemName: "checkmark.seal.fill")
-					.foregroundColor(.green)
-				Text("Diese Reise wurde abgeschlossen")
+					.foregroundColor(.tripBuddySuccess)
+				Text("Reise erfolgreich abgeschlossen! Gute Reise!")
 					.font(.headline)
-					.foregroundColor(.green)
+					.foregroundColor(.tripBuddySuccess)
 				Spacer()
 			}
 			.padding()
 			.background(
-				RoundedRectangle(cornerRadius: 10)
-					.fill(Color.green.opacity(0.1))
+				RoundedRectangle(cornerRadius: 16) // More rounded
+					.fill(Color.tripBuddySuccess.opacity(0.1))
 			)
 		}
 		.padding(.horizontal)
@@ -177,21 +177,31 @@ struct TripDetailView: View {
 			}
 						
 			// Fortschrittsbalken
-			VStack(alignment: .leading, spacing: 4) {
+			VStack(alignment: .leading, spacing: 6) {
 				HStack {
-					Text("\(Int(trip.packingProgress * 100))% ")
-						.font(.headline)
+					// More encouraging message based on progress
+					Text(progressMessage(for: trip.packingProgress))
+						.font(.subheadline)
 						.foregroundColor(progressColor(for: trip.packingProgress))
-								
+						
 					Spacer()
-								
+						
 					Text("\((trip.packingItems?.filter { $0.isPacked }.count ?? 0))/\(trip.packingItems?.count ?? 0) items_count")
 						.font(.caption)
 						.foregroundColor(.secondary)
 				}
-							
-				ProgressView(value: trip.packingProgress)
-					.progressViewStyle(LinearProgressViewStyle(tint: progressColor(for: trip.packingProgress)))
+					
+				// Slightly thicker progress bar with rounded ends
+				ZStack(alignment: .leading) {
+					Capsule()
+						.fill(Color.tripBuddyText.opacity(0.1))
+						.frame(height: 8)
+						
+					Capsule()
+						.fill(progressColor(for: trip.packingProgress))
+						.frame(width: max(CGFloat(trip.packingProgress) * UIScreen.main.bounds.width * 0.85, 8), height: 8)
+						.animation(.easeInOut(duration: 0.6), value: trip.packingProgress)
+				}
 			}
 		}
 		.padding()
@@ -309,6 +319,22 @@ struct TripDetailView: View {
 			trip.update()
 				
 			try? modelContext.save()
+		}
+	}
+	
+	func progressMessage(for value: Double) -> String {
+		if value == 0 {
+			return "Bereit zum Packen!"
+		} else if value < 0.25 {
+			return "Guter Start!"
+		} else if value < 0.5 {
+			return "Du machst Fortschritte!"
+		} else if value < 0.75 {
+			return "Mehr als die Hälfte!"
+		} else if value < 1.0 {
+			return "Fast geschafft!"
+		} else {
+			return "Alles gepackt! 🎉"
 		}
 	}
 }

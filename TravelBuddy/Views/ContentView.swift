@@ -91,6 +91,8 @@ struct ContentView: View {
 				AddTripView()
 			}
 		}
+		.navigationViewStyle(StackNavigationViewStyle())
+		.animation(.easeInOut(duration: 0.3), value: trips.isEmpty)
 	}
 	
 	func deleteTrip(_ indexes: IndexSet) {

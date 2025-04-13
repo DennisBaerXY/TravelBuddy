@@ -1,39 +1,40 @@
 import SwiftUI
 
 extension Color {
-	// Farbdefinitionen für Light & Dark Mode-kompatible Farben
-	// Diese verwenden den Asset Catalog
-
-	// Fallback-Werte für die Vorschau und Tests
-	// Diese werden nur verwendet, wenn die Asset Catalog Farben nicht verfügbar sind
+	// Primary color - shifting from bright blue to a calmer blue-teal
 	static var tripBuddyPrimaryValue: Color {
 		@Environment(\.colorScheme) var colorScheme
-		return colorScheme == .dark ? Color(hex: 0x5D87FF) : Color(hex: 0x3563E9)
+		return colorScheme == .dark ? Color(hex: 0x5A9EA4) : Color(hex: 0x3A8A94)
 	}
-	
+		
+	// Success color - softer, less intense green
 	static var tripBuddySuccessValue: Color {
 		@Environment(\.colorScheme) var colorScheme
-		return colorScheme == .dark ? Color(hex: 0x4ADE80) : Color(hex: 0x21C55D)
+		return colorScheme == .dark ? Color(hex: 0x7AC1A4) : Color(hex: 0x5AAD8A)
 	}
-	
+		
+	// Alert color - warmer, less alarming
 	static var tripBuddyAlertValue: Color {
 		@Environment(\.colorScheme) var colorScheme
-		return colorScheme == .dark ? Color(hex: 0xFF7D73) : Color(hex: 0xF97066)
+		return colorScheme == .dark ? Color(hex: 0xE5A17E) : Color(hex: 0xD48E69)
 	}
-	
+		
+	// Accent color - warmer amber tone
 	static var tripBuddyAccentValue: Color {
 		@Environment(\.colorScheme) var colorScheme
-		return colorScheme == .dark ? Color(hex: 0xFFB940) : Color(hex: 0xF59F00)
+		return colorScheme == .dark ? Color(hex: 0xE6C29E) : Color(hex: 0xD6AF88)
 	}
-	
+		
+	// Background - subtle off-white/darker gray
 	static var tripBuddyBackgroundValue: Color {
 		@Environment(\.colorScheme) var colorScheme
-		return colorScheme == .dark ? Color(hex: 0x121212) : Color(hex: 0xF8F9FA)
+		return colorScheme == .dark ? Color(hex: 0x1D2228) : Color(hex: 0xF9F6F2)
 	}
-	
+		
+	// Card backgrounds - softer contrast
 	static var tripBuddyCardValue: Color {
 		@Environment(\.colorScheme) var colorScheme
-		return colorScheme == .dark ? Color(hex: 0x1E1E1E) : Color(hex: 0xFFFFFF)
+		return colorScheme == .dark ? Color(hex: 0x2A3038) : Color(hex: 0xFFFCF8)
 	}
 	
 	static var tripBuddyTextValue: Color {

@@ -15,8 +15,6 @@ struct TripCardView: View {
 		.opacity(trip.isCompleted ? 0.9 : 1.0)
 	}
 	
-	// MARK: - Components
-	
 	private var tripHeader: some View {
 		HStack {
 			Text(trip.name)
@@ -126,19 +124,20 @@ struct TripCardView: View {
 	}
 	
 	private var cardBackground: some View {
-		RoundedRectangle(cornerRadius: 16)
-			.fill(trip.isCompleted ? Color.tripBuddyCard.opacity(0.7) : Color.tripBuddyCard)
+		RoundedRectangle(cornerRadius: 20) // More rounded corners
+			.fill(trip.isCompleted ? Color.tripBuddyCard.opacity(0.8) : Color.tripBuddyCard)
 			.overlay(
-				RoundedRectangle(cornerRadius: 16)
+				RoundedRectangle(cornerRadius: 20)
 					.strokeBorder(
-						trip.isCompleted ? Color.tripBuddyAccent.opacity(0.3) : Color.clear,
-						lineWidth: trip.isCompleted ? 2 : 0
+						trip.isCompleted ? Color.tripBuddySuccess.opacity(0.3) : Color.clear,
+						lineWidth: trip.isCompleted ? 1.5 : 0 // Thinner stroke
 					)
 			)
-			.shadow(color: Color.tripBuddyText.opacity(trip.isCompleted ? 0.05 : 0.1), radius: 5, x: 0, y: 2)
+			.shadow(
+				color: Color.tripBuddyText.opacity(trip.isCompleted ? 0.03 : 0.07),
+				radius: 6, x: 0, y: 2
+			) // Softer shadow
 	}
-	
-	// MARK: - Helper Methods
 	
 	func progressColor(for value: Double) -> Color {
 		if value < 0.3 {
