@@ -31,15 +31,13 @@ struct TripsListView: View {
 	var body: some View {
 		NavigationStack {
 			ZStack {
-				backgroundGradient
-				
 				Group {
 					if trips.isEmpty {
 						emptyStateView
 					} else {
 						tripsListView
 					}
-				}.padding()
+				}.padding(.horizontal)
 				
 				floatingAddButton
 			}
@@ -171,7 +169,6 @@ struct TripsListView: View {
 			}
 		}
 		.listStyle(.plain)
-		.padding(.bottom, 60) // Space for FAB
 	}
 	
 	private func sectionHeader(_ titleKey: LocalizedStringKey, systemImage: String) -> some View {

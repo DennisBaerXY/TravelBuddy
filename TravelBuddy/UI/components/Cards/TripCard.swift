@@ -15,17 +15,43 @@ struct TripCard: View {
 			tripHeader
 			
 			// Ortsbild (falls verfügbar)
-			if let image = placeImage {
+			if isLoadingImage {
+				ZStack {
+					RoundedRectangle(cornerRadius: 12)
+						.fill(Color.gray.opacity(0.1))
+						.frame(height: 140)
+					
+					ProgressView()
+						.progressViewStyle(CircularProgressViewStyle(tint: .tripBuddyPrimary))
+				}
+				.padding(.vertical, 5)
+			}
+			// Wenn das Bild geladen ist, zeige es
+			else if let image = placeImage {
 				image
 					.resizable()
-					.aspectRatio(contentMode: .fill)
-					.frame(height: 120)
+					.aspectRatio(contentMode: .fill) // Füllt den Rahmen aus
+					.frame(height: 140)
+					.clipped() // Schneidet Überläufe ab
+					// Verwende overlay mit ZStack für einen Farbverlauf am unteren Rand
+					.overlay(
+						ZStack(alignment: .bottom) {
+							// Farbverlauf für bessere Lesbarkeit des darüberliegenden Textes
+							LinearGradient(
+								gradient: Gradient(colors: [.clear, .black.opacity(0.3)]),
+								startPoint: .top,
+								endPoint: .bottom
+							)
+							.frame(height: 50) // Nur unterer Bereich
+						}
+					)
 					.clipShape(RoundedRectangle(cornerRadius: 12))
 					.overlay(
 						RoundedRectangle(cornerRadius: 12)
 							.stroke(Color.tripBuddyText.opacity(0.1), lineWidth: 1)
 					)
-					.padding(.horizontal, 4)
+					.shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+					.padding(.vertical, 5)
 			}
 			destinationRow
 			dateRow
@@ -42,9 +68,7 @@ struct TripCard: View {
 			alignment: .leading
 		)
 		.onAppear { // Trigger image loading when the card appears
-			print("Where am i before")
 			if !trip.destinationPlaceId.isEmpty && placeImage == nil && !isLoadingImage {
-				print("Where am i")
 				loadImageForPlace()
 			}
 		}
