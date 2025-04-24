@@ -74,7 +74,7 @@ final class PackItem {
 		categoryEnum.iconName
 	}
 	
-	var categoryName: LocalizedStringKey {
+	var categoryName: String {
 		categoryEnum.localizedName
 	}
 	

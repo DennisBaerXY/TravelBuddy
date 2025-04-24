@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct CategoryFilterButton: View {
-	let title: LocalizedStringKey
+	let title: String
 	var iconName: String? = nil
 	let isSelected: Bool
 	let action: () -> Void

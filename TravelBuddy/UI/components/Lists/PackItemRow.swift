@@ -22,10 +22,11 @@ struct PackItemRow: View {
 		
 	var body: some View {
 		HStack(spacing: 15) {
-			itemCheckbox
 			itemDetails
 			Spacer()
 			quantityBadge
+			
+			itemCheckbox
 		}
 		.padding(.vertical, 12)
 		.padding(.horizontal, 15)
@@ -113,8 +114,9 @@ struct PackItemRow: View {
 					.fill(
 						RadialGradient(
 							gradient: Gradient(colors: [
-								checkboxColor.opacity(0.3),
-								checkboxColor.opacity(0.0)
+								checkboxColor.opacity(0.0),
+								checkboxColor.opacity(0.7)
+								
 							]),
 							center: .leading,
 							startRadius: 5,

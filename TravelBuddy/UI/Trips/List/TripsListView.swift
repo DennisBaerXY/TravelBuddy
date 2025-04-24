@@ -33,14 +33,17 @@ struct TripsListView: View {
 			ZStack {
 				backgroundGradient
 				
-				if trips.isEmpty {
-					emptyStateView
-				} else {
-					tripsListView
-				}
+				Group {
+					if trips.isEmpty {
+						emptyStateView
+					} else {
+						tripsListView
+					}
+				}.padding()
 				
 				floatingAddButton
 			}
+			
 			.navigationTitle("my.trips")
 			.toolbar {
 				ToolbarItem(placement: .navigationBarLeading) {
@@ -120,7 +123,7 @@ struct TripsListView: View {
 		List {
 			// Active trips
 			if !activeTrips.isEmpty {
-				Section(header: sectionHeader("Active Trips", systemImage: "airplane")) {
+				Section(header: sectionHeader("active_trips", systemImage: "airplane")) {
 					ForEach(activeTrips) { trip in
 						NavigationLink(destination: TripDetailView(trip: trip)) {
 							TripCard(trip: trip)
@@ -148,7 +151,7 @@ struct TripsListView: View {
 			
 			// Completed trips
 			if !completedTrips.isEmpty {
-				Section(header: sectionHeader("Completed Trips", systemImage: "checkmark.circle")) {
+				Section(header: sectionHeader("completed_trips", systemImage: "checkmark.circle")) {
 					ForEach(completedTrips) { trip in
 						NavigationLink(destination: TripDetailView(trip: trip)) {
 							TripCard(trip: trip)

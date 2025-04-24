@@ -140,50 +140,67 @@ struct AddTripView: View {
 	private var transportAccommodationView: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 25) {
+				// Heading text
 				Text("transport_and_accommodation_prompt")
-					.font(.title2.weight(.semibold)).padding(.bottom, 5)
+					.font(.title2.weight(.semibold))
+					.padding(.bottom, 5)
 				
-				// Transport options
-				Section {
-					LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
-						ForEach(TransportType.allCases) { type in
-							SelectableButton(
-								systemImage: type.iconName,
-								text: type.localizedName,
-								isSelected: selectedTransport.contains(type)
-							) {
-								if selectedTransport.contains(type) {
-									selectedTransport.removeAll { $0 == type }
-								} else {
-									selectedTransport.append(type)
-								}
-							}
-						}
-					}
-				} header: {
-					Text("how_do_you_travel").font(.headline).padding(.leading, -15)
-				}
+				// Transport options section
+				transportOptionsSection
 				
-				// Accommodation options
-				Section {
-					LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
-						ForEach(AccommodationType.allCases) { type in
-							SelectableButton(
-								systemImage: type.iconName,
-								text: type.localizedName,
-								isSelected: selectedAccommodation == type
-							) {
-								selectedAccommodation = type
-							}
-						}
-					}
-				} header: {
-					Text("where_do_you_stay").font(.headline).padding(.leading, -15)
-				}
+				// Accommodation options section
+				accommodationOptionsSection
 			}
 			.padding()
 		}
 		.padding(.horizontal)
+	}
+
+	// Break down into smaller components to avoid compiler issues
+	private var transportOptionsSection: some View {
+		Section {
+			LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
+				ForEach(TransportType.allCases) { type in
+					SelectableButton(
+						systemImage: type.iconName,
+						// Convert LocalizedStringKey to String
+						text: type.localizedName,
+						isSelected: selectedTransport.contains(type)
+					) {
+						if selectedTransport.contains(type) {
+							selectedTransport.removeAll { $0 == type }
+						} else {
+							selectedTransport.append(type)
+						}
+					}
+				}
+			}
+		} header: {
+			Text("how_do_you_travel")
+				.font(.headline)
+				.padding(.leading, -15)
+		}
+	}
+
+	private var accommodationOptionsSection: some View {
+		Section {
+			LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
+				ForEach(AccommodationType.allCases) { type in
+					SelectableButton(
+						systemImage: type.iconName,
+						// Convert LocalizedStringKey to String
+						text: type.localizedName,
+						isSelected: selectedAccommodation == type
+					) {
+						selectedAccommodation = type
+					}
+				}
+			}
+		} header: {
+			Text("where_do_you_stay")
+				.font(.headline)
+				.padding(.leading, -15)
+		}
 	}
 	
 	private var activitiesAndDetailsView: some View {
@@ -297,7 +314,10 @@ struct AddTripView: View {
 				
 				ReviewSection(title: "transport_and_accommodation") {
 					ReviewRow(label: "transport", value: transportText)
-					ReviewRow(label: "accommodation", value: selectedAccommodation.localizedName)
+					ReviewRow(
+						label: "accommodation",
+						value: selectedAccommodation.localizedName
+					)
 				}
 				
 				ReviewSection(title: "activities_and_details") {
@@ -471,7 +491,7 @@ struct ReviewSection<Content: View>: View {
 }
 
 struct ReviewRow: View {
-	let label: LocalizedStringKey
+	let label: String
 	let value: String
 	
 	var body: some View {

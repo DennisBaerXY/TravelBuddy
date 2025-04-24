@@ -139,7 +139,7 @@ class Trip {
 }
 
 // Helper extension for comparability
-extension Bool: Comparable {
+extension Bool: @retroactive Comparable {
 	public static func <(lhs: Self, rhs: Self) -> Bool {
 		!lhs && rhs
 	}

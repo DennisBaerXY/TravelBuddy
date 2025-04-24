@@ -21,29 +21,29 @@ struct OnboardingView: View {
 		OnboardingPage(
 			image: nil,
 			customImage: "AppIconLogo",
-			title: "Willkommen bei TravelBuddy",
-			description: "Der ultimative Reisebegleiter für deine Abenteuer.",
+			title: "onboarding_welcome_title", // Was: "Willkommen bei TravelBuddy"
+			description: "onboarding_welcome_description", // Was: "Der ultimative Reisebegleiter für deine Abenteuer."
 			tintColor: .tripBuddyPrimary
 		),
 		OnboardingPage(
 			image: "list.bullet.clipboard",
 			customImage: nil,
-			title: "Organisiere Deine Reisen",
-			description: "Erstelle individuelle Packlisten für jede Reise und behalte den Überblick.",
+			title: "onboarding_organize_title", // Was: "Organisiere Deine Reisen"
+			description: "onboarding_organize_description", // Was: "Erstelle individuelle Packlisten für jede Reise und behalte den Überblick."
 			tintColor: .tripBuddyAccent
 		),
 		OnboardingPage(
 			image: "checkmark.circle.fill",
 			customImage: nil,
-			title: "Immer vorbereitet",
-			description: "Nie wieder etwas vergessen! TripBuddy hilft dir, alles Wichtige einzupacken.",
+			title: "onboarding_prepared_title", // Was: "Immer vorbereitet"
+			description: "onboarding_prepared_description", // Was: "Nie wieder etwas vergessen! TripBuddy hilft dir, alles Wichtige einzupacken."
 			tintColor: .tripBuddySuccess
 		),
 		OnboardingPage(
 			image: "arrow.triangle.2.circlepath",
 			customImage: nil,
-			title: "Abgeschlossen? Kein Problem!",
-			description: "Reise beendet? Markiere sie als abgeschlossen, um später darauf zurückzugreifen.",
+			title: "onboarding_completed_title", // Was: "Abgeschlossen? Kein Problem!"
+			description: "onboarding_completed_description", // Was: "Reise beendet? Markiere sie als abgeschlossen, um später darauf zurückzugreifen."
 			tintColor: .tripBuddyAlert
 		)
 	]
@@ -93,7 +93,7 @@ struct OnboardingView: View {
 			
 			// Skip/Finish button
 			if currentPage < pages.count - 1 {
-				Button("Überspringen") {
+				Button("skip") { // Was: "Überspringen"
 					withAnimation {
 						finishOnboarding(skipped: true)
 					}
@@ -101,7 +101,7 @@ struct OnboardingView: View {
 				.padding()
 				.foregroundColor(.tripBuddyTextSecondary)
 			} else {
-				Button("Abschließen") {
+				Button("finish") { // Was: "Abschließen"
 					withAnimation {
 						finishOnboarding(skipped: false)
 					}
@@ -140,7 +140,7 @@ struct OnboardingView: View {
 				}
 			}) {
 				HStack {
-					Text(currentPage == pages.count - 1 ? "Starten" : "Weiter")
+					Text(currentPage == pages.count - 1 ? "start" : "next") // Was: "Starten" : "Weiter"
 						.font(.headline)
 						.fontWeight(.bold)
 					

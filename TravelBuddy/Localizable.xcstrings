@@ -44,29 +44,12 @@
         }
       }
     },
-    "%lld/%lld items_count" : {
-      "extractionState" : "stale",
+    "%lld/%lld packed" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld/%2$lld gepackt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$lld/%2$lld packed"
-          }
-        }
-      }
-    },
-    "%lld/%lld packed" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld/%2$lld packed"
           }
         }
       }
@@ -87,37 +70,8 @@
     "© 2025 Dennis DevLops" : {
 
     },
-    "×" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "x"
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
     "×%lld" : {
 
-    },
-    "Abbrechen" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abbrechen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
-          }
-        }
-      }
     },
     "Abgeschlossen" : {
       "localizations" : {
@@ -135,10 +89,24 @@
         }
       }
     },
-    "About" : {
-
+    "about" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
     },
     "Abschließen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -155,6 +123,7 @@
       }
     },
     "accommodation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -165,6 +134,7 @@
       }
     },
     "accommodation_airbnb" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -181,6 +151,7 @@
       }
     },
     "accommodation_apartment" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -197,6 +168,7 @@
       }
     },
     "accommodation_camping" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -213,6 +185,7 @@
       }
     },
     "accommodation_friends" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -229,6 +202,7 @@
       }
     },
     "accommodation_hostel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -245,6 +219,7 @@
       }
     },
     "accommodation_hotel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -260,19 +235,63 @@
         }
       }
     },
-    "Account" : {
-
+    "account" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konto"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account"
+          }
+        }
+      }
     },
     "Acknowledgements" : {
 
     },
+    "active" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiv"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        }
+      }
+    },
     "Active" : {
 
     },
-    "Active Trips" : {
-
+    "active_trips" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktive Reisen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active Trips"
+          }
+        }
+      }
     },
     "activities" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -309,6 +328,7 @@
       }
     },
     "activity_beach" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -325,6 +345,7 @@
       }
     },
     "activity_business" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -341,6 +362,7 @@
       }
     },
     "activity_hiking" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -357,6 +379,7 @@
       }
     },
     "activity_relaxing" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -373,6 +396,7 @@
       }
     },
     "activity_sightseeing" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -389,6 +413,7 @@
       }
     },
     "activity_skiing" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -405,6 +430,7 @@
       }
     },
     "activity_sports" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -421,6 +447,7 @@
       }
     },
     "activity_swimming" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -472,6 +499,7 @@
       }
     },
     "all_items" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -490,17 +518,6 @@
     "all_items_packed" : {
 
     },
-    "Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All packed! 🎉 Do you want to mark the trip as completed?"
-          }
-        }
-      }
-    },
     "already_packed_section_header" : {
       "localizations" : {
         "de" : {
@@ -514,14 +531,53 @@
     "App Initialization Failed" : {
 
     },
-    "Appearance" : {
-
+    "appearance" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aussehen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        }
+      }
     },
-    "Ascending" : {
-
+    "ascending" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufsteigend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ascending"
+          }
+        }
+      }
     },
-    "Auto-suggest Packing Lists" : {
-
+    "auto_suggest_packing_lists" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Packlisten automatisch vorschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-suggest Packing Lists"
+          }
+        }
+      }
     },
     "back" : {
       "localizations" : {
@@ -542,8 +598,21 @@
     "Backup Data" : {
 
     },
-    "Behavior" : {
-
+    "behavior" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verhalten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behavior"
+          }
+        }
+      }
     },
     "business_trip" : {
       "localizations" : {
@@ -600,6 +669,7 @@
       }
     },
     "category_accessories" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -616,6 +686,7 @@
       }
     },
     "category_clothing" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -632,6 +703,7 @@
       }
     },
     "category_documents" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -648,6 +720,7 @@
       }
     },
     "category_electronics" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -664,6 +737,7 @@
       }
     },
     "category_medication" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -680,6 +754,7 @@
       }
     },
     "category_other" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -696,6 +771,7 @@
       }
     },
     "category_toiletries" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -731,6 +807,7 @@
       }
     },
     "climate_cold" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -747,6 +824,7 @@
       }
     },
     "climate_cool" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -763,6 +841,7 @@
       }
     },
     "climate_hot" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -789,6 +868,7 @@
       }
     },
     "climate_moderate" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -805,6 +885,7 @@
       }
     },
     "climate_warm" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -820,20 +901,76 @@
         }
       }
     },
+    "close" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        }
+      }
+    },
     "Close" : {
 
     },
-    "Color Theme" : {
-
+    "color_theme" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Farbthema"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color Theme"
+          }
+        }
+      }
     },
     "complete_button" : {
 
     },
     "complete_trip_alert_message" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All items are packed. Do you want to mark the trip as completed?"
+          }
+        }
+      }
     },
     "complete_trip_alert_title" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reise abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Complete Trip"
+          }
+        }
+      }
     },
     "complete_trip_button" : {
 
@@ -841,11 +978,24 @@
     "Completed" : {
 
     },
-    "Completed Trips" : {
-
-    },
     "completed_trip_banner" : {
 
+    },
+    "completed_trips" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossene Reisen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed Trips"
+          }
+        }
+      }
     },
     "Contact Support" : {
 
@@ -882,11 +1032,37 @@
         }
       }
     },
-    "Data" : {
-
+    "data" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data"
+          }
+        }
+      }
     },
-    "Default Sort" : {
-
+    "default_sort" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard-Sortierung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default Sort"
+          }
+        }
+      }
     },
     "delete" : {
       "localizations" : {
@@ -904,10 +1080,24 @@
         }
       }
     },
-    "Descending" : {
-
+    "descending" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Absteigend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descending"
+          }
+        }
+      }
     },
     "destination" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -955,16 +1145,39 @@
         }
       }
     },
-    "Development" : {
-
-    },
-    "Diese Reise wurde abgeschlossen" : {
+    "development" : {
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entwicklung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This Trip has been completed"
+            "value" : "Development"
+          }
+        }
+      }
+    },
+    "Development" : {
+
+    },
+    "done" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fertig"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
           }
         }
       }
@@ -994,6 +1207,22 @@
     "Export Data" : {
 
     },
+    "finish" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abschließen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish"
+          }
+        }
+      }
+    },
     "Fortschritt: %lld%%" : {
 
     },
@@ -1013,14 +1242,158 @@
         }
       }
     },
-    "Get Premium" : {
-
+    "get_premium" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium erhalten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get Premium"
+          }
+        }
+      }
     },
     "Hawaii" : {
       "comment" : "Sample destination"
     },
     "Help Center" : {
 
+    },
+    "help_center" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe-Center"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help Center"
+          }
+        }
+      }
+    },
+    "help_getting_started" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erste Schritte"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Getting Started"
+          }
+        }
+      }
+    },
+    "help_packing_lists" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Packlisten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Packing Lists"
+          }
+        }
+      }
+    },
+    "help_settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "help_trip_planning" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiseplanung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip Planning"
+          }
+        }
+      }
+    },
+    "help_troubleshooting" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fehlerbehebung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Troubleshooting"
+          }
+        }
+      }
+    },
+    "help_welcome_content" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TravelBuddy ist deine ultimative Reisebegleiter-App, die dir hilft, deine Reisen und Packlisten zu organisieren.\n\nMit TravelBuddy kannst du:\n• Reisen erstellen und organisieren\n• Smarte Packlisten generieren\n• Den Überblick über deinen Packfortschritt behalten\n• Nie wieder wichtige Gegenstände vergessen\n\nDieses Hilfe-Center wird dich durch alle Funktionen der App führen und häufige Fragen beantworten."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TravelBuddy is your ultimate travel companion app that helps you organize your trips and packing lists.\n\nWith TravelBuddy, you can:\n• Create and organize your trips\n• Generate smart packing lists\n• Keep track of your packing progress\n• Never forget important items again\n\nThis help center will guide you through all the features of the app and answer common questions."
+          }
+        }
+      }
+    },
+    "help_welcome_title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen bei TravelBuddy"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to TravelBuddy"
+          }
+        }
+      }
     },
     "how_do_you_travel" : {
       "localizations" : {
@@ -1038,8 +1411,21 @@
         }
       }
     },
-    "Imperial" : {
-
+    "imperial" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imperial"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imperial"
+          }
+        }
+      }
     },
     "item" : {
       "localizations" : {
@@ -1077,14 +1463,53 @@
         }
       }
     },
-    "Language" : {
-
+    "language" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        }
+      }
     },
-    "Measurement System" : {
-
+    "measurement_system" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maßeinheitensystem"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measurement System"
+          }
+        }
+      }
     },
-    "Metric" : {
-
+    "metric" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metrisch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metric"
+          }
+        }
+      }
     },
     "Mountain Cabin" : {
       "comment" : "Sample destination"
@@ -1222,23 +1647,6 @@
         }
       }
     },
-    "no_items" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Gegenstände"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Items"
-          }
-        }
-      }
-    },
     "no_items_in_category" : {
 
     },
@@ -1254,23 +1662,6 @@
     },
     "no_search_results" : {
 
-    },
-    "no.trips.planned" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Reisen geplant"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No Trips Planned"
-          }
-        }
-      }
     },
     "no.trips.planned.title" : {
 
@@ -1296,6 +1687,142 @@
     },
     "Ocean" : {
       "comment" : "Color theme name"
+    },
+    "onboarding_completed_description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reise beendet? Markiere sie als abgeschlossen, um später darauf zurückzugreifen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip finished? Mark it as completed to refer back to it later."
+          }
+        }
+      }
+    },
+    "onboarding_completed_title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgeschlossen? Kein Problem!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed? No Problem!"
+          }
+        }
+      }
+    },
+    "onboarding_organize_description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erstelle individuelle Packlisten für jede Reise und behalte den Überblick."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create custom packing lists for each trip and keep track of everything."
+          }
+        }
+      }
+    },
+    "onboarding_organize_title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organisiere Deine Reisen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Organize Your Trips"
+          }
+        }
+      }
+    },
+    "onboarding_prepared_description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie wieder etwas vergessen! TripBuddy hilft dir, alles Wichtige einzupacken."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Never forget anything again! TripBuddy helps you pack all the essentials."
+          }
+        }
+      }
+    },
+    "onboarding_prepared_title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immer vorbereitet"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always Prepared"
+          }
+        }
+      }
+    },
+    "onboarding_welcome_description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der ultimative Reisebegleiter für deine Abenteuer."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The ultimate travel companion for your adventures."
+          }
+        }
+      }
+    },
+    "onboarding_welcome_title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Willkommen bei TravelBuddy"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to TravelBuddy"
+          }
+        }
+      }
     },
     "other_details" : {
       "localizations" : {
@@ -1335,11 +1862,121 @@
     "Premium" : {
 
     },
-    "Premium Account" : {
-
+    "premium_account" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium-Konto"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premium Account"
+          }
+        }
+      }
     },
-    "Prioritize Essential Items" : {
-
+    "premium_feature_advanced" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweiterte Packlisten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced Packing Lists"
+          }
+        }
+      }
+    },
+    "premium_feature_advanced_desc" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erhalte intelligentere, personalisierte Vorschläge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get smarter, more personalized suggestions"
+          }
+        }
+      }
+    },
+    "premium_feature_unlimited" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbegrenzte Reisen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited Trips"
+          }
+        }
+      }
+    },
+    "premium_feature_unlimited_desc" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erstelle so viele Reisen, wie du möchtest"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create as many trips as you want"
+          }
+        }
+      }
+    },
+    "premium_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TravelBuddy Premium"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TravelBuddy Premium"
+          }
+        }
+      }
+    },
+    "prioritize_essential_items" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wichtige Gegenstände priorisieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prioritize Essential Items"
+          }
+        }
+      }
     },
     "Privacy Policy" : {
 
@@ -1362,17 +1999,6 @@
     },
     "Rate TravelBuddy" : {
 
-    },
-    "Reise abschließen" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Complete Trip"
-          }
-        }
-      }
     },
     "Reset" : {
 
@@ -1436,27 +2062,42 @@
     "Share TravelBuddy" : {
 
     },
-    "Show Completed Trips" : {
-
-    },
     "Show Debug Logs" : {
 
     },
-    "Socks" : {
-
-    },
-    "Sort by" : {
-      "extractionState" : "stale",
+    "show_completed_trips" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sortieren nach"
+            "value" : "Abgeschlossene Reisen anzeigen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Completed Trips"
           }
         }
       }
     },
-    "Sort Order" : {
+    "skip" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Überspringen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        }
+      }
+    },
+    "Socks" : {
 
     },
     "sort_ascending" : {
@@ -1469,16 +2110,8 @@
         }
       }
     },
-    "sort_by_category" : {
-
-    },
-    "sort_by_date" : {
-
-    },
-    "sort_by_essential" : {
-
-    },
     "sort_by_name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1504,10 +2137,43 @@
     "sort_options_label" : {
 
     },
+    "sort_order" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortierreihenfolge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort Order"
+          }
+        }
+      }
+    },
     "Standard" : {
       "comment" : "Color theme name"
     },
+    "start" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        }
+      }
+    },
     "Starten" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1517,23 +2183,24 @@
         }
       }
     },
-    "status_active" : {
-
-    },
-    "status_completed" : {
-
-    },
-    "status_past" : {
-
-    },
-    "status_upcoming" : {
-
-    },
     "Subscribe Now" : {
 
     },
-    "Support" : {
-
+    "support" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        }
+      }
     },
     "T-Shirts" : {
 
@@ -1573,9 +2240,6 @@
         }
       }
     },
-    "transport" : {
-
-    },
     "transport_and_accommodation" : {
       "localizations" : {
         "de" : {
@@ -1603,6 +2267,7 @@
       }
     },
     "transport_bicycle" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1619,6 +2284,7 @@
       }
     },
     "transport_bus" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1635,6 +2301,7 @@
       }
     },
     "transport_car" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1651,6 +2318,7 @@
       }
     },
     "transport_on_foot" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1667,6 +2335,7 @@
       }
     },
     "transport_plane" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1683,6 +2352,7 @@
       }
     },
     "transport_ship" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1699,6 +2369,7 @@
       }
     },
     "transport_train" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1736,9 +2407,6 @@
     "TravelBuddy could not start correctly. Please try restarting the app." : {
 
     },
-    "TravelBuddy Premium" : {
-
-    },
     "trip_details" : {
       "localizations" : {
         "de" : {
@@ -1766,6 +2434,7 @@
       }
     },
     "trip_name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1798,6 +2467,7 @@
       }
     },
     "Überspringen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1847,6 +2517,7 @@
 
     },
     "Weiter" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -5,7 +5,6 @@
 //  Created by Dennis Bär on 24.04.25.
 //
 
-
 import SwiftUI
 
 /// A view showing information about premium features
@@ -30,7 +29,7 @@ struct PremiumInfoView: View {
 							.font(.system(size: 80))
 							.foregroundColor(.yellow)
                         
-						Text("TravelBuddy Premium")
+						Text("premium_title") // Was: "TravelBuddy Premium"
 							.font(.title)
 							.fontWeight(.bold)
 					}

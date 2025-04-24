@@ -31,7 +31,7 @@ struct SettingsView: View {
 		NavigationStack {
 			List {
 				// Account section
-				Section(header: Text("Account")) {
+				Section(header: Text("account")) { // Was: "Account"
 					if userSettings.isPremiumUser {
 						premiumAccountRow
 					} else {
@@ -40,27 +40,27 @@ struct SettingsView: View {
 				}
                 
 				// Appearance section
-				Section(header: Text("Appearance")) {
+				Section(header: Text("appearance")) { // Was: "Appearance"
 					appearanceRows
 				}
                 
 				// Behavior section
-				Section(header: Text("Behavior")) {
+				Section(header: Text("behavior")) { // Was: "Behavior"
 					behaviorRows
 				}
                 
 				// Data section
-				Section(header: Text("Data")) {
+				Section(header: Text("data")) { // Was: "Data"
 					dataRows
 				}
                 
 				// Support section
-				Section(header: Text("Support")) {
+				Section(header: Text("support")) { // Was: "Support"
 					supportRows
 				}
                 
 				// About section
-				Section(header: Text("About")) {
+				Section(header: Text("about")) { // Was: "About"
 					aboutRows
 				}
                 
@@ -106,7 +106,7 @@ struct SettingsView: View {
 	private var premiumAccountRow: some View {
 		HStack {
 			Label {
-				Text("Premium Account")
+				Text("premium_account") // Was: "Premium Account"
 			} icon: {
 				Image(systemName: "star.fill")
 					.foregroundColor(.yellow)
@@ -127,7 +127,7 @@ struct SettingsView: View {
 		} label: {
 			HStack {
 				Label {
-					Text("Get Premium")
+					Text("get_premium") // Was: "Get Premium"Text("get_premium") // Was: "Get Premium"
 				} icon: {
 					Image(systemName: "star.fill")
 						.foregroundColor(.yellow)
@@ -148,14 +148,14 @@ struct SettingsView: View {
 	private var appearanceRows: some View {
 		Group {
 			// Theme picker
-			Picker("Color Theme", selection: $themeManager.colorTheme) {
+			Picker("color_theme", selection: $themeManager.colorTheme) {
 				ForEach(ColorTheme.allCases) { theme in
 					Text(theme.displayName).tag(theme)
 				}
 			}
             
 			// Dark mode toggle
-			Picker("Appearance", selection: $themeManager.colorSchemePreference) {
+			Picker("appearance", selection: $themeManager.colorSchemePreference) {
 				ForEach(ColorSchemePreference.allCases, id: \.self) { preference in
 					Text(preference.displayName).tag(preference)
 				}
@@ -166,7 +166,7 @@ struct SettingsView: View {
 				showingLanguagePicker = true
 			} label: {
 				HStack {
-					Text("Language")
+					Text("language") // Was: Sprache
                     
 					Spacer()
                     
@@ -190,33 +190,33 @@ struct SettingsView: View {
 	private var behaviorRows: some View {
 		Group {
 			// Sort preferences
-			Picker("Default Sort", selection: $userSettings.defaultSortOption) {
+			Picker("default_sort", selection: $userSettings.defaultSortOption) {
 				ForEach(SortOption.allCases) { option in
 					Text(option.localizedName).tag(option)
 				}
 			}
             
-			Picker("Sort Order", selection: $userSettings.defaultSortOrder) {
-				Text("Ascending").tag(SortOrder.ascending)
-				Text("Descending").tag(SortOrder.descending)
+			Picker("sort_order", selection: $userSettings.defaultSortOrder) {
+				Text("ascending").tag(SortOrder.ascending)
+				Text("descending").tag(SortOrder.descending)
 			}
             
 			// Essential items priority
-			Toggle("Prioritize Essential Items", isOn: $userSettings.prioritizeEssentialItems)
+			Toggle("prioritize_essential_items", isOn: $userSettings.prioritizeEssentialItems)
 				.tint(.tripBuddyPrimary)
             
 			// Show completed trips
-			Toggle("Show Completed Trips", isOn: $userSettings.showCompletedTrips)
+			Toggle("show_completed_trips", isOn: $userSettings.showCompletedTrips)
 				.tint(.tripBuddyPrimary)
             
 			// Auto-suggest packing lists
-			Toggle("Auto-suggest Packing Lists", isOn: $userSettings.autoSuggestPackingLists)
+			Toggle("auto_suggest_packing_lists", isOn: $userSettings.autoSuggestPackingLists)
 				.tint(.tripBuddyPrimary)
             
 			// Measurement system
-			Picker("Measurement System", selection: $userSettings.preferredMeasurementSystem) {
-				Text("Metric").tag(MeasurementSystem.metric)
-				Text("Imperial").tag(MeasurementSystem.imperial)
+			Picker("measurement_system", selection: $userSettings.preferredMeasurementSystem) {
+				Text("metric").tag(MeasurementSystem.metric)
+				Text("imperial").tag(MeasurementSystem.imperial)
 			}
 		}
 	}

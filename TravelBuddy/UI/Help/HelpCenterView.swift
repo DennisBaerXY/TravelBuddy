@@ -112,48 +112,48 @@ struct HelpCenterView: View {
 				title: "Welcome to TravelBuddy",
 				content: """
 				TravelBuddy is your ultimate travel companion app that helps you organize your trips and packing lists.
-				
+
 				With TravelBuddy, you can:
 				• Create and organize your trips
 				• Generate smart packing lists
 				• Keep track of your packing progress
 				• Never forget important items again
-				
+
 				This help center will guide you through all the features of the app and answer common questions.
 				"""
 			)
-            
+
 			helpArticle(
 				id: "create-trip",
 				title: "How to Create Your First Trip",
 				content: """
 				Creating a new trip in TravelBuddy is simple:
-				
+
 				1. From the main screen, tap the plus (+) button in the bottom right corner
 				2. Enter a name for your trip and destination
 				3. Select the travel dates
 				4. Choose your transportation method and accommodation
 				5. Select activities and other details
 				6. Tap "Create Packing List" to finish
-				
+
 				TravelBuddy will automatically generate a packing list based on your selections!
 				"""
 			)
-            
+
 			helpArticle(
 				id: "ui-navigation",
 				title: "Navigating the App",
 				content: """
 				TravelBuddy has a simple, intuitive interface:
-				
+
 				• My Trips: The main screen showing all your trips
 				• Trip Details: Tap on a trip to view and manage its packing list
 				• Settings: Access app preferences and account settings
-				
+
 				Swipe gestures and intuitive icons make navigation easy!
 				"""
 			)
-            
+
 			tutorialCard(
 				title: "Video Tutorial: Getting Started",
 				description: "Watch this short video to learn the basics of TravelBuddy",
@@ -459,17 +459,16 @@ enum HelpCategory: String, CaseIterable, Identifiable {
 	case tripPlanning
 	case settings
 	case troubleshooting
-    
+	
 	var id: String { rawValue }
-    
-	/// Display name for the category
+	
 	var displayName: String {
 		switch self {
-		case .gettingStarted: return "Getting Started"
-		case .packingLists: return "Packing Lists"
-		case .tripPlanning: return "Trip Planning"
-		case .settings: return "Settings"
-		case .troubleshooting: return "Troubleshooting"
+		case .gettingStarted: return String(localized: "help_getting_started") // Was: "Getting Started"
+		case .packingLists: return String(localized: "help_packing_lists") // Was: "Packing Lists"
+		case .tripPlanning: return String(localized: "help_trip_planning") // Was: "Trip Planning"
+		case .settings: return String(localized: "help_settings") // Was: "Settings"
+		case .troubleshooting: return String(localized: "help_troubleshooting") // Was: "Troubleshooting"
 		}
 	}
     

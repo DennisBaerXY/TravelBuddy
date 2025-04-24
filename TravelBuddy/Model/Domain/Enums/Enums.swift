@@ -29,7 +29,7 @@ enum TransportType: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .plane: return "transport_plane"
 		case .car: return "transport_car"
@@ -68,7 +68,7 @@ enum AccommodationType: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .hotel: return "accommodation_hotel"
 		case .apartment: return "accommodation_apartment"
@@ -110,7 +110,7 @@ enum Activity: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .business: return "activity_business"
 		case .swimming: return "activity_swimming"
@@ -151,8 +151,7 @@ enum ItemCategory: String, CaseIterable, Identifiable, Codable {
 		}
 	}
 
-	// Changed to return LocalizedStringKey
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .clothing: return "category_clothing"
 		case .documents: return "category_documents"
@@ -189,7 +188,7 @@ enum Climate: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .hot: return "climate_hot"
 		case .warm: return "climate_warm"
@@ -226,7 +225,7 @@ enum SortOption: String, CaseIterable, Identifiable, Codable {
 
 	var id: String { rawValue }
 
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .name: return "sort_by_name"
 		case .category: return "sort_by_category"
@@ -255,7 +254,7 @@ enum SortOrder: String, CaseIterable, Identifiable, Codable {
 
 	var id: String { rawValue }
 
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .ascending: return "sort_ascending"
 		case .descending: return "sort_descending"
@@ -292,7 +291,7 @@ enum TripStatus: String, Identifiable {
 
 	var id: String { rawValue }
 
-	var localizedName: LocalizedStringKey {
+	var localizedName: String {
 		switch self {
 		case .upcoming: return "status_upcoming"
 		case .active: return "status_active"
