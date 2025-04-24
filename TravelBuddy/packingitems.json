@@ -1,0 +1,592 @@
+[
+	{
+		"categoryKey": "basic",
+		"items": [
+			{
+				"name": "Wallet",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Phone + Charger",
+				"category": "electronics",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Keys",
+				"category": "other",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Toothbrush",
+				"category": "toiletries",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Toothpaste",
+				"category": "toiletries",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Deodorant", "category": "toiletries", "quantity": 1 },
+			{ "name": "Shower Gel", "category": "toiletries", "quantity": 1 },
+			{ "name": "Underwear", "category": "clothing", "quantity": 2 },
+			{ "name": "Socks", "category": "clothing", "quantity": 2 }
+		]
+	},
+	{
+		"categoryKey": "airTravel",
+		"items": [
+			{
+				"name": "Boarding Pass",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Passport/ID",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Travel Pillow", "category": "accessories", "quantity": 1 },
+			{ "name": "Earplugs", "category": "accessories", "quantity": 1 },
+			{ "name": "Eye Mask", "category": "accessories", "quantity": 1 },
+			{ "name": "Entertainment", "category": "electronics", "quantity": 1 },
+			{
+				"name": "Empty Water Bottle",
+				"category": "accessories",
+				"quantity": 1
+			},
+			{ "name": "Travel Adapters", "category": "electronics", "quantity": 1 },
+			{ "name": "Compression Socks", "category": "clothing", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "carTravel",
+		"items": [
+			{
+				"name": "Driver's License",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Vehicle Registration",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Navigation Device/Maps",
+				"category": "electronics",
+				"quantity": 1
+			},
+			{ "name": "Snacks", "category": "other", "quantity": 1 },
+			{ "name": "Drinks", "category": "other", "quantity": 1 },
+			{
+				"name": "Safety Vest",
+				"category": "other",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "First Aid Kit", "category": "medication", "quantity": 1 },
+			{ "name": "Car Charger", "category": "electronics", "quantity": 1 },
+			{ "name": "Blanket", "category": "other", "quantity": 1 },
+			{ "name": "Sunglasses", "category": "accessories", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "trainTravel",
+		"items": [
+			{
+				"name": "Train Tickets",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Book/Magazine", "category": "other", "quantity": 1 },
+			{ "name": "Snacks", "category": "other", "quantity": 1 },
+			{ "name": "Water Bottle", "category": "other", "quantity": 1 },
+			{ "name": "Headphones", "category": "electronics", "quantity": 1 },
+			{ "name": "Travel Pillow", "category": "accessories", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "shipTravel",
+		"items": [
+			{
+				"name": "Ferry/Cruise Tickets",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Sea Sickness Medication",
+				"category": "medication",
+				"quantity": 1
+			},
+			{ "name": "Deck Shoes", "category": "clothing", "quantity": 1 },
+			{ "name": "Binoculars", "category": "accessories", "quantity": 1 },
+			{ "name": "Lightweight Jacket", "category": "clothing", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "hotel",
+		"items": [
+			{
+				"name": "Hotel Reservation",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Credit Card",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Do Not Disturb Sign", "category": "other", "quantity": 1 },
+			{ "name": "Tip Money", "category": "other", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "camping",
+		"items": [
+			{
+				"name": "Tent",
+				"category": "other",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Sleeping Bag",
+				"category": "other",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Sleeping Pad",
+				"category": "other",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Flashlight", "category": "electronics", "quantity": 1 },
+			{ "name": "Multi-tool", "category": "other", "quantity": 1 },
+			{ "name": "Camping Stove", "category": "other", "quantity": 1 },
+			{ "name": "Water Container", "category": "other", "quantity": 1 },
+			{ "name": "Matches/Lighter", "category": "other", "quantity": 1 },
+			{ "name": "Cooking Utensils", "category": "other", "quantity": 1 },
+			{ "name": "Food Storage", "category": "other", "quantity": 1 },
+			{ "name": "Insect Repellent", "category": "toiletries", "quantity": 1 },
+			{ "name": "Biodegradable Soap", "category": "toiletries", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "apartment",
+		"items": [
+			{
+				"name": "Rental Confirmation",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Check-in Instructions",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Host Contact Info", "category": "documents", "quantity": 1 },
+			{ "name": "House Rules", "category": "documents", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "hostel",
+		"items": [
+			{
+				"name": "Hostel Reservation",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Padlock",
+				"category": "accessories",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Earplugs", "category": "accessories", "quantity": 1 },
+			{ "name": "Eye Mask", "category": "accessories", "quantity": 1 },
+			{
+				"name": "Flip-flops",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Quick-dry Towel", "category": "toiletries", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "friends",
+		"items": [
+			{ "name": "Host Gift", "category": "other", "quantity": 1 },
+			{ "name": "Host Address", "category": "documents", "quantity": 1 },
+			{ "name": "House Keys (if provided)", "category": "other", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "swimming",
+		"items": [
+			{
+				"name": "Swimwear",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Towel", "category": "toiletries", "quantity": 1 },
+			{ "name": "Sunscreen", "category": "toiletries", "quantity": 1 },
+			{ "name": "Sunglasses", "category": "accessories", "quantity": 1 },
+			{ "name": "Flip-flops", "category": "clothing", "quantity": 1 },
+			{ "name": "Swim Cap", "category": "accessories", "quantity": 1 },
+			{ "name": "Goggles", "category": "accessories", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "hiking",
+		"items": [
+			{
+				"name": "Hiking Boots",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Water Bottle",
+				"category": "accessories",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Backpack", "category": "accessories", "quantity": 1 },
+			{ "name": "Rain Jacket", "category": "clothing", "quantity": 1 },
+			{ "name": "Sun Hat", "category": "clothing", "quantity": 1 },
+			{ "name": "Hiking Map", "category": "other", "quantity": 1 },
+			{ "name": "Compass", "category": "accessories", "quantity": 1 },
+			{ "name": "First Aid Kit", "category": "medication", "quantity": 1 },
+			{ "name": "Whistle", "category": "accessories", "quantity": 1 },
+			{ "name": "Sunscreen", "category": "toiletries", "quantity": 1 },
+			{ "name": "Insect Repellent", "category": "toiletries", "quantity": 1 },
+			{ "name": "Blister Plasters", "category": "medication", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "business",
+		"items": [
+			{
+				"name": "Business Attire",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Business Cards", "category": "documents", "quantity": 1 },
+			{
+				"name": "Laptop + Charger",
+				"category": "electronics",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Notebook", "category": "other", "quantity": 1 },
+			{ "name": "Pens", "category": "other", "quantity": 1 },
+			{
+				"name": "Presentation Materials",
+				"category": "documents",
+				"quantity": 1
+			},
+			{ "name": "Portfolio", "category": "accessories", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "beach",
+		"items": [
+			{
+				"name": "Swimwear",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Beach Towel", "category": "toiletries", "quantity": 1 },
+			{
+				"name": "Sunscreen",
+				"category": "toiletries",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Sun Hat", "category": "clothing", "quantity": 1 },
+			{ "name": "Sunglasses", "category": "accessories", "quantity": 1 },
+			{ "name": "Beach Bag", "category": "accessories", "quantity": 1 },
+			{ "name": "Flip-flops", "category": "clothing", "quantity": 1 },
+			{ "name": "Beach Games", "category": "other", "quantity": 1 },
+			{ "name": "Water Bottle", "category": "accessories", "quantity": 1 },
+			{ "name": "Cover-up", "category": "clothing", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "sports",
+		"items": [
+			{
+				"name": "Sports Clothing",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Athletic Shoes",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Water Bottle", "category": "accessories", "quantity": 1 },
+			{ "name": "Sports Equipment", "category": "other", "quantity": 1 },
+			{ "name": "Sports Bag", "category": "accessories", "quantity": 1 },
+			{ "name": "Towel", "category": "toiletries", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "skiing",
+		"items": [
+			{
+				"name": "Ski Jacket",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Ski Pants",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Thermal Base Layers",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Ski Gloves",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Ski Socks", "category": "clothing", "quantity": 3 },
+			{
+				"name": "Ski Hat/Helmet",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Ski Goggles",
+				"category": "accessories",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Sunscreen",
+				"category": "toiletries",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Lip Balm", "category": "toiletries", "quantity": 1 },
+			{
+				"name": "Ski Pass",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Hand Warmers", "category": "accessories", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "sightseeing",
+		"items": [
+			{
+				"name": "Comfortable Walking Shoes",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Camera", "category": "electronics", "quantity": 1 },
+			{ "name": "City Map/Guide", "category": "other", "quantity": 1 },
+			{ "name": "Day Bag", "category": "accessories", "quantity": 1 },
+			{ "name": "Sunglasses", "category": "accessories", "quantity": 1 },
+			{ "name": "Water Bottle", "category": "accessories", "quantity": 1 },
+			{ "name": "Umbrella", "category": "accessories", "quantity": 1 },
+			{ "name": "Entrance Tickets", "category": "documents", "quantity": 1 },
+			{ "name": "Travel Journal", "category": "other", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "relaxing",
+		"items": [
+			{
+				"name": "Comfortable Loungewear",
+				"category": "clothing",
+				"quantity": 1
+			},
+			{ "name": "Book", "category": "other", "quantity": 1 },
+			{
+				"name": "Music Player + Headphones",
+				"category": "electronics",
+				"quantity": 1
+			},
+			{ "name": "Essential Oils", "category": "toiletries", "quantity": 1 },
+			{ "name": "Face Mask", "category": "toiletries", "quantity": 1 },
+			{ "name": "Bath Salts", "category": "toiletries", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "additionalBusiness",
+		"items": [
+			{ "name": "Travel Insurance", "category": "documents", "quantity": 1 },
+			{
+				"name": "Business Documents",
+				"category": "documents",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Power Bank", "category": "electronics", "quantity": 1 },
+			{ "name": "Travel Adapters", "category": "electronics", "quantity": 1 },
+			{ "name": "Business Phone", "category": "electronics", "quantity": 1 },
+			{ "name": "Portable Scanner", "category": "electronics", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "hotWeather",
+		"items": [
+			{
+				"name": "Sunscreen SPF 50+",
+				"category": "toiletries",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Sunglasses", "category": "accessories", "quantity": 1 },
+			{ "name": "Sun Hat", "category": "clothing", "quantity": 1 },
+			{ "name": "Lightweight Clothing", "category": "clothing", "quantity": 1 },
+			{ "name": "Sandals", "category": "clothing", "quantity": 1 },
+			{ "name": "After Sun Lotion", "category": "toiletries", "quantity": 1 },
+			{ "name": "Insect Repellent", "category": "toiletries", "quantity": 1 },
+			{
+				"name": "Refillable Water Bottle",
+				"category": "accessories",
+				"isEssential": true,
+				"quantity": 1
+			}
+		]
+	},
+	{
+		"categoryKey": "warmWeather",
+		"items": [
+			{
+				"name": "Sunscreen",
+				"category": "toiletries",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Sunglasses", "category": "accessories", "quantity": 1 },
+			{ "name": "Light Jacket", "category": "clothing", "quantity": 1 },
+			{ "name": "Short Sleeve Shirts", "category": "clothing", "quantity": 3 },
+			{ "name": "Shorts", "category": "clothing", "quantity": 2 },
+			{ "name": "Light Pants", "category": "clothing", "quantity": 1 },
+			{ "name": "Hat", "category": "clothing", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "moderateWeather",
+		"items": [
+			{ "name": "Light Jacket", "category": "clothing", "quantity": 1 },
+			{ "name": "Long Pants", "category": "clothing", "quantity": 2 },
+			{ "name": "Long Sleeve Shirts", "category": "clothing", "quantity": 2 },
+			{ "name": "Short Sleeve Shirts", "category": "clothing", "quantity": 2 },
+			{ "name": "Light Sweater", "category": "clothing", "quantity": 1 },
+			{ "name": "Rain Jacket", "category": "clothing", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "coolWeather",
+		"items": [
+			{
+				"name": "Jacket",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Long Pants", "category": "clothing", "quantity": 2 },
+			{ "name": "Sweaters", "category": "clothing", "quantity": 2 },
+			{ "name": "Long Sleeve Shirts", "category": "clothing", "quantity": 3 },
+			{ "name": "Scarf", "category": "clothing", "quantity": 1 },
+			{ "name": "Light Gloves", "category": "clothing", "quantity": 1 },
+			{ "name": "Rain Jacket", "category": "clothing", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "coldWeather",
+		"items": [
+			{
+				"name": "Winter Jacket",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Sweaters", "category": "clothing", "quantity": 2 },
+			{ "name": "Scarf", "category": "clothing", "quantity": 1 },
+			{
+				"name": "Gloves",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{
+				"name": "Winter Hat",
+				"category": "clothing",
+				"isEssential": true,
+				"quantity": 1
+			},
+			{ "name": "Thermal Socks", "category": "clothing", "quantity": 3 },
+			{ "name": "Thermal Underwear", "category": "clothing", "quantity": 1 },
+			{ "name": "Snow Boots", "category": "clothing", "quantity": 1 },
+			{ "name": "Lip Balm", "category": "toiletries", "quantity": 1 },
+			{ "name": "Hand Cream", "category": "toiletries", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "multiPersonGeneral",
+		"items": [
+			{ "name": "Power Strip", "category": "electronics", "quantity": 1 },
+			{ "name": "Group Photo", "category": "other", "quantity": 1 },
+			{ "name": "Travel Games", "category": "other", "quantity": 1 }
+		]
+	},
+	{
+		"categoryKey": "multiPersonFamily",
+		"items": [
+			{
+				"name": "Children's Entertainment",
+				"category": "other",
+				"quantity": 1
+			},
+			{ "name": "Snacks", "category": "other", "quantity": 2 },
+			{ "name": "Wet Wipes", "category": "toiletries", "quantity": 1 },
+			{
+				"name": "First Aid Kit",
+				"category": "medication",
+				"isEssential": true,
+				"quantity": 1
+			}
+		]
+	}
+]

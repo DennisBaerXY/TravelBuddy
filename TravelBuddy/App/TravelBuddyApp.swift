@@ -1,130 +1,106 @@
+// TravelBuddy/App/TravelBuddyApp.swift
 import SwiftData
 import SwiftUI
 
 @main
 struct TravelBuddyApp: App {
-	// MARK: - State
+	// MARK: - State Objects & Environment
 
-	@AppStorage(AppConstants.UserDefaultsKeys.hasCompletedOnboarding)
-	private var hasCompletedOnboarding = false
+	// Use the UserSettingsManager singleton as the source of truth for settings
+	@StateObject private var userSettings = UserSettingsManager.shared
+	@StateObject private var themeManager = ThemeManager.shared
 
-	// SwiftData Container
-	private var sharedModelContainer: ModelContainer
+	// State variable to hold the initialized ModelContainer or nil if setup failed
+	@State private var modelContainer: ModelContainer?
+	@State private var initializationError: Error? = nil
+
+	// MARK: - Initialization
 
 	init() {
+		// --- SwiftData Setup ---
 		let schema = Schema([Trip.self, PackItem.self])
 		let modelConfiguration = ModelConfiguration(
 			schema: schema,
-			isStoredInMemoryOnly: false,
+			isStoredInMemoryOnly: false, // Set to true for UI previews or testing if needed
 			cloudKitDatabase: AppConstants.enableCloudSync ? .automatic : .none
 		)
 
 		do {
-			sharedModelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
+			let container = try ModelContainer(for: schema, configurations: [modelConfiguration])
+			_modelContainer = State(initialValue: container) // Assign to @State variable
+
+			// --- Development Utilities ---
+			// Reset specific states if configured (run before sample data)
+			if AppConstants.resetPreferencesOnLaunch {
+				// Optional: Clear SwiftData entirely AND reset onboarding
+				// DevelopmentHelpers.clearAllSwiftData(context: container.mainContext)
+				DevelopmentHelpers.resetAppState()
+			}
+
+			// Add sample data if needed and not already present
+			if AppConstants.includeSampleData {
+				DevelopmentHelpers.createSampleData(context: container.mainContext)
+			}
+
 		} catch {
-			// Handle error appropriately in production
-			fatalError("Could not create ModelContainer: \(error)")
-		}
-		
-		// Reset for development if needed
-		if AppConstants.resetPreferencesOnLaunch {
-			resetAppState()
-		}
-		
-		// Add sample data if needed
-		if AppConstants.includeSampleData && !UserDefaults.standard.bool(forKey: "hasInsertedSampleData") {
-			createSampleData()
-			UserDefaults.standard.set(true, forKey: "hasInsertedSampleData")
+			// --- Robust Error Handling ---
+			// Store the error to potentially display an error message
+			_initializationError = State(initialValue: error)
+			_modelContainer = State(initialValue: nil) // Ensure container is nil on error
+			print("❌ FATAL ERROR: Could not create ModelContainer: \(error.localizedDescription)")
 		}
 	}
 
-	// MARK: - App Scene
+	// MARK: - App Scene Body
 
 	var body: some Scene {
 		WindowGroup {
-			Group {
-				if hasCompletedOnboarding {
-					// Main app view
-					TripsListView()
-				} else {
-					// Onboarding view
-					OnboardingView {
-						withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
-							hasCompletedOnboarding = true
+			// --- UI Content ---
+			if let container = modelContainer {
+				// If container setup was successful, show main content
+				Group {
+					// Check onboarding status from the single source of truth: UserSettingsManager
+					if userSettings.hasCompletedOnboarding {
+						TripsListView()
+
+					} else {
+						OnboardingView {
+							// Update onboarding status via the manager
+							withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+								userSettings.hasCompletedOnboarding = true
+							}
 						}
 					}
-					.transition(.opacity)
+				}
+				// Inject ModelContainer and Managers into the environment
+				.modelContainer(container)
+				.environmentObject(userSettings) // Already initialized as @StateObject
+				.environmentObject(themeManager) // Already initialized as @StateObject
+				.preferredColorScheme(themeManager.colorScheme) // Apply theme preference
+
+			} else {
+				// If container setup failed, show an error message
+				VStack {
+					Image(systemName: "exclamationmark.triangle.fill")
+						.resizable()
+						.scaledToFit()
+						.frame(width: 50, height: 50)
+						.foregroundColor(.red)
+					Text("App Initialization Failed")
+						.font(.title)
+						.padding(.bottom)
+					Text("TravelBuddy could not start correctly. Please try restarting the app.")
+						.multilineTextAlignment(.center)
+						.foregroundColor(.secondary)
+						.padding(.horizontal)
+					if let error = initializationError {
+						Text("Error: \(error.localizedDescription)")
+							.font(.caption)
+							.foregroundColor(.gray)
+							.padding()
+					}
 				}
 			}
-			// SwiftData Container in environment
-			.modelContainer(sharedModelContainer)
-			.environmentObject(UserSettingsManager.shared)
-			.environmentObject(ThemeManager.shared)
-		}
-	}
-	
-	// MARK: - Development utilities
-	
-	private func resetAppState() {
-		UserDefaults.standard.set(false, forKey: AppConstants.UserDefaultsKeys.hasCompletedOnboarding)
-		hasCompletedOnboarding = false
-		
-		if AppConstants.enableDebugLogging {
-			print("App state has been reset")
-		}
-	}
-	
-	private func createSampleData() {
-		let context = sharedModelContainer.mainContext
-		
-		// Create beach vacation
-		let beach = TripServices.createTripWithPackingList(
-			in: context,
-			name: "Beach Vacation",
-			destination: "Hawaii",
-			startDate: Date().addingTimeInterval(86400 * 14),
-			endDate: Date().addingTimeInterval(86400 * 21),
-			transportTypes: [.plane, .car],
-			accommodationType: .hotel,
-			activities: [.beach, .swimming, .relaxing],
-			isBusinessTrip: false,
-			numberOfPeople: 2,
-			climate: .hot
-		)
-		
-		// Create business trip
-		let business = TripServices.createTripWithPackingList(
-			in: context,
-			name: "Business Conference",
-			destination: "New York",
-			startDate: Date().addingTimeInterval(86400 * 3),
-			endDate: Date().addingTimeInterval(86400 * 5),
-			transportTypes: [.plane],
-			accommodationType: .hotel,
-			activities: [.business],
-			isBusinessTrip: true,
-			numberOfPeople: 1,
-			climate: .moderate
-		)
-		
-		// Create completed trip
-		let completed = TripServices.createTripWithPackingList(
-			in: context,
-			name: "Weekend Getaway",
-			destination: "Mountain Cabin",
-			startDate: Date().addingTimeInterval(-86400 * 10),
-			endDate: Date().addingTimeInterval(-86400 * 8),
-			transportTypes: [.car],
-			accommodationType: .apartment,
-			activities: [.hiking, .relaxing],
-			isBusinessTrip: false,
-			numberOfPeople: 4,
-			climate: .cool
-		)
-		TripServices.completeTrip(completed, in: context)
-		
-		if AppConstants.enableDebugLogging {
-			print("Sample data created")
 		}
 	}
 }

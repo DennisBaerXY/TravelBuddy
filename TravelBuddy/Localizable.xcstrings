@@ -511,6 +511,9 @@
         }
       }
     },
+    "App Initialization Failed" : {
+
+    },
     "Appearance" : {
 
     },
@@ -575,6 +578,9 @@
       }
     },
     "Cancel" : {
+
+    },
+    "Casual Shoes" : {
 
     },
     "category" : {
@@ -966,6 +972,9 @@
     "Done" : {
 
     },
+    "Error: %@" : {
+
+    },
     "essential" : {
       "localizations" : {
         "de" : {
@@ -1006,6 +1015,9 @@
     },
     "Get Premium" : {
 
+    },
+    "Hawaii" : {
+      "comment" : "Sample destination"
     },
     "Help Center" : {
 
@@ -1074,6 +1086,9 @@
     "Metric" : {
 
     },
+    "Mountain Cabin" : {
+      "comment" : "Sample destination"
+    },
     "my.trips" : {
       "localizations" : {
         "de" : {
@@ -1105,6 +1120,9 @@
           }
         }
       }
+    },
+    "New York" : {
+      "comment" : "Sample destination"
     },
     "new_item" : {
       "localizations" : {
@@ -1305,6 +1323,12 @@
         }
       }
     },
+    "Pajamas" : {
+
+    },
+    "Pants" : {
+
+    },
     "Premium" : {
 
     },
@@ -1375,6 +1399,15 @@
         }
       }
     },
+    "Sample Beach Vacation" : {
+      "comment" : "Sample trip name"
+    },
+    "Sample Business Conference" : {
+      "comment" : "Sample trip name"
+    },
+    "Sample Weekend Getaway" : {
+      "comment" : "Sample trip name"
+    },
     "search_placeholder" : {
       "localizations" : {
         "de" : {
@@ -1404,6 +1437,9 @@
 
     },
     "Show Debug Logs" : {
+
+    },
+    "Socks" : {
 
     },
     "Sort by" : {
@@ -1491,6 +1527,9 @@
 
     },
     "Support" : {
+
+    },
+    "T-Shirts" : {
 
     },
     "Terms of Service" : {
@@ -1688,6 +1727,9 @@
     "TravelBuddy" : {
 
     },
+    "TravelBuddy could not start correctly. Please try restarting the app." : {
+
+    },
     "TravelBuddy Premium" : {
 
     },
@@ -1758,6 +1800,9 @@
           }
         }
       }
+    },
+    "Underwear" : {
+
     },
     "Upcoming" : {
 
