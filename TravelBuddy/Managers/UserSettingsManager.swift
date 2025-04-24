@@ -1,308 +1,205 @@
+// TravelBuddy/Managers/UserSettingsManager.swift
 import Combine
 import Foundation
+import SwiftUI // Needed for @AppStorage
 
-/// A centralized manager for user settings and preferences
-class UserSettingsManager: ObservableObject {
+/// A centralized manager for user settings and preferences, leveraging @AppStorage.
+final class UserSettingsManager: ObservableObject { // Mark final for performance
 	// MARK: - Shared Instance
-	
-	/// Shared singleton instance
+
+	/// Shared singleton instance (remains for potential non-SwiftUI access)
 	static let shared = UserSettingsManager()
-	
-	// MARK: - Published Properties
-	
-	/// Whether the user has completed the onboarding
-	@Published var hasCompletedOnboarding: Bool {
-		didSet {
-			userDefaults.set(hasCompletedOnboarding, forKey: Keys.hasCompletedOnboarding)
-		}
-	}
-	
-	/// Whether the user has premium access
-	@Published var isPremiumUser: Bool {
-		didSet {
-			userDefaults.set(isPremiumUser, forKey: Keys.isPremiumUser)
-		}
-	}
-	
-	/// User's preferred sort option for packing lists
-	@Published var defaultSortOption: SortOption {
-		didSet {
-			userDefaults.set(defaultSortOption.rawValue, forKey: Keys.defaultSortOption)
-		}
-	}
-	
-	/// User's preferred sort order for packing lists
-	@Published var defaultSortOrder: SortOrder {
-		didSet {
-			userDefaults.set(defaultSortOrder == .ascending ? "ascending" : "descending", forKey: Keys.defaultSortOrder)
-		}
-	}
-	
-	/// Whether the user prefers dark mode
-	@Published var prefersDarkMode: Bool? {
-		didSet {
-			if let prefersDarkMode = prefersDarkMode {
-				userDefaults.set(prefersDarkMode, forKey: Keys.prefersDarkMode)
-			} else {
-				userDefaults.removeObject(forKey: Keys.prefersDarkMode)
-			}
-		}
-	}
-	
-	/// Whether to show essential items at the top of the list
-	@Published var prioritizeEssentialItems: Bool {
-		didSet {
-			userDefaults.set(prioritizeEssentialItems, forKey: Keys.prioritizeEssentialItems)
-		}
-	}
-	
-	/// Whether to automatically suggest packing lists
-	@Published var autoSuggestPackingLists: Bool {
-		didSet {
-			userDefaults.set(autoSuggestPackingLists, forKey: Keys.autoSuggestPackingLists)
-		}
-	}
-	
-	/// Whether to show completed trips in the main list
-	@Published var showCompletedTrips: Bool {
-		didSet {
-			userDefaults.set(showCompletedTrips, forKey: Keys.showCompletedTrips)
-		}
-	}
-	
-	/// The user's preferred measurement system
-	@Published var preferredMeasurementSystem: MeasurementSystem {
-		didSet {
-			userDefaults.set(preferredMeasurementSystem.rawValue, forKey: Keys.preferredMeasurementSystem)
-		}
-	}
-	
-	// MARK: - Private Properties
-	
-	/// UserDefaults instance for storing settings
-	private let userDefaults: UserDefaults
-	
-	/// Key constants for UserDefaults storage
+
+	// MARK: - Private Keys Enum
+
+	/// Keys constants for UserDefaults storage, kept private.
 	private enum Keys {
 		static let hasCompletedOnboarding = "hasCompletedOnboarding"
 		static let isPremiumUser = "isPremiumUser"
 		static let defaultSortOption = "defaultSortOption"
 		static let defaultSortOrder = "defaultSortOrder"
-		static let prefersDarkMode = "prefersDarkMode"
+		static let prefersDarkMode = "prefersDarkMode" // Key for optional bool
 		static let prioritizeEssentialItems = "prioritizeEssentialItems"
 		static let autoSuggestPackingLists = "autoSuggestPackingLists"
 		static let showCompletedTrips = "showCompletedTrips"
 		static let preferredMeasurementSystem = "preferredMeasurementSystem"
-		static let lastUsedDate = "lastUsedDate"
+		static let lastUsedDate = "lastUsedDate" // Keep if needed outside settings data
 	}
-	
-	// MARK: - Initialization
-	
-	/// Creates a new UserSettingsManager with the specified UserDefaults
-	/// - Parameter userDefaults: The UserDefaults instance to use (defaults to standard)
-	init(userDefaults: UserDefaults = .standard) {
-		self.userDefaults = userDefaults
-		
-		// Initialize properties from UserDefaults
-		self.hasCompletedOnboarding = userDefaults.bool(forKey: Keys.hasCompletedOnboarding)
-		self.isPremiumUser = userDefaults.bool(forKey: Keys.isPremiumUser)
-		
-		// Initialize sort preferences
-		if let sortOptionString = userDefaults.string(forKey: Keys.defaultSortOption),
-		   let sortOption = SortOption(rawValue: sortOptionString)
-		{
-			self.defaultSortOption = sortOption
-		} else {
-			self.defaultSortOption = .name
+
+	// MARK: - Published Properties (Using @AppStorage where possible)
+
+	/// Whether the user has completed the onboarding.
+	@AppStorage(Keys.hasCompletedOnboarding) var hasCompletedOnboarding: Bool = false
+
+	/// Whether the user has premium access.
+	@AppStorage(Keys.isPremiumUser) var isPremiumUser: Bool = false
+
+	/// User's preferred sort option for packing lists. Defaults to name.
+	@AppStorage(Keys.defaultSortOption) var defaultSortOption: SortOption = .name
+
+	/// User's preferred sort order for packing lists. Defaults to ascending.
+	@AppStorage(Keys.defaultSortOrder) var defaultSortOrder: SortOrder = .ascending
+
+	/// Whether to show essential items at the top of the list. Defaults to true.
+	@AppStorage(Keys.prioritizeEssentialItems) var prioritizeEssentialItems: Bool = true
+
+	/// Whether to automatically suggest packing lists. Defaults to true.
+	@AppStorage(Keys.autoSuggestPackingLists) var autoSuggestPackingLists: Bool = true
+
+	/// Whether to show completed trips in the main list. Defaults to true.
+	@AppStorage(Keys.showCompletedTrips) var showCompletedTrips: Bool = true
+
+	/// The user's preferred measurement system. Defaults based on locale.
+	@AppStorage(Keys.preferredMeasurementSystem) var preferredMeasurementSystem: MeasurementSystem = {
+		// Default logic based on system locale if not set
+		Locale.current.measurementSystem == .metric ? .metric : .imperial
+	}()
+
+	/// User's preference for dark mode (nil means follow system).
+	/// Needs custom handling because @AppStorage doesn't directly support Optional<Bool>.
+	@Published var prefersDarkMode: Bool? {
+		didSet {
+			// Save manually to UserDefaults
+			if let value = prefersDarkMode {
+				UserDefaults.standard.set(value, forKey: Keys.prefersDarkMode)
+			} else {
+				UserDefaults.standard.removeObject(forKey: Keys.prefersDarkMode)
+			}
+			// Notify ThemeManager if it observes this (already done in original ThemeManager)
+			objectWillChange.send() // Ensure SwiftUI updates if needed
 		}
-		
-		let sortOrderString = userDefaults.string(forKey: Keys.defaultSortOrder)
-		self.defaultSortOrder = sortOrderString == "descending" ? .descending : .ascending
-		
-		// Initialize appearance preferences
-		if userDefaults.object(forKey: Keys.prefersDarkMode) != nil {
-			self.prefersDarkMode = userDefaults.bool(forKey: Keys.prefersDarkMode)
+	}
+
+	// MARK: - Initialization
+
+	/// Private initializer to enforce singleton pattern and load custom properties.
+	private init() {
+		// Load the optional prefersDarkMode manually
+		if UserDefaults.standard.object(forKey: Keys.prefersDarkMode) != nil {
+			self.prefersDarkMode = UserDefaults.standard.bool(forKey: Keys.prefersDarkMode)
 		} else {
 			self.prefersDarkMode = nil // Use system setting
 		}
-		
-		// Initialize other preferences with defaults if not set
-		self.prioritizeEssentialItems = userDefaults.object(forKey: Keys.prioritizeEssentialItems) != nil ?
-			userDefaults.bool(forKey: Keys.prioritizeEssentialItems) : true
-		
-		self.autoSuggestPackingLists = userDefaults.object(forKey: Keys.autoSuggestPackingLists) != nil ?
-			userDefaults.bool(forKey: Keys.autoSuggestPackingLists) : true
-		
-		self.showCompletedTrips = userDefaults.object(forKey: Keys.showCompletedTrips) != nil ?
-			userDefaults.bool(forKey: Keys.showCompletedTrips) : true
-		
-		// Initialize measurement system preference
-		if let systemString = userDefaults.string(forKey: Keys.preferredMeasurementSystem),
-		   let system = MeasurementSystem(rawValue: systemString)
-		{
-			self.preferredMeasurementSystem = system
-		} else {
-			// Default to system locale based choice
-			let locale = Locale.current
-			if locale.measurementSystem == .metric {
-				self.preferredMeasurementSystem = .metric
-			} else {
-				self.preferredMeasurementSystem = .imperial
-			}
-		}
-		
-		// Update last used date
-		userDefaults.set(Date(), forKey: Keys.lastUsedDate)
+
+		// Update last used date on initialization
+		UserDefaults.standard.set(Date(), forKey: Keys.lastUsedDate)
 	}
-	
+
 	// MARK: - Public Methods
-	
-	/// Resets all user settings to their default values
+
+	/// Resets all user settings managed by @AppStorage and custom ones to their default values.
 	func resetAllSettings() {
+		// @AppStorage vars reset automatically when their key is removed or set to default
+		UserDefaults.standard.removeObject(forKey: Keys.hasCompletedOnboarding)
+		UserDefaults.standard.removeObject(forKey: Keys.isPremiumUser)
+		UserDefaults.standard.removeObject(forKey: Keys.defaultSortOption)
+		UserDefaults.standard.removeObject(forKey: Keys.defaultSortOrder)
+		UserDefaults.standard.removeObject(forKey: Keys.prioritizeEssentialItems)
+		UserDefaults.standard.removeObject(forKey: Keys.autoSuggestPackingLists)
+		UserDefaults.standard.removeObject(forKey: Keys.showCompletedTrips)
+		UserDefaults.standard.removeObject(forKey: Keys.preferredMeasurementSystem)
+		UserDefaults.standard.removeObject(forKey: Keys.prefersDarkMode)
+
+		// Manually trigger updates for @Published vars if needed, though @AppStorage handles its own
+		// Reset prefersDarkMode explicitly
+		prefersDarkMode = nil
+
+		// Re-apply defaults (AppStorage does this implicitly, but good for clarity)
 		hasCompletedOnboarding = false
 		isPremiumUser = false
 		defaultSortOption = .name
 		defaultSortOrder = .ascending
-		prefersDarkMode = nil
 		prioritizeEssentialItems = true
 		autoSuggestPackingLists = true
 		showCompletedTrips = true
-		
-		let locale = Locale.current
-		preferredMeasurementSystem = locale.measurementSystem == .metric ? .metric : .imperial
+		preferredMeasurementSystem = Locale.current.measurementSystem == .metric ? .metric : .imperial
+
+		// Need to manually update the @AppStorage properties if they don't automatically pick up the removal
+		// by assigning their default values again to trigger updates.
+		objectWillChange.send() // Notify subscribers of potential bulk change
 	}
-	
-	/// Resets only the onboarding flag (for testing/development)
+
+	/// Resets only the onboarding flag (for testing/development).
 	func resetOnboarding() {
-		hasCompletedOnboarding = false
+		hasCompletedOnboarding = false // Directly sets the @AppStorage value
+		// Replace print with proper logging
+		// Logger.debug("Onboarding has been reset")
 		if AppConstants.enableDebugLogging {
-			print("Onboarding has been reset")
+			print("UserSettingsManager: Onboarding has been reset")
 		}
 	}
-	
-	/// Returns the date when the app was last used
+
+	/// Returns the date when the app was last used.
 	func getLastUsedDate() -> Date? {
-		return userDefaults.object(forKey: Keys.lastUsedDate) as? Date
+		return UserDefaults.standard.object(forKey: Keys.lastUsedDate) as? Date
 	}
-	
-	/// Exports the user settings as a dictionary
-	func exportSettings() -> [String: Any] {
-		[
-			Keys.hasCompletedOnboarding: hasCompletedOnboarding,
-			Keys.isPremiumUser: isPremiumUser,
-			Keys.defaultSortOption: defaultSortOption.rawValue,
-			Keys.defaultSortOrder: defaultSortOrder == .ascending ? "ascending" : "descending",
-			Keys.prefersDarkMode: prefersDarkMode as Any,
-			Keys.prioritizeEssentialItems: prioritizeEssentialItems,
-			Keys.autoSuggestPackingLists: autoSuggestPackingLists,
-			Keys.showCompletedTrips: showCompletedTrips,
-			Keys.preferredMeasurementSystem: preferredMeasurementSystem.rawValue
-		]
-	}
-	
-	/// Imports user settings from a dictionary
-	/// - Parameter settings: Dictionary of settings to import
-	func importSettings(from settings: [String: Any]) {
-		if let value = settings[Keys.hasCompletedOnboarding] as? Bool {
-			hasCompletedOnboarding = value
-		}
-		
-		if let value = settings[Keys.isPremiumUser] as? Bool {
-			isPremiumUser = value
-		}
-		
-		if let value = settings[Keys.defaultSortOption] as? String,
-		   let sortOption = SortOption(rawValue: value)
-		{
-			defaultSortOption = sortOption
-		}
-		
-		if let value = settings[Keys.defaultSortOrder] as? String {
-			defaultSortOrder = value == "descending" ? .descending : .ascending
-		}
-		
-		if let value = settings[Keys.prefersDarkMode] as? Bool {
-			prefersDarkMode = value
-		}
-		
-		if let value = settings[Keys.prioritizeEssentialItems] as? Bool {
-			prioritizeEssentialItems = value
-		}
-		
-		if let value = settings[Keys.autoSuggestPackingLists] as? Bool {
-			autoSuggestPackingLists = value
-		}
-		
-		if let value = settings[Keys.showCompletedTrips] as? Bool {
-			showCompletedTrips = value
-		}
-		
-		if let value = settings[Keys.preferredMeasurementSystem] as? String,
-		   let system = MeasurementSystem(rawValue: value)
-		{
-			preferredMeasurementSystem = system
-		}
-	}
-}
 
-// MARK: - Measurement System
+	// MARK: - Import/Export using Codable
 
-/// Supported measurement systems for the app
-enum MeasurementSystem: String, CaseIterable {
-	case metric
-	case imperial
-	
-	/// Returns the appropriate weight unit (kg or lb)
-	var weightUnit: String {
-		switch self {
-		case .metric: return "kg"
-		case .imperial: return "lb"
+	/// Defines the structure for encoding/decoding settings data.
+	struct SettingsData: Codable {
+		var hasCompletedOnboarding: Bool
+		var isPremiumUser: Bool
+		var defaultSortOption: SortOption // Ensure Enums are Codable
+		var defaultSortOrder: SortOrder // Ensure Enums are Codable
+		var prefersDarkMode: Bool? // Optional Bool is Codable
+		var prioritizeEssentialItems: Bool
+		var autoSuggestPackingLists: Bool
+		var showCompletedTrips: Bool
+		var preferredMeasurementSystem: MeasurementSystem // Ensure Enum is Codable
+	}
+
+	/// Exports the current settings as JSON data.
+	/// - Returns: Data object containing the JSON representation of settings, or nil on failure.
+	func exportSettings() -> Data? {
+		let currentSettings = SettingsData(
+			hasCompletedOnboarding: hasCompletedOnboarding,
+			isPremiumUser: isPremiumUser,
+			defaultSortOption: defaultSortOption,
+			defaultSortOrder: defaultSortOrder,
+			prefersDarkMode: prefersDarkMode,
+			prioritizeEssentialItems: prioritizeEssentialItems,
+			autoSuggestPackingLists: autoSuggestPackingLists,
+			showCompletedTrips: showCompletedTrips,
+			preferredMeasurementSystem: preferredMeasurementSystem
+		)
+		let encoder = JSONEncoder()
+		encoder.outputFormatting = .prettyPrinted // Optional: for readability
+		do {
+			return try encoder.encode(currentSettings)
+		} catch {
+			// Logger.error("Failed to export settings: \(error.localizedDescription)")
+			print("Error exporting settings: \(error)")
+			return nil
 		}
 	}
-	
-	/// Returns the appropriate distance unit (km or mi)
-	var distanceUnit: String {
-		switch self {
-		case .metric: return "km"
-		case .imperial: return "mi"
-		}
-	}
-	
-	/// Returns the appropriate temperature unit (°C or °F)
-	var temperatureUnit: String {
-		switch self {
-		case .metric: return "°C"
-		case .imperial: return "°F"
-		}
-	}
-	
-	/// Converts a weight value from the system's unit to the other system
-	/// - Parameter value: The weight value to convert
-	/// - Returns: The converted weight value
-	func convertWeight(_ value: Double) -> Double {
-		switch self {
-		case .metric: return value * 2.20462 // kg to lb
-		case .imperial: return value * 0.453592 // lb to kg
-		}
-	}
-	
-	/// Converts a distance value from the system's unit to the other system
-	/// - Parameter value: The distance value to convert
-	/// - Returns: The converted distance value
-	func convertDistance(_ value: Double) -> Double {
-		switch self {
-		case .metric: return value * 0.621371 // km to mi
-		case .imperial: return value * 1.60934 // mi to km
-		}
-	}
-	
-	/// Converts a temperature value from the system's unit to the other system
-	/// - Parameter value: The temperature value to convert
-	/// - Returns: The converted temperature value
-	func convertTemperature(_ value: Double) -> Double {
-		switch self {
-		case .metric: return value * 9/5 + 32 // °C to °F
-		case .imperial: return (value - 32) * 5/9 // °F to °C
+
+	/// Imports settings from JSON data.
+	/// - Parameter data: Data object containing the JSON representation of settings.
+	/// - Returns: True if import was successful, false otherwise.
+	@discardableResult
+	func importSettings(from data: Data) -> Bool {
+		let decoder = JSONDecoder()
+		do {
+			let importedSettings = try decoder.decode(SettingsData.self, from: data)
+
+			// Apply imported settings - this will trigger @AppStorage updates
+			hasCompletedOnboarding = importedSettings.hasCompletedOnboarding
+			isPremiumUser = importedSettings.isPremiumUser
+			defaultSortOption = importedSettings.defaultSortOption
+			defaultSortOrder = importedSettings.defaultSortOrder
+			prefersDarkMode = importedSettings.prefersDarkMode // Update the @Published var
+			prioritizeEssentialItems = importedSettings.prioritizeEssentialItems
+			autoSuggestPackingLists = importedSettings.autoSuggestPackingLists
+			showCompletedTrips = importedSettings.showCompletedTrips
+			preferredMeasurementSystem = importedSettings.preferredMeasurementSystem
+
+			objectWillChange.send() // Notify subscribers of potential bulk change
+			return true
+		} catch {
+			// Logger.error("Failed to import settings: \(error.localizedDescription)")
+			print("Error importing settings: \(error)")
+			return false
 		}
 	}
 }

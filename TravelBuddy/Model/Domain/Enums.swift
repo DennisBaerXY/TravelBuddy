@@ -219,7 +219,7 @@ enum Climate: String, CaseIterable, Identifiable {
 
 // MARK: - Sort Options
 
-enum SortOption: String, CaseIterable, Identifiable {
+enum SortOption: String, CaseIterable, Identifiable, Codable {
 	case name = "Name"
 	case category = "Category"
 	case essential = "Essential"
@@ -248,7 +248,7 @@ enum SortOption: String, CaseIterable, Identifiable {
 
 // MARK: - Sort Order
 
-enum SortOrder: String, CaseIterable, Identifiable {
+enum SortOrder: String, CaseIterable, Identifiable, Codable {
 	case ascending = "Ascending"
 	case descending = "Descending"
 	
@@ -307,6 +307,68 @@ enum TripStatus: String, Identifiable {
 		case .active: return .green
 		case .past: return .orange
 		case .completed: return .gray
+		}
+	}
+}
+
+// MARK: - Measurement System
+
+/// Supported measurement systems for the app
+enum MeasurementSystem: String, CaseIterable, Codable {
+	case metric
+	case imperial
+	 
+	/// Returns the appropriate weight unit (kg or lb)
+	var weightUnit: String {
+		switch self {
+		case .metric: return "kg"
+		case .imperial: return "lb"
+		}
+	}
+	 
+	/// Returns the appropriate distance unit (km or mi)
+	var distanceUnit: String {
+		switch self {
+		case .metric: return "km"
+		case .imperial: return "mi"
+		}
+	}
+	 
+	/// Returns the appropriate temperature unit (°C or °F)
+	var temperatureUnit: String {
+		switch self {
+		case .metric: return "°C"
+		case .imperial: return "°F"
+		}
+	}
+	 
+	/// Converts a weight value from the system's unit to the other system
+	/// - Parameter value: The weight value to convert
+	/// - Returns: The converted weight value
+	func convertWeight(_ value: Double) -> Double {
+		switch self {
+		case .metric: return value * 2.20462 // kg to lb
+		case .imperial: return value * 0.453592 // lb to kg
+		}
+	}
+	 
+	/// Converts a distance value from the system's unit to the other system
+	/// - Parameter value: The distance value to convert
+	/// - Returns: The converted distance value
+	func convertDistance(_ value: Double) -> Double {
+		switch self {
+		case .metric: return value * 0.621371 // km to mi
+		case .imperial: return value * 1.60934 // mi to km
+		}
+	}
+	 
+	/// Converts a temperature value from the system's unit to the other system
+	/// - Parameter value: The temperature value to convert
+	/// - Returns: The converted temperature value
+	func convertTemperature(_ value: Double) -> Double {
+		switch self {
+		case .metric: return value * 9/5 + 32 // °C to °F
+		case .imperial: return (value - 32) * 5/9 // °F to °C
 		}
 	}
 }
