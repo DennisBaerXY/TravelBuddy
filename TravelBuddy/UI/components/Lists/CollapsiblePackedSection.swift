@@ -135,23 +135,23 @@ struct CollapsiblePackedSection: View {
 #Preview {
 	// Sample data for preview
 	let categories: [ItemCategory] = [.clothing, .electronics, .toiletries]
-    
+	
 	let clothingItems: [PackItem] = [
 		PackItem(name: "T-Shirt", category: .clothing, isPacked: true, quantity: 3),
 		PackItem(name: "Jeans", category: .clothing, isPacked: true)
 	]
-    
+	
 	let electronicsItems: [PackItem] = [
 		PackItem(name: "Charger", category: .electronics, isPacked: true),
 		PackItem(name: "Headphones", category: .electronics, isPacked: true)
 	]
-    
+	
 	let groupedItems: [ItemCategory: [PackItem]] = [
 		.clothing: clothingItems,
 		.electronics: electronicsItems
 	]
-    
-	VStack {
+	
+	return VStack {
 		CollapsiblePackedSection(
 			categories: categories,
 			groupedPackedItems: groupedItems,

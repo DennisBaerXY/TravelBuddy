@@ -1,21 +1,21 @@
-//
-//  AddItemView.swift
-//  TravelBuddy
-//
-//  Created by Dennis Bär on 01.04.25.
-//
-
 import SwiftUI
 
 struct AddItemView: View {
+	// MARK: - Environment & State
+
 	@Environment(\.dismiss) private var dismiss
+	
+	// Form state
 	@State private var itemName = ""
 	@State private var selectedCategory: ItemCategory = .other
 	@State private var isEssential = false
 	@State private var quantity = 1
 	
+	// Callback
 	var onAddItem: (PackItem) -> Void
 	
+	// MARK: - Body
+
 	var body: some View {
 		NavigationStack {
 			Form {
@@ -25,7 +25,7 @@ struct AddItemView: View {
 				
 				Section(header: Text("category")) {
 					Picker("category", selection: $selectedCategory) {
-						ForEach(ItemCategory.allCases, id: \.self) { category in
+						ForEach(ItemCategory.allCases) { category in
 							Label(category.localizedName, systemImage: category.iconName)
 								.tag(category)
 						}
@@ -57,7 +57,9 @@ struct AddItemView: View {
 		}
 	}
 	
-	func addItem() {
+	// MARK: - Actions
+
+	private func addItem() {
 		let newItem = PackItem(
 			name: itemName,
 			category: selectedCategory,
@@ -68,5 +70,11 @@ struct AddItemView: View {
 		
 		onAddItem(newItem)
 		dismiss()
+	}
+}
+
+#Preview {
+	AddItemView { item in
+		print("Added item: \(item.name)")
 	}
 }

@@ -5,65 +5,72 @@ struct TripsListView: View {
 	// MARK: - Environment & State
 
 	@Environment(\.modelContext) private var modelContext
-	@Environment(TripRepository.self) private var repository // Zugriff auf Repository für Aktionen
-	@EnvironmentObject private var userSettings: UserSettingsManager // Für Premium-Status
-
-	// SwiftData Query für Trips, sortiert
+	@EnvironmentObject private var userSettings: UserSettingsManager
+	
+	// SwiftData Query for trips
 	@Query(sort: [
-		SortDescriptor(\Trip.isCompleted, order: .forward), // Nicht abgeschlossene zuerst
-		SortDescriptor(\Trip.createdAt, order: .reverse) // Neueste zuerst
+		SortDescriptor(\Trip.isCompleted, order: .forward),
+		SortDescriptor(\Trip.startDate, order: .forward)
 	]) private var trips: [Trip]
-
+	
 	@State private var showingAddTrip = false
-	@State private var showingSettings = false // Für Settings-Sheet
-
+	@State private var showingSettings = false
+	
 	// MARK: - Computed Properties
 
 	private var activeTrips: [Trip] {
 		trips.filter { !$0.isCompleted }
 	}
-
+	
 	private var completedTrips: [Trip] {
-		trips.filter { $0.isCompleted }
+		trips.filter { $0.isCompleted && userSettings.showCompletedTrips }
 	}
-
-	private var isEmpty: Bool {
-		trips.isEmpty
-	}
-
+	
 	// MARK: - Body
 
 	var body: some View {
 		NavigationStack {
 			ZStack {
 				backgroundGradient
-
-				if isEmpty {
+				
+				if trips.isEmpty {
 					emptyStateView
 				} else {
 					tripsListView
 				}
-
-				floatingActionButton
+				
+				floatingAddButton
 			}
 			.navigationTitle("my.trips")
 			.toolbar {
-				leadingToolbarItem
-				trailingToolbarItems // Zusammengefasst für Klarheit
+				ToolbarItem(placement: .navigationBarLeading) {
+					Button {
+						showingSettings = true
+					} label: {
+						Label("Settings", systemImage: "gear")
+					}
+				}
+				
+				ToolbarItem(placement: .navigationBarTrailing) {
+					Button {
+						showingSettings = true
+					} label: {
+						Label("Premium", systemImage: "star.fill")
+							.foregroundColor(userSettings.isPremiumUser ? .yellow : .gray)
+					}
+				}
 			}
 			.sheet(isPresented: $showingAddTrip) {
-				// AddTripView benötigt das Repository zum Speichern
-				AddTripView(repository: repository)
+				AddTripView()
 			}
 			.sheet(isPresented: $showingSettings) {
-				SettingsView() // Settings brauchen ggf. EnvironmentObjects
+				SettingsView()
 			}
-			// .refreshable { } // SwiftData @Query aktualisiert automatisch, manuelles Refresh oft unnötig
 		}
 	}
-
-	// MARK: - Subviews
-
+	
+	// MARK: - UI Components
+	
 	private var backgroundGradient: some View {
 		LinearGradient(
 			gradient: Gradient(colors: [
@@ -75,28 +82,28 @@ struct TripsListView: View {
 		)
 		.ignoresSafeArea()
 	}
-
+	
 	private var emptyStateView: some View {
 		VStack(spacing: 25) {
-			Image("AppIconLogo") // Stelle sicher, dass das Bild existiert
+			Image("AppIconLogo")
 				.resizable()
 				.aspectRatio(contentMode: .fit)
 				.frame(width: 120, height: 120)
 				.clipShape(RoundedRectangle(cornerRadius: 24))
 				.shadow(color: .black.opacity(0.1), radius: 10, y: 5)
-
+			
 			VStack(spacing: 10) {
 				Text("no.trips.planned.title")
 					.font(.title2)
 					.fontWeight(.bold)
 					.foregroundColor(.tripBuddyText)
-
+				
 				Text("add.trip.tip")
 					.multilineTextAlignment(.center)
 					.foregroundColor(.tripBuddyTextSecondary)
 					.padding(.horizontal)
 			}
-
+			
 			Button {
 				showingAddTrip = true
 			} label: {
@@ -108,58 +115,70 @@ struct TripsListView: View {
 		}
 		.padding()
 	}
-
+	
 	private var tripsListView: some View {
 		List {
-			// Aktive Reisen
+			// Active trips
 			if !activeTrips.isEmpty {
 				Section(header: sectionHeader("Active Trips", systemImage: "airplane")) {
 					ForEach(activeTrips) { trip in
-						navigationLink(for: trip)
-							.swipeActions(edge: .trailing, allowsFullSwipe: false) {
-								deleteButton(for: trip)
-								completeButton(for: trip)
+						NavigationLink(destination: TripDetailView(trip: trip)) {
+							TripCard(trip: trip)
+						}
+						.swipeActions(edge: .trailing, allowsFullSwipe: false) {
+							Button(role: .destructive) {
+								deleteTrip(trip)
+							} label: {
+								Label("delete", systemImage: "trash")
 							}
-							.listRowSeparator(.hidden)
-							.listRowInsets(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
-							.listRowBackground(Color.clear)
+							
+							Button {
+								completeTrip(trip)
+							} label: {
+								Label("complete_trip_button", systemImage: "checkmark.circle.fill")
+							}
+							.tint(.tripBuddySuccess)
+						}
+						.listRowSeparator(.hidden)
+						.listRowInsets(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+						.listRowBackground(Color.clear)
 					}
 				}
 			}
-
-			// Abgeschlossene Reisen
+			
+			// Completed trips
 			if !completedTrips.isEmpty {
 				Section(header: sectionHeader("Completed Trips", systemImage: "checkmark.circle")) {
 					ForEach(completedTrips) { trip in
-						navigationLink(for: trip)
-							.swipeActions(edge: .trailing, allowsFullSwipe: false) {
-								deleteButton(for: trip)
+						NavigationLink(destination: TripDetailView(trip: trip)) {
+							TripCard(trip: trip)
+						}
+						.swipeActions(edge: .trailing, allowsFullSwipe: false) {
+							Button(role: .destructive) {
+								deleteTrip(trip)
+							} label: {
+								Label("delete", systemImage: "trash")
 							}
-							.listRowSeparator(.hidden)
-							.listRowInsets(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
-							.listRowBackground(Color.clear)
+						}
+						.listRowSeparator(.hidden)
+						.listRowInsets(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+						.listRowBackground(Color.clear)
 					}
 				}
 			}
 		}
-		.listStyle(.plain) // Oder .grouped, je nach Präferenz
-		.padding(.bottom, 60) // Platz für FAB
+		.listStyle(.plain)
+		.padding(.bottom, 60) // Space for FAB
 	}
-
-	private func navigationLink(for trip: Trip) -> some View {
-		NavigationLink(destination: TripDetailView(trip: trip)) { // Übergibt nur den Trip
-			TripCard(trip: trip) {} // onTap wird durch NavigationLink gehandhabt
-		}
-	}
-
+	
 	private func sectionHeader(_ titleKey: LocalizedStringKey, systemImage: String) -> some View {
 		Label(titleKey, systemImage: systemImage)
 			.font(.headline)
 			.foregroundColor(.tripBuddyPrimary)
 			.padding(.vertical, 5)
 	}
-
-	private var floatingActionButton: some View {
+	
+	private var floatingAddButton: some View {
 		VStack {
 			Spacer()
 			HStack {
@@ -178,86 +197,49 @@ struct TripsListView: View {
 			}
 		}
 	}
-
-	// MARK: - Toolbar Items
-
-	private var leadingToolbarItem: some ToolbarContent {
-		ToolbarItem(placement: .navigationBarLeading) {
-			Button {
-				showingSettings = true
-			} label: {
-				Label("Settings", systemImage: "gear")
-			}
-		}
-	}
-
-	private var trailingToolbarItems: some ToolbarContent {
-		ToolbarItemGroup(placement: .navigationBarTrailing) {
-			// Premium Button (Beispiel, Logik im UserSettingsManager)
-			Button {
-				showingSettings = true // Oder dedizierte Premium-Info zeigen
-			} label: {
-				Label("Premium", systemImage: "star.fill")
-					.foregroundColor(userSettings.isPremiumUser ? .yellow : .gray)
-			}
-
-			// Optional: EditButton für Bulk-Delete
-			// EditButton()
-		}
-	}
-
-	// MARK: - Swipe Actions
-
-	private func deleteButton(for trip: Trip) -> some View {
-		Button(role: .destructive) {
-			deleteTrip(trip)
-		} label: {
-			Label("delete", systemImage: "trash")
-		}
-	}
-
-	private func completeButton(for trip: Trip) -> some View {
-		Button {
-			completeTrip(trip)
-		} label: {
-			Label("complete_trip_button", systemImage: "checkmark.circle.fill")
-		}
-		.tint(.green) // Oder .tripBuddySuccess
-	}
-
-	// MARK: - Data Actions
-
+	
+	// MARK: - Actions
+	
 	private func deleteTrip(_ trip: Trip) {
-		// Verwende das Repository für die Löschlogik
-		repository.deleteTrip(trip)
-		// @Query aktualisiert die View automatisch
+		modelContext.delete(trip)
+		try? modelContext.save()
 	}
-
+	
 	private func completeTrip(_ trip: Trip) {
-		repository.completeTrip(trip)
-		// @Query aktualisiert die View automatisch
+		TripServices.completeTrip(trip, in: modelContext)
 	}
 }
 
 // MARK: - Preview
 
 #Preview {
-	// Preview benötigt einen konfigurierten Container und das Repository
 	let config = ModelConfiguration(isStoredInMemoryOnly: true)
 	do {
 		let container = try ModelContainer(for: Trip.self, PackItem.self, configurations: config)
-		let repository = TripRepository(modelContext: container.mainContext)
-		// Beispiel-Daten hinzufügen
-		_ = repository.createTrip(name: "Preview Trip", destination: "Test City", startDate: Date(), endDate: Date().addingDays(5), transportTypes: [.car], accommodationType: .hotel, activities: [.hiking], isBusinessTrip: false, numberOfPeople: 1, climate: .moderate)
-		let completed = repository.createTrip(name: "Completed Preview", destination: "Past City", startDate: Date().addingDays(-10), endDate: Date().addingDays(-5), transportTypes: [.train], accommodationType: .airbnb, activities: [.relaxing], isBusinessTrip: false, numberOfPeople: 2, climate: .cool)
-		repository.completeTrip(completed)
-
+		
+		// Add sample data
+		let context = container.mainContext
+		
+		// Create beach vacation
+		_ = TripServices.createTripWithPackingList(
+			in: context,
+			name: "Beach Vacation",
+			destination: "Hawaii",
+			startDate: Date().addingTimeInterval(86400 * 14),
+			endDate: Date().addingTimeInterval(86400 * 21),
+			transportTypes: [.plane, .car],
+			accommodationType: .hotel,
+			activities: [.beach, .swimming, .relaxing],
+			isBusinessTrip: false,
+			numberOfPeople: 2,
+			climate: .hot
+		)
+		
 		return TripsListView()
 			.modelContainer(container)
-			.environment(repository)
-			.environmentObject(UserSettingsManager.shared) // Mock oder echtes Objekt
+			.environmentObject(UserSettingsManager.shared)
 			.environmentObject(ThemeManager.shared)
 	} catch {
-		fatalError("Failed to create container: \(error)")
+		return Text("Failed to create preview: \(error.localizedDescription)")
 	}
 }

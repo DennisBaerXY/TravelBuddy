@@ -3,7 +3,6 @@ import SwiftUI
 
 // MARK: - Transport Types
 
-/// Types of transportation used for a trip
 enum TransportType: String, CaseIterable, Identifiable {
 	case plane = "Flugzeug"
 	case car = "Auto"
@@ -15,7 +14,6 @@ enum TransportType: String, CaseIterable, Identifiable {
 	
 	var id: String { rawValue }
 	
-	/// System icon name representing this transport type
 	var iconName: String {
 		switch self {
 		case .plane: return "airplane"
@@ -28,7 +26,6 @@ enum TransportType: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Localized name for display
 	var localizedName: String {
 		switch self {
 		case .plane: return String(localized: "transport_plane")
@@ -44,7 +41,6 @@ enum TransportType: String, CaseIterable, Identifiable {
 
 // MARK: - Accommodation Types
 
-/// Types of accommodation for a trip
 enum AccommodationType: String, CaseIterable, Identifiable {
 	case hotel = "Hotel"
 	case apartment = "Apartment"
@@ -55,7 +51,6 @@ enum AccommodationType: String, CaseIterable, Identifiable {
 	
 	var id: String { rawValue }
 	
-	/// System icon name representing this accommodation type
 	var iconName: String {
 		switch self {
 		case .hotel: return "building.2"
@@ -67,7 +62,6 @@ enum AccommodationType: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Localized name for display
 	var localizedName: String {
 		switch self {
 		case .hotel: return String(localized: "accommodation_hotel")
@@ -82,7 +76,6 @@ enum AccommodationType: String, CaseIterable, Identifiable {
 
 // MARK: - Activity Types
 
-/// Types of activities planned for a trip
 enum Activity: String, CaseIterable, Identifiable {
 	case business = "Geschäftstermine"
 	case swimming = "Schwimmen"
@@ -95,7 +88,6 @@ enum Activity: String, CaseIterable, Identifiable {
 	
 	var id: String { rawValue }
 	
-	/// System icon name representing this activity
 	var iconName: String {
 		switch self {
 		case .business: return "briefcase"
@@ -109,7 +101,6 @@ enum Activity: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Localized name for display
 	var localizedName: String {
 		switch self {
 		case .business: return String(localized: "activity_business")
@@ -126,7 +117,6 @@ enum Activity: String, CaseIterable, Identifiable {
 
 // MARK: - Item Categories
 
-/// Categories for packing items
 enum ItemCategory: String, CaseIterable, Identifiable {
 	case clothing = "Kleidung"
 	case documents = "Dokumente"
@@ -138,7 +128,6 @@ enum ItemCategory: String, CaseIterable, Identifiable {
 	
 	var id: String { rawValue }
 	
-	/// System icon name representing this category
 	var iconName: String {
 		switch self {
 		case .clothing: return "tshirt"
@@ -151,7 +140,6 @@ enum ItemCategory: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Localized name for display
 	var localizedName: String {
 		switch self {
 		case .clothing: return String(localized: "category_clothing")
@@ -164,7 +152,6 @@ enum ItemCategory: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Color associated with this category
 	var color: Color {
 		switch self {
 		case .clothing: return .blue
@@ -180,7 +167,6 @@ enum ItemCategory: String, CaseIterable, Identifiable {
 
 // MARK: - Climate Types
 
-/// Types of climate at the destination
 enum Climate: String, CaseIterable, Identifiable {
 	case hot = "Heiß"
 	case warm = "Warm"
@@ -190,7 +176,6 @@ enum Climate: String, CaseIterable, Identifiable {
 	
 	var id: String { rawValue }
 	
-	/// System icon name representing this climate
 	var iconName: String {
 		switch self {
 		case .hot: return "sun.max"
@@ -201,7 +186,6 @@ enum Climate: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Localized name for display
 	var localizedName: String {
 		switch self {
 		case .hot: return String(localized: "climate_hot")
@@ -212,7 +196,6 @@ enum Climate: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Color associated with this climate
 	var color: Color {
 		switch self {
 		case .hot: return .red
@@ -223,7 +206,6 @@ enum Climate: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Temperature range recommendation in Celsius
 	var temperatureRange: String {
 		switch self {
 		case .hot: return "30°C+"
@@ -237,7 +219,6 @@ enum Climate: String, CaseIterable, Identifiable {
 
 // MARK: - Sort Options
 
-/// Options for sorting packing items
 enum SortOption: String, CaseIterable, Identifiable {
 	case name = "Name"
 	case category = "Category"
@@ -246,7 +227,6 @@ enum SortOption: String, CaseIterable, Identifiable {
 	
 	var id: String { rawValue }
 	
-	/// Localized name for display
 	var localizedName: LocalizedStringKey {
 		switch self {
 		case .name: return "sort_by_name"
@@ -256,7 +236,6 @@ enum SortOption: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Icon name representing this sort option
 	var iconName: String {
 		switch self {
 		case .name: return "textformat.abc"
@@ -269,14 +248,12 @@ enum SortOption: String, CaseIterable, Identifiable {
 
 // MARK: - Sort Order
 
-/// Direction for sorting operations
 enum SortOrder: String, CaseIterable, Identifiable {
 	case ascending = "Ascending"
 	case descending = "Descending"
 	
 	var id: String { rawValue }
 	
-	/// Localized name for display
 	var localizedName: LocalizedStringKey {
 		switch self {
 		case .ascending: return "sort_ascending"
@@ -284,7 +261,6 @@ enum SortOrder: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Icon name representing this sort order
 	var iconName: String {
 		switch self {
 		case .ascending: return "arrow.up"
@@ -292,7 +268,6 @@ enum SortOrder: String, CaseIterable, Identifiable {
 		}
 	}
 	
-	/// Toggles between ascending and descending
 	mutating func toggle() {
 		self = (self == .ascending) ? .descending : .ascending
 	}
@@ -300,7 +275,6 @@ enum SortOrder: String, CaseIterable, Identifiable {
 
 // MARK: - Trip Status
 
-/// Status of a trip based on dates
 enum TripStatus: String, Identifiable {
 	case upcoming = "Upcoming"
 	case active = "Active"
@@ -309,7 +283,6 @@ enum TripStatus: String, Identifiable {
 	
 	var id: String { rawValue }
 	
-	/// Localized name for display
 	var localizedName: LocalizedStringKey {
 		switch self {
 		case .upcoming: return "status_upcoming"
@@ -319,7 +292,6 @@ enum TripStatus: String, Identifiable {
 		}
 	}
 	
-	/// Icon name representing this status
 	var iconName: String {
 		switch self {
 		case .upcoming: return "calendar.badge.clock"
@@ -329,7 +301,6 @@ enum TripStatus: String, Identifiable {
 		}
 	}
 	
-	/// Color associated with this status
 	var color: Color {
 		switch self {
 		case .upcoming: return .blue

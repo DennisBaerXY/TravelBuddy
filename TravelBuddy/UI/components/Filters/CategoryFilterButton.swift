@@ -37,3 +37,28 @@ struct CategoryFilterButton: View {
 		.buttonStyle(PlainButtonStyle())
 	}
 }
+
+// MARK: - Preview
+
+#Preview {
+	HStack {
+		CategoryFilterButton(
+			title: "All",
+			isSelected: true
+		) {}
+
+		CategoryFilterButton(
+			title: "Clothing",
+			iconName: "tshirt",
+			isSelected: false
+		) {}
+
+		CategoryFilterButton(
+			title: "Electronics",
+			iconName: "laptopcomputer",
+			isSelected: false
+		) {}
+	}
+	.padding()
+	.background(Color.tripBuddyBackground)
+}

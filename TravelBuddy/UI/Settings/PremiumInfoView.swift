@@ -1,3 +1,11 @@
+//
+//  PremiumInfoView.swift
+//  TravelBuddy
+//
+//  Created by Dennis Bär on 24.04.25.
+//
+
+
 import SwiftUI
 
 /// A view showing information about premium features

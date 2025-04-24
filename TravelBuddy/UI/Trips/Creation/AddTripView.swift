@@ -1,19 +1,77 @@
 import SwiftData
 import SwiftUI
 
-/// View for creating a new trip with a multi-step form process
 struct AddTripView: View {
-	// MARK: - Environment & State
-	
+	// MARK: - Environment
+
 	@Environment(\.dismiss) private var dismiss
-	@StateObject private var viewModel: AddTripViewModel
+	@Environment(\.modelContext) private var modelContext
 	@FocusState private var isFocused: Bool
 	
-	// MARK: - Initialization
+	// MARK: - State
+
+	// Trip data
+	@State private var tripName = ""
+	@State private var destination = ""
+	@State private var startDate = Date()
+	@State private var endDate = Date().addingTimeInterval(86400 * 7) // One week default
+	@State private var selectedTransport: [TransportType] = []
+	@State private var selectedAccommodation: AccommodationType = .hotel
+	@State private var selectedActivities: [Activity] = []
+	@State private var isBusinessTrip = false
+	@State private var numberOfPeople = 1
+	@State private var selectedClimate: Climate = .moderate
 	
-	init(repository: TripRepository) {
-		// Initialize the view model with the repository
-		_viewModel = StateObject(wrappedValue: AddTripViewModel(repository: repository))
+	// UI state
+	@State private var currentStep = 0
+	@State private var validationMessage: String? = nil
+	@State private var showingClimateInfo = false
+	@State private var isKeyboardVisible = false
+	
+	// MARK: - Constants
+
+	private let totalSteps = 4
+	
+	// MARK: - Computed Properties
+	
+	private var navigationTitle: LocalizedStringKey {
+		switch currentStep {
+		case 0: return "new_trip_step1_title" // Trip details
+		case 1: return "new_trip_step2_title" // Transport & Accommodation
+		case 2: return "new_trip_step3_title" // Activities & Details
+		case 3: return "new_trip_step4_title" // Review
+		default: return "new_trip"
+		}
+	}
+	
+	private var shouldShowBackButton: Bool {
+		currentStep > 0
+	}
+	
+	private var isLastStep: Bool {
+		currentStep == totalSteps - 1
+	}
+	
+	private var dateRangeText: String {
+		let startText = startDate.formatted(date: .abbreviated, time: .omitted)
+		let endText = endDate.formatted(date: .abbreviated, time: .omitted)
+		return "\(startText) - \(endText)"
+	}
+	
+	private var transportText: String {
+		if selectedTransport.isEmpty {
+			return String(localized: "none")
+		} else {
+			return selectedTransport.map { $0.localizedName }.joined(separator: ", ")
+		}
+	}
+	
+	private var activitiesText: String {
+		if selectedActivities.isEmpty {
+			return String(localized: "none")
+		} else {
+			return selectedActivities.map { $0.localizedName }.joined(separator: ", ")
+		}
 	}
 	
 	// MARK: - Body
@@ -23,14 +81,14 @@ struct AddTripView: View {
 			VStack(spacing: 0) {
 				// Progress indicator
 				StepProgressIndicator(
-					currentStep: viewModel.currentStep,
-					totalSteps: viewModel.totalSteps
+					currentStep: currentStep,
+					totalSteps: totalSteps
 				)
 				.padding(.horizontal)
 				.padding(.top, 10)
 				
 				// Content area with step views
-				TabView(selection: $viewModel.currentStep) {
+				TabView(selection: $currentStep) {
 					basicInfoView.tag(0)
 					transportAccommodationView.tag(1)
 					activitiesAndDetailsView.tag(2)
@@ -43,15 +101,15 @@ struct AddTripView: View {
 				navigationControlView
 			}
 			.background(Color.tripBuddyBackground)
-			.navigationTitle(viewModel.navigationTitle)
+			.navigationTitle(navigationTitle)
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
 				ToolbarItem(placement: .navigationBarLeading) {
-					Button(String(localized: "cancel")) { dismiss() }
+					Button("cancel") { dismiss() }
 				}
 			}
 			.onChange(of: isFocused) { _, newValue in
-				viewModel.isKeyboardVisible = newValue
+				isKeyboardVisible = newValue
 			}
 			.ignoresSafeArea(.keyboard, edges: .bottom)
 		}
@@ -59,28 +117,26 @@ struct AddTripView: View {
 	
 	// MARK: - Step Views
 	
-	/// Step 1: Basic trip information
 	private var basicInfoView: some View {
 		Form {
 			Section {
-				TextField(String(localized: "trip_name_placeholder"), text: $viewModel.tripName)
+				TextField(String(localized: "trip_name_placeholder"), text: $tripName)
 					.focused($isFocused)
 				
-				TextField(String(localized: "destination_placeholder"), text: $viewModel.destination)
+				TextField(String(localized: "destination_placeholder"), text: $destination)
 					.focused($isFocused)
 			} header: {
 				Text("trip_details_prompt")
 			}
 			
 			Section(header: Text("travel_dates")) {
-				DatePicker("from_date", selection: $viewModel.startDate, displayedComponents: .date)
-				DatePicker("to_date", selection: $viewModel.endDate, in: viewModel.startDate..., displayedComponents: .date)
+				DatePicker("from_date", selection: $startDate, displayedComponents: .date)
+				DatePicker("to_date", selection: $endDate, in: startDate..., displayedComponents: .date)
 			}
 		}
 		.scrollDismissesKeyboard(.interactively)
 	}
 	
-	/// Step 2: Transport and accommodation
 	private var transportAccommodationView: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 25) {
@@ -90,16 +146,16 @@ struct AddTripView: View {
 				// Transport options
 				Section {
 					LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
-						ForEach(TransportType.allCases, id: \.self) { type in
+						ForEach(TransportType.allCases) { type in
 							SelectableButton(
 								systemImage: type.iconName,
 								text: type.localizedName,
-								isSelected: viewModel.selectedTransport.contains(type)
+								isSelected: selectedTransport.contains(type)
 							) {
-								if viewModel.selectedTransport.contains(type) {
-									viewModel.selectedTransport.removeAll { $0 == type }
+								if selectedTransport.contains(type) {
+									selectedTransport.removeAll { $0 == type }
 								} else {
-									viewModel.selectedTransport.append(type)
+									selectedTransport.append(type)
 								}
 							}
 						}
@@ -111,13 +167,13 @@ struct AddTripView: View {
 				// Accommodation options
 				Section {
 					LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
-						ForEach(AccommodationType.allCases, id: \.self) { type in
+						ForEach(AccommodationType.allCases) { type in
 							SelectableButton(
 								systemImage: type.iconName,
 								text: type.localizedName,
-								isSelected: viewModel.selectedAccommodation == type
+								isSelected: selectedAccommodation == type
 							) {
-								viewModel.selectedAccommodation = type
+								selectedAccommodation = type
 							}
 						}
 					}
@@ -130,7 +186,6 @@ struct AddTripView: View {
 		.padding(.horizontal)
 	}
 	
-	/// Step 3: Activities and details
 	private var activitiesAndDetailsView: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 25) {
@@ -140,16 +195,16 @@ struct AddTripView: View {
 				// Activities selection
 				Section {
 					LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
-						ForEach(Activity.allCases, id: \.self) { activity in
+						ForEach(Activity.allCases) { activity in
 							SelectableButton(
 								systemImage: activity.iconName,
 								text: activity.localizedName,
-								isSelected: viewModel.selectedActivities.contains(activity)
+								isSelected: selectedActivities.contains(activity)
 							) {
-								if viewModel.selectedActivities.contains(activity) {
-									viewModel.selectedActivities.removeAll { $0 == activity }
+								if selectedActivities.contains(activity) {
+									selectedActivities.removeAll { $0 == activity }
 								} else {
-									viewModel.selectedActivities.append(activity)
+									selectedActivities.append(activity)
 								}
 							}
 						}
@@ -160,7 +215,7 @@ struct AddTripView: View {
 				
 				// Additional details
 				Section(header: Text("other_details").font(.headline).padding(.leading, -15)) {
-					Toggle("business_trip", isOn: $viewModel.isBusinessTrip)
+					Toggle("business_trip", isOn: $isBusinessTrip)
 						.tint(.tripBuddyPrimary)
 					
 					// Number of people
@@ -169,20 +224,20 @@ struct AddTripView: View {
 						Spacer()
 						HStack {
 							Button {
-								if viewModel.numberOfPeople > 1 {
-									viewModel.numberOfPeople -= 1
+								if numberOfPeople > 1 {
+									numberOfPeople -= 1
 								}
 							} label: {
 								Image(systemName: "minus.circle.fill")
 							}
 							
-							Text("\(viewModel.numberOfPeople)")
+							Text("\(numberOfPeople)")
 								.font(.headline)
 								.frame(minWidth: 30)
 							
 							Button {
-								if viewModel.numberOfPeople < 10 {
-									viewModel.numberOfPeople += 1
+								if numberOfPeople < 10 {
+									numberOfPeople += 1
 								}
 							} label: {
 								Image(systemName: "plus.circle.fill")
@@ -196,8 +251,8 @@ struct AddTripView: View {
 				
 				// Climate selection
 				Section {
-					Picker("climate", selection: $viewModel.selectedClimate) {
-						ForEach(Climate.allCases, id: \.self) { climate in
+					Picker("climate", selection: $selectedClimate) {
+						ForEach(Climate.allCases) { climate in
 							Label(climate.localizedName, systemImage: climate.iconName)
 								.tag(climate)
 						}
@@ -208,12 +263,12 @@ struct AddTripView: View {
 						Text("climate").font(.headline)
 						Spacer()
 						Button {
-							viewModel.showingClimateInfo = true
+							showingClimateInfo = true
 						} label: {
 							Image(systemName: "info.circle")
 								.foregroundColor(.tripBuddyAccent)
 						}
-						.popover(isPresented: $viewModel.showingClimateInfo, arrowEdge: .top) {
+						.popover(isPresented: $showingClimateInfo, arrowEdge: .top) {
 							Text("climate_info_popover_text")
 								.font(.caption)
 								.padding()
@@ -228,7 +283,6 @@ struct AddTripView: View {
 		.padding(.horizontal)
 	}
 	
-	/// Step 4: Review and confirm
 	private var reviewView: some View {
 		ScrollView {
 			VStack(alignment: .leading, spacing: 20) {
@@ -236,32 +290,31 @@ struct AddTripView: View {
 					.font(.title2.weight(.semibold))
 				
 				ReviewSection(title: "trip_details") {
-					ReviewRow(label: "trip_name", value: viewModel.tripName)
-					ReviewRow(label: "destination", value: viewModel.destination)
+					ReviewRow(label: "trip_name", value: tripName)
+					ReviewRow(label: "destination", value: destination)
 					ReviewRow(label: "travel_dates", value: dateRangeText)
 				}
 				
 				ReviewSection(title: "transport_and_accommodation") {
 					ReviewRow(label: "transport", value: transportText)
-					ReviewRow(label: "accommodation", value: viewModel.selectedAccommodation.localizedName)
+					ReviewRow(label: "accommodation", value: selectedAccommodation.localizedName)
 				}
 				
 				ReviewSection(title: "activities_and_details") {
 					ReviewRow(label: "activities", value: activitiesText)
-					ReviewRow(label: "climate", value: viewModel.selectedClimate.localizedName)
-					ReviewRow(label: "business_trip", value: viewModel.isBusinessTrip ? String(localized: "yes") : String(localized: "no"))
-					ReviewRow(label: "number_of_people", value: "\(viewModel.numberOfPeople)")
+					ReviewRow(label: "climate", value: selectedClimate.localizedName)
+					ReviewRow(label: "business_trip", value: isBusinessTrip ? String(localized: "yes") : String(localized: "no"))
+					ReviewRow(label: "number_of_people", value: "\(numberOfPeople)")
 				}
 			}
 			.padding()
 		}
 	}
 	
-	/// Navigation controls at the bottom of the screen
 	private var navigationControlView: some View {
 		VStack(spacing: 5) {
 			// Validation message
-			if let message = viewModel.validationMessage {
+			if let message = validationMessage {
 				Text(message)
 					.font(.caption)
 					.foregroundColor(.tripBuddyAlert)
@@ -271,9 +324,9 @@ struct AddTripView: View {
 			
 			HStack {
 				// Back button
-				if viewModel.shouldShowBackButton {
+				if shouldShowBackButton {
 					Button {
-						viewModel.goToPreviousStep()
+						goToPreviousStep()
 					} label: {
 						Label("back", systemImage: "chevron.left")
 					}
@@ -286,9 +339,9 @@ struct AddTripView: View {
 				Spacer()
 				
 				// Next/Create button
-				if viewModel.isLastStep {
+				if isLastStep {
 					Button {
-						if viewModel.createTrip() {
+						if createTrip() {
 							dismiss()
 						}
 					} label: {
@@ -297,7 +350,7 @@ struct AddTripView: View {
 					.primaryButtonStyle()
 				} else {
 					Button {
-						viewModel.goToNextStep()
+						goToNextStep()
 					} label: {
 						Label("next", systemImage: "chevron.right")
 					}
@@ -307,40 +360,82 @@ struct AddTripView: View {
 			.padding()
 		}
 		.background(.thinMaterial)
-		.animation(.default, value: viewModel.validationMessage)
+		.animation(.default, value: validationMessage)
 	}
 	
-	// MARK: - Helper Computed Properties
+	// MARK: - Navigation Methods
 	
-	/// Formatted date range text
-	private var dateRangeText: String {
-		let startText = viewModel.startDate.formatted(date: .abbreviated, time: .omitted)
-		let endText = viewModel.endDate.formatted(date: .abbreviated, time: .omitted)
-		return "\(startText) - \(endText)"
-	}
-	
-	/// Formatted transport text
-	private var transportText: String {
-		if viewModel.selectedTransport.isEmpty {
-			return String(localized: "none")
-		} else {
-			return viewModel.selectedTransport.map { $0.localizedName }.joined(separator: ", ")
+	private func goToNextStep() {
+		if validateCurrentStep() {
+			withAnimation {
+				isKeyboardVisible = false
+				currentStep += 1
+				validationMessage = nil
+			}
 		}
 	}
 	
-	/// Formatted activities text
-	private var activitiesText: String {
-		if viewModel.selectedActivities.isEmpty {
-			return String(localized: "none")
-		} else {
-			return viewModel.selectedActivities.map { $0.localizedName }.joined(separator: ", ")
+	private func goToPreviousStep() {
+		withAnimation {
+			currentStep -= 1
+			validationMessage = nil
 		}
+	}
+	
+	// MARK: - Validation
+	
+	private func validateCurrentStep() -> Bool {
+		var isValid = true
+		var message: String? = nil
+		
+		switch currentStep {
+		case 0: // Trip details
+			if tripName.isEmpty {
+				isValid = false
+				message = String(localized: "validation_missing_trip_name")
+			} else if destination.isEmpty {
+				isValid = false
+				message = String(localized: "validation_missing_destination")
+			}
+			
+		case 1: // Transport & Accommodation
+			if selectedTransport.isEmpty {
+				isValid = false
+				message = String(localized: "validation_missing_transport")
+			}
+			
+		default: // No validation needed
+			break
+		}
+		
+		validationMessage = isValid ? nil : message
+		return isValid
+	}
+	
+	// MARK: - Trip Creation
+	
+	private func createTrip() -> Bool {
+		// Create the trip directly with our TripServices
+		let trip = TripServices.createTripWithPackingList(
+			in: modelContext,
+			name: tripName,
+			destination: destination,
+			startDate: startDate,
+			endDate: endDate,
+			transportTypes: selectedTransport,
+			accommodationType: selectedAccommodation,
+			activities: selectedActivities,
+			isBusinessTrip: isBusinessTrip,
+			numberOfPeople: numberOfPeople,
+			climate: selectedClimate
+		)
+		
+		return trip.id != UUID()
 	}
 }
 
-// MARK: - Helper Structs
+// MARK: - Helper Components
 
-/// Displays a progress bar with steps
 struct StepProgressIndicator: View {
 	let currentStep: Int
 	let totalSteps: Int
@@ -357,7 +452,6 @@ struct StepProgressIndicator: View {
 	}
 }
 
-/// Displays a section title for the review screen
 struct ReviewSection<Content: View>: View {
 	let title: LocalizedStringKey
 	@ViewBuilder let content: Content
@@ -376,7 +470,6 @@ struct ReviewSection<Content: View>: View {
 	}
 }
 
-/// Displays a label-value row for the review screen
 struct ReviewRow: View {
 	let label: LocalizedStringKey
 	let value: String
@@ -401,9 +494,14 @@ struct ReviewRow: View {
 
 #Preview {
 	let config = ModelConfiguration(isStoredInMemoryOnly: true)
-	let container = try! ModelContainer(for: Trip.self, PackItem.self, configurations: config)
-	let repository = TripRepository(modelContext: container.mainContext)
-	
-	return AddTripView(repository: repository)
-		.modelContainer(container)
+	do {
+		let container = try ModelContainer(for: Trip.self, PackItem.self, configurations: config)
+			
+		return AddTripView()
+			.modelContainer(container)
+			.environmentObject(UserSettingsManager.shared)
+			.environmentObject(ThemeManager.shared)
+	} catch {
+		return Text("Failed to create preview: \(error.localizedDescription)")
+	}
 }

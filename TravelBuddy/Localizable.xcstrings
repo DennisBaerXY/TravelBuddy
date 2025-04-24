@@ -1,16 +1,15 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-    "%@ - %@" : {
+    "%@ %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ - %2$@"
+            "value" : "%1$@ %2$@"
           }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "%lld" : {
       "shouldTranslate" : false
@@ -35,12 +34,12 @@
         }
       }
     },
-    "%lld/%lld %@" : {
+    "%lld/%lld items" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$lld/%2$lld %3$@"
+            "value" : "%1$lld/%2$lld items"
           }
         }
       }
@@ -62,6 +61,19 @@
         }
       }
     },
+    "%lld/%lld packed" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld packed"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+
+    },
     "%lld%% %@" : {
       "localizations" : {
         "de" : {
@@ -71,6 +83,9 @@
           }
         }
       }
+    },
+    "© 2025 Dennis DevLops" : {
+
     },
     "×" : {
       "extractionState" : "stale",
@@ -119,6 +134,9 @@
           }
         }
       }
+    },
+    "About" : {
+
     },
     "Abschließen" : {
       "localizations" : {
@@ -241,6 +259,18 @@
           }
         }
       }
+    },
+    "Account" : {
+
+    },
+    "Acknowledgements" : {
+
+    },
+    "Active" : {
+
+    },
+    "Active Trips" : {
+
     },
     "activities" : {
       "localizations" : {
@@ -425,9 +455,6 @@
     "add_item_label" : {
 
     },
-    "add_to_calendar_label" : {
-
-    },
     "add.trip.tip" : {
       "localizations" : {
         "de" : {
@@ -460,6 +487,9 @@
         }
       }
     },
+    "all_items_packed" : {
+
+    },
     "Alle Elemente wurden abgehakt. Möchtest du die Reise als abgeschlossen markieren?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -481,6 +511,15 @@
         }
       }
     },
+    "Appearance" : {
+
+    },
+    "Ascending" : {
+
+    },
+    "Auto-suggest Packing Lists" : {
+
+    },
     "back" : {
       "localizations" : {
         "de" : {
@@ -496,6 +535,12 @@
           }
         }
       }
+    },
+    "Backup Data" : {
+
+    },
+    "Behavior" : {
+
     },
     "business_trip" : {
       "localizations" : {
@@ -528,6 +573,9 @@
           }
         }
       }
+    },
+    "Cancel" : {
+
     },
     "category" : {
       "localizations" : {
@@ -657,6 +705,9 @@
         }
       }
     },
+    "Choose a Plan" : {
+
+    },
     "climate" : {
       "localizations" : {
         "de" : {
@@ -763,6 +814,12 @@
         }
       }
     },
+    "Close" : {
+
+    },
+    "Color Theme" : {
+
+    },
     "complete_button" : {
 
     },
@@ -775,7 +832,16 @@
     "complete_trip_button" : {
 
     },
+    "Completed" : {
+
+    },
+    "Completed Trips" : {
+
+    },
     "completed_trip_banner" : {
+
+    },
+    "Contact Support" : {
 
     },
     "create_list" : {
@@ -810,6 +876,12 @@
         }
       }
     },
+    "Data" : {
+
+    },
+    "Default Sort" : {
+
+    },
     "delete" : {
       "localizations" : {
         "de" : {
@@ -825,6 +897,9 @@
           }
         }
       }
+    },
+    "Descending" : {
+
     },
     "destination" : {
       "localizations" : {
@@ -874,6 +949,9 @@
         }
       }
     },
+    "Development" : {
+
+    },
     "Diese Reise wurde abgeschlossen" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -884,6 +962,9 @@
           }
         }
       }
+    },
+    "Done" : {
+
     },
     "essential" : {
       "localizations" : {
@@ -900,6 +981,9 @@
           }
         }
       }
+    },
+    "Export Data" : {
+
     },
     "Fortschritt: %lld%%" : {
 
@@ -920,6 +1004,12 @@
         }
       }
     },
+    "Get Premium" : {
+
+    },
+    "Help Center" : {
+
+    },
     "how_do_you_travel" : {
       "localizations" : {
         "de" : {
@@ -935,6 +1025,9 @@
           }
         }
       }
+    },
+    "Imperial" : {
+
     },
     "item" : {
       "localizations" : {
@@ -971,6 +1064,15 @@
           }
         }
       }
+    },
+    "Language" : {
+
+    },
+    "Measurement System" : {
+
+    },
+    "Metric" : {
+
     },
     "my.trips" : {
       "localizations" : {
@@ -1203,6 +1305,18 @@
         }
       }
     },
+    "Premium" : {
+
+    },
+    "Premium Account" : {
+
+    },
+    "Prioritize Essential Items" : {
+
+    },
+    "Privacy Policy" : {
+
+    },
     "quantity_count: %lld" : {
       "localizations" : {
         "de" : {
@@ -1219,6 +1333,9 @@
         }
       }
     },
+    "Rate TravelBuddy" : {
+
+    },
     "Reise abschließen" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1229,6 +1346,24 @@
           }
         }
       }
+    },
+    "Reset" : {
+
+    },
+    "Reset All Settings" : {
+
+    },
+    "Reset All Settings?" : {
+
+    },
+    "Reset Onboarding" : {
+
+    },
+    "Restore from Backup" : {
+
+    },
+    "Restore Purchases" : {
+
     },
     "review_prompt" : {
       "localizations" : {
@@ -1256,6 +1391,21 @@
         }
       }
     },
+    "Select Language" : {
+
+    },
+    "Settings" : {
+
+    },
+    "Share TravelBuddy" : {
+
+    },
+    "Show Completed Trips" : {
+
+    },
+    "Show Debug Logs" : {
+
+    },
     "Sort by" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1267,6 +1417,9 @@
         }
       }
     },
+    "Sort Order" : {
+
+    },
     "sort_ascending" : {
       "localizations" : {
         "de" : {
@@ -1276,6 +1429,15 @@
           }
         }
       }
+    },
+    "sort_by_category" : {
+
+    },
+    "sort_by_date" : {
+
+    },
+    "sort_by_essential" : {
+
     },
     "sort_by_name" : {
       "localizations" : {
@@ -1312,6 +1474,33 @@
           }
         }
       }
+    },
+    "status_active" : {
+
+    },
+    "status_completed" : {
+
+    },
+    "status_past" : {
+
+    },
+    "status_upcoming" : {
+
+    },
+    "Subscribe Now" : {
+
+    },
+    "Support" : {
+
+    },
+    "Terms of Service" : {
+
+    },
+    "Terms of Use" : {
+
+    },
+    "This will reset all settings to their default values. This action cannot be undone." : {
+
     },
     "to_date" : {
       "localizations" : {
@@ -1496,6 +1685,12 @@
         }
       }
     },
+    "TravelBuddy" : {
+
+    },
+    "TravelBuddy Premium" : {
+
+    },
     "trip_details" : {
       "localizations" : {
         "de" : {
@@ -1564,6 +1759,9 @@
         }
       }
     },
+    "Upcoming" : {
+
+    },
     "validation_missing_destination" : {
       "localizations" : {
         "de" : {
@@ -1593,6 +1791,9 @@
           }
         }
       }
+    },
+    "Version %@" : {
+
     },
     "Weiter" : {
       "localizations" : {

@@ -107,8 +107,8 @@ struct CollapsibleCategorySection: View {
 		PackItem(name: "Jeans", category: .clothing),
 		PackItem(name: "Socks", category: .clothing, quantity: 5)
 	]
-    
-	VStack {
+	
+	return VStack {
 		CollapsibleCategorySection(
 			category: .clothing,
 			items: items,
@@ -117,12 +117,15 @@ struct CollapsibleCategorySection: View {
 			onUpdate: { _ in },
 			onDelete: { _ in }
 		)
-        
+		
 		CollapsibleCategorySection(
-			category: .clothing,
-			items: items,
+			category: .electronics,
+			items: [
+				PackItem(name: "Camera", category: .electronics, isEssential: true),
+				PackItem(name: "Phone Charger", category: .electronics)
+			],
 			isInitiallyExpanded: false,
-			isTripCompleted: true,
+			isTripCompleted: false,
 			onUpdate: { _ in },
 			onDelete: { _ in }
 		)

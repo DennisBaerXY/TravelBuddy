@@ -282,7 +282,7 @@ extension TripHeaderView {
 		numberOfPeople: 2,
 		climate: .hot
 	)
-	
+		
 	// Add sample packing items
 	let items = [
 		PackItem(name: "Passport", category: .documents, isEssential: true),
@@ -291,32 +291,25 @@ extension TripHeaderView {
 		PackItem(name: "Camera", category: .electronics, isPacked: true),
 		PackItem(name: "T-Shirts", category: .clothing, quantity: 5)
 	]
-	
+		
 	sampleTrip.packingItems = items
-	
+		
 	// Set up the relationship
 	for item in items {
 		item.trip = sampleTrip
 	}
-	
+		
 	// Set some items as packed
 	if let packingItems = sampleTrip.packingItems {
 		for (index, item) in packingItems.enumerated() where index % 2 == 0 {
 			item.isPacked = true
 		}
 	}
-	
+		
 	return VStack(spacing: 20) {
 		TripHeaderView(trip: sampleTrip)
-		
+			
 		TripHeaderView(trip: sampleTrip, isCompact: true)
-		
-		TripHeaderView.minimal(trip: sampleTrip)
-			.padding(.horizontal)
-		
-		TripHeaderView.card(trip: sampleTrip)
-			.padding(.horizontal)
-			.frame(height: 160)
 	}
 	.padding(.vertical)
 	.background(Color.tripBuddyBackground)
