@@ -516,7 +516,9 @@ struct AddTripView: View {
 			destination: destination,
 			startDate: startDate,
 			endDate: endDate,
+			destinationPlaceId: destinationPlaceId ?? "",
 			transportTypes: selectedTransport,
+			
 			accommodationType: selectedAccommodation,
 			activities: selectedActivities,
 			isBusinessTrip: isBusinessTrip,

@@ -42,6 +42,7 @@ struct TripCard: View {
 			alignment: .leading
 		)
 		.onAppear { // Trigger image loading when the card appears
+			print("Where am i before")
 			if !trip.destinationPlaceId.isEmpty && placeImage == nil && !isLoadingImage {
 				print("Where am i")
 				loadImageForPlace()
@@ -207,7 +208,7 @@ struct TripCard: View {
 			// 1. Fetch Place Details (specifically asking for photos)
 			let placesClient = PlacesClient.shared
 				
-			let fetchPlaceRequest = FetchPlaceRequest(placeID: trip.destinationPlaceId, placeProperties: [.displayName])
+			let fetchPlaceRequest = FetchPlaceRequest(placeID: trip.destinationPlaceId, placeProperties: [.photos])
 				
 			var fetchedPlace: Place
 			switch await placesClient.fetchPlace(with: fetchPlaceRequest) {
@@ -221,6 +222,7 @@ struct TripCard: View {
 			}
 				
 			guard let photo = fetchedPlace.photos?.first else {
+				print("Place has no photos")
 				isLoadingImage = false
 				return
 			}

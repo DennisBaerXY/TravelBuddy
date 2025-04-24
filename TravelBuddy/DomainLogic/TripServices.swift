@@ -22,7 +22,9 @@ struct TripServices {
 		destination: String,
 		startDate: Date,
 		endDate: Date,
+		destinationPlaceId: String = "",
 		transportTypes: [TransportType],
+		
 		accommodationType: AccommodationType,
 		activities: [Activity],
 		isBusinessTrip: Bool,
@@ -35,7 +37,9 @@ struct TripServices {
 			destination: destination,
 			startDate: startDate,
 			endDate: endDate,
+			destinationPlaceId: destinationPlaceId,
 			transportTypes: transportTypes,
+			
 			accommodationType: accommodationType,
 			activities: activities,
 			isBusinessTrip: isBusinessTrip,
