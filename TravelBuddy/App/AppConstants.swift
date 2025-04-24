@@ -16,10 +16,10 @@ enum AppConstants {
 	static let enableCloudSync = true
     
 	/// Controls whether analytics are enabled
-	static let enableAnalytics = false
+	static let enableAnalytics = true
     
 	/// Controls whether debug logging is enabled
-	static let enableDebugLogging = false
+	static let enableDebugLogging = true
     
 	// MARK: - UI Constants
     

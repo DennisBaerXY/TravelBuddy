@@ -1,6 +1,8 @@
 import SwiftData
 import SwiftUI
 
+import FirebaseAnalytics
+
 struct TripDetailView: View {
 	// MARK: - Environment & State
 
@@ -54,6 +56,10 @@ struct TripDetailView: View {
 	
 	private var packedItems: [PackItem] {
 		items.filter { $0.isPacked }
+	}
+	
+	private var groupedItems: [ItemCategory: [PackItem]] {
+		Dictionary(grouping: items, by: { $0.categoryEnum })
 	}
 	
 	private var groupedItemsToPack: [ItemCategory: [PackItem]] {
@@ -138,6 +144,14 @@ struct TripDetailView: View {
 			// Load initial sort settings
 			currentSortOption = UserSettingsManager.shared.defaultSortOption
 			currentSortOrder = UserSettingsManager.shared.defaultSortOrder
+			
+			guard AppConstants.enableAnalytics else { return }
+			
+			Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+				AnalyticsParameterScreenName: "TripDetailView", // Predefined parameter
+				AnalyticsParameterScreenClass: "TripDetailView", // Can be same as name for SwiftUI
+				"trip_id": trip.id.uuidString // Custom parameter
+			])
 		}
 		.animation(.default, value: items)
 		.animation(.default, value: currentSortOption)
@@ -172,7 +186,7 @@ struct TripDetailView: View {
 			ScrollView(.horizontal, showsIndicators: false) {
 				HStack(spacing: 8) {
 					CategoryFilterButton(
-						title: String(localized: "all_items"),
+						title: "all_items",
 						isSelected: selectedCategoryFilter == nil
 					) { withAnimation { selectedCategoryFilter = nil } }
 					
@@ -192,14 +206,14 @@ struct TripDetailView: View {
 	private var packingListContent: some View {
 		VStack(alignment: .leading, spacing: 25) {
 			// Items to pack
-			if !itemsToPack.isEmpty {
+			if !items.isEmpty {
 				sectionHeader(
 					titleKey: "to_pack_section_header \(itemsToPack.count)",
 					color: .tripBuddyPrimary
 				)
 				
 				ForEach(categoriesToShowInSections, id: \.self) { category in
-					if let itemsInSection = groupedItemsToPack[category], !itemsInSection.isEmpty {
+					if let itemsInSection = groupedItems[category], !itemsInSection.isEmpty {
 						CollapsibleCategorySection(
 							category: category,
 							items: itemsInSection,
@@ -209,21 +223,6 @@ struct TripDetailView: View {
 						)
 					}
 				}
-			}
-			
-			// Already packed items
-			if !packedItems.isEmpty {
-				if !itemsToPack.isEmpty {
-					Divider().padding(.horizontal)
-				}
-				
-				CollapsiblePackedSection(
-					categories: categoriesToShowInSections,
-					groupedPackedItems: groupedPackedItems,
-					isTripCompleted: trip.isCompleted,
-					onUpdate: { item in updateItem(item) },
-					onDelete: { item in deleteItem(item) }
-				)
 			}
 			
 			// Empty state view

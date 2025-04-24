@@ -70,7 +70,6 @@ struct CollapsibleCategorySection: View {
 						}
 					}
 				}
-				.transition(.opacity.combined(with: .move(edge: .top)))
 			}
 		}
 		.padding(.top, 5)

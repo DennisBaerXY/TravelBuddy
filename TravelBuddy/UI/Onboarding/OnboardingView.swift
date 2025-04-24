@@ -1,3 +1,4 @@
+import FirebaseAnalytics
 import SwiftUI
 
 /// Onboarding view shown to first-time users of the app
@@ -59,7 +60,7 @@ struct OnboardingView: View {
 				// Paging view for slides
 				TabView(selection: $currentPage) {
 					ForEach(0..<pages.count, id: \.self) { index in
-						OnboardingPageView(page: pages[index])
+						OnboardingPageView(page: pages[index], pageIndex: index)
 							.tag(index)
 					}
 				}
@@ -94,7 +95,7 @@ struct OnboardingView: View {
 			if currentPage < pages.count - 1 {
 				Button("Überspringen") {
 					withAnimation {
-						finishOnboarding()
+						finishOnboarding(skipped: true)
 					}
 				}
 				.padding()
@@ -102,7 +103,7 @@ struct OnboardingView: View {
 			} else {
 				Button("Abschließen") {
 					withAnimation {
-						finishOnboarding()
+						finishOnboarding(skipped: false)
 					}
 				}
 				.padding()
@@ -135,7 +136,7 @@ struct OnboardingView: View {
 						currentPage += 1
 					}
 				} else {
-					finishOnboarding()
+					finishOnboarding(skipped: false)
 				}
 			}) {
 				HStack {
@@ -173,9 +174,26 @@ struct OnboardingView: View {
 	}
 	
 	/// Completes the onboarding process
-	private func finishOnboarding() {
+	private func finishOnboarding(skipped: Bool = false) {
+		logOnboardingFinished(skipped: skipped)
+		
 		withAnimation(.easeOut(duration: 0.5)) {
 			onFinished()
+		}
+	}
+	
+	// --- Helper to log finish/skip ---
+	private func logOnboardingFinished(skipped: Bool) {
+		guard AppConstants.enableAnalytics else { return } //
+
+		if skipped {
+			// Log a custom "onboarding_skipped" event
+			Analytics.logEvent("onboarding_skipped", parameters: [
+				"skipped_at_page_index": currentPage // Log which page they skipped from
+			])
+		} else {
+			// Log the standard "tutorial_complete" event
+			Analytics.logEvent(AnalyticsEventTutorialComplete, parameters: nil)
 		}
 	}
 }
@@ -210,6 +228,7 @@ struct OnboardingPageView: View {
 	// MARK: - Properties
 	
 	let page: OnboardingPage
+	let pageIndex: Int
 	
 	/// Animation state
 	@State private var isAnimating = false
@@ -268,10 +287,23 @@ struct OnboardingPageView: View {
 			withAnimation(.easeOut(duration: 0.6)) {
 				isAnimating = true
 			}
+			
+			logOnboardingScreenView()
 		}
 		.onDisappear {
 			isAnimating = false
 		}
+	}
+	
+	private func logOnboardingScreenView() {
+		guard AppConstants.enableAnalytics else { return } //
+
+		Analytics.logEvent(AnalyticsEventScreenView, parameters: [
+			AnalyticsParameterScreenName: "OnboardingPage_\(pageIndex)", // e.g., OnboardingPage_0
+			AnalyticsParameterScreenClass: "OnboardingView", // The parent view controller/struct name
+			"onboarding_page_index": pageIndex,
+			"onboarding_page_title": page.title // Log the title if useful
+		])
 	}
 }
 

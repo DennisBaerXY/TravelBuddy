@@ -2,6 +2,9 @@
 import SwiftData
 import SwiftUI
 
+import FirebaseAnalytics
+import FirebaseCore
+
 @main
 struct TravelBuddyApp: App {
 	// MARK: - State Objects & Environment
@@ -9,6 +12,7 @@ struct TravelBuddyApp: App {
 	// Use the UserSettingsManager singleton as the source of truth for settings
 	@StateObject private var userSettings = UserSettingsManager.shared
 	@StateObject private var themeManager = ThemeManager.shared
+	@StateObject private var localizationManager = LocalizationManager.shared
 
 	// State variable to hold the initialized ModelContainer or nil if setup failed
 	@State private var modelContainer: ModelContainer?
@@ -17,6 +21,15 @@ struct TravelBuddyApp: App {
 	// MARK: - Initialization
 
 	init() {
+		if AppConstants.enableAnalytics {
+			FirebaseApp.configure()
+			if AppConstants.enableDebugLogging {
+				print("Firebase configured for Analytics")
+			}
+		} else {
+			print("Firebase Analytics disabled via AppConstants.enableAnalytics")
+		}
+
 		// --- SwiftData Setup ---
 		let schema = Schema([Trip.self, PackItem.self])
 		let modelConfiguration = ModelConfiguration(
@@ -76,6 +89,8 @@ struct TravelBuddyApp: App {
 				.modelContainer(container)
 				.environmentObject(userSettings) // Already initialized as @StateObject
 				.environmentObject(themeManager) // Already initialized as @StateObject
+				.environmentObject(localizationManager) // Inject the manager
+				.environment(\.locale, localizationManager.appLocale) // <<< APPLY LOCALE HERE
 				.preferredColorScheme(themeManager.colorScheme) // Apply theme preference
 
 			} else {

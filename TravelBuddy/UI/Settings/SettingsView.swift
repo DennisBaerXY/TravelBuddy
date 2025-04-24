@@ -18,6 +18,7 @@ struct SettingsView: View {
     
 	@ObservedObject private var userSettings = UserSettingsManager.shared
 	@ObservedObject private var themeManager = ThemeManager.shared
+	@ObservedObject private var localeManager = LocalizationManager.shared
 	@State private var showingThemePicker = false
 	@State private var showingLanguagePicker = false
 	@State private var showingHelpCenter = false

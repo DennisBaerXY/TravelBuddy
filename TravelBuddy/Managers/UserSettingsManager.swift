@@ -1,7 +1,8 @@
 // TravelBuddy/Managers/UserSettingsManager.swift
 import Combine
+import FirebaseAnalytics
 import Foundation
-import SwiftUI // Needed for @AppStorage
+import SwiftUI
 
 /// A centralized manager for user settings and preferences, leveraging @AppStorage.
 final class UserSettingsManager: ObservableObject { // Mark final for performance
@@ -32,7 +33,17 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 	@AppStorage(Keys.hasCompletedOnboarding) var hasCompletedOnboarding: Bool = false
 
 	/// Whether the user has premium access.
-	@AppStorage(Keys.isPremiumUser) var isPremiumUser: Bool = false
+	@AppStorage(Keys.isPremiumUser) var isPremiumUser: Bool = false {
+		didSet {
+			UserDefaults.standard.set(isPremiumUser, forKey: Keys.isPremiumUser)
+			// --- Set Firebase User Property ---
+			if AppConstants.enableAnalytics {
+				// Property names should be <= 24 chars, values <= 36 chars
+				Analytics.setUserProperty(isPremiumUser ? "true" : "false",
+				                          forName: "is_premium") // Custom user property name
+			}
+		}
+	}
 
 	/// User's preferred sort option for packing lists. Defaults to name.
 	@AppStorage(Keys.defaultSortOption) var defaultSortOption: SortOption = .name
@@ -65,8 +76,6 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 			} else {
 				UserDefaults.standard.removeObject(forKey: Keys.prefersDarkMode)
 			}
-			// Notify ThemeManager if it observes this (already done in original ThemeManager)
-			objectWillChange.send() // Ensure SwiftUI updates if needed
 		}
 	}
 

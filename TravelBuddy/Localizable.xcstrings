@@ -1294,6 +1294,9 @@
         }
       }
     },
+    "Ocean" : {
+      "comment" : "Color theme name"
+    },
     "other_details" : {
       "localizations" : {
         "de" : {
@@ -1500,6 +1503,9 @@
     },
     "sort_options_label" : {
 
+    },
+    "Standard" : {
+      "comment" : "Color theme name"
     },
     "Starten" : {
       "localizations" : {

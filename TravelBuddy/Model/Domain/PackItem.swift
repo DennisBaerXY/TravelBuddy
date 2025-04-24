@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import SwiftUI
 
 @Model
 final class PackItem {
@@ -73,7 +74,7 @@ final class PackItem {
 		categoryEnum.iconName
 	}
 	
-	var categoryName: String {
+	var categoryName: LocalizedStringKey {
 		categoryEnum.localizedName
 	}
 	

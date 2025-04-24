@@ -11,8 +11,7 @@ import Foundation
 import SwiftData
 import SwiftUI
 
-import Foundation
-import SwiftData
+import FirebaseAnalytics
 
 // Helper object to encapsulate complex operations
 struct TripServices {
@@ -74,6 +73,16 @@ struct TripServices {
 		trip.isCompleted = true
 		trip.update()
 		try? modelContext.save()
+		
+		// --- Log Trip Completion Event ---
+		if AppConstants.enableAnalytics {
+			let params: [String: Any] = [
+				"trip_id": trip.id.uuidString,
+				"item_count": trip.packingItems?.count ?? 0,
+				"duration_days": trip.numberOfDays
+			]
+			Analytics.logEvent("trip_completed", parameters: params) // Custom event name
+		}
 	}
 	
 	// Add item to trip
@@ -88,5 +97,20 @@ struct TripServices {
 		trip.packingItems?.append(item)
 		trip.update()
 		try? modelContext.save()
+		
+		// --- Log Item Added Event ---
+		if AppConstants.enableAnalytics {
+			let params: [String: Any] = [
+				AnalyticsParameterItemName: item.name, // Standard param
+				AnalyticsParameterItemCategory: item.category, // Standard param
+				"is_essential": item.isEssential,
+				"trip_destination": trip.destination,
+				AnalyticsParameterQuantity: item.quantity,
+				// Standard param
+				"trip_id": trip.id.uuidString
+			]
+			// Could use AnalyticsEventAddToCart if it fits, or a custom one
+			Analytics.logEvent("pack_item_added", parameters: params)
+		}
 	}
 }
