@@ -1118,12 +1118,12 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "z.B. Rom, Italien"
+            "value" : "Ziel z.B. Rom*"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "e.g. Rome, Italy"
           }
         }
@@ -2455,12 +2455,12 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "z.B. Sommerurlaub Italien"
+            "value" : "z.B. Sommerurlaub Italien *"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "e.g. Summer Vacation"
           }
         }
@@ -2502,6 +2502,9 @@
           }
         }
       }
+    },
+    "validation_missing_trip_destination" : {
+
     },
     "validation_missing_trip_name" : {
       "localizations" : {

@@ -1,15 +1,32 @@
+import GooglePlacesSwift
 import SwiftUI
 
 struct TripCard: View {
 	// MARK: - Properties
 
 	let trip: Trip
+	@State private var placeImage: Image? = nil // State to hold the loaded image
+	@State private var isLoadingImage = false // State to track loading
 	
 	// MARK: - Body
 
 	var body: some View {
 		VStack(alignment: .leading, spacing: 15) {
 			tripHeader
+			
+			// Ortsbild (falls verfügbar)
+			if let image = placeImage {
+				image
+					.resizable()
+					.aspectRatio(contentMode: .fill)
+					.frame(height: 120)
+					.clipShape(RoundedRectangle(cornerRadius: 12))
+					.overlay(
+						RoundedRectangle(cornerRadius: 12)
+							.stroke(Color.tripBuddyText.opacity(0.1), lineWidth: 1)
+					)
+					.padding(.horizontal, 4)
+			}
 			destinationRow
 			dateRow
 			tripProgressView
@@ -24,6 +41,12 @@ struct TripCard: View {
 				.padding(.vertical, 10),
 			alignment: .leading
 		)
+		.onAppear { // Trigger image loading when the card appears
+			if !trip.destinationPlaceId.isEmpty && placeImage == nil && !isLoadingImage {
+				print("Where am i")
+				loadImageForPlace()
+			}
+		}
 	}
 	
 	// MARK: - Computed Views & Properties
@@ -168,5 +191,57 @@ struct TripCard: View {
 				RoundedRectangle(cornerRadius: 20)
 					.stroke(Color.tripBuddyText.opacity(trip.isCompleted ? 0.1 : 0.05), lineWidth: 1)
 			)
+	}
+	
+	private func loadImageForPlace() {
+		print("Starting loading for \(trip.destinationPlaceId) ")
+		// Only load if we have a place ID and haven't loaded yet
+		guard !trip.destinationPlaceId.isEmpty, placeImage == nil, !isLoadingImage else {
+			print("Not loading image")
+			return
+		}
+
+		isLoadingImage = true
+
+		Task { // Perform asynchronous loading in a Task
+			// 1. Fetch Place Details (specifically asking for photos)
+			let placesClient = PlacesClient.shared
+				
+			let fetchPlaceRequest = FetchPlaceRequest(placeID: trip.destinationPlaceId, placeProperties: [.displayName])
+				
+			var fetchedPlace: Place
+			switch await placesClient.fetchPlace(with: fetchPlaceRequest) {
+			case .success(let place):
+				fetchedPlace = place
+				
+			case .failure(let placesError):
+				print("Error fetching place details: \(placesError)")
+				isLoadingImage = false
+				return
+			}
+				
+			guard let photo = fetchedPlace.photos?.first else {
+				isLoadingImage = false
+				return
+			}
+				
+			let fetchPhotoRequest = FetchPhotoRequest(photo: photo, maxSize: CGSizeMake(400, 300))
+			// 3. Fetch the actual photo image
+			var image: UIImage = .init()
+			switch await placesClient.fetchPhoto(with: fetchPhotoRequest) {
+			case .success(let uiImage):
+				image = uiImage
+				print("Photo fetched successfully!")
+			case .failure(let error):
+				print("Error fetching photo: \(error)")
+				isLoadingImage = false
+				return
+			}
+			// 4. Update the state with the loaded image
+			await MainActor.run { // Ensure UI update is on the main thread
+				self.placeImage = Image(uiImage: image)
+				self.isLoadingImage = false
+			}
+		}
 	}
 }

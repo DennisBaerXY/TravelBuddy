@@ -20,6 +20,9 @@ enum AppConstants {
     
 	/// Controls whether debug logging is enabled
 	static let enableDebugLogging = true
+	
+	/// Controls wheather google maps autocomplete is used
+	static let enableGoogleMapsAutocomplete: Bool = true
     
 	// MARK: - UI Constants
     

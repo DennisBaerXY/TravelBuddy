@@ -18,6 +18,10 @@ class Trip {
 	var numberOfPeople: Int = 1
 	var climate: String = Climate.moderate.rawValue
 	
+	// Google Places Integration
+	
+	var destinationPlaceId: String = ""
+	
 	// Status tracking
 	var isCompleted: Bool = false
 	
@@ -36,18 +40,24 @@ class Trip {
 		destination: String,
 		startDate: Date,
 		endDate: Date,
+		
+		destinationPlaceId: String = "",
+		
 		transportTypes: [TransportType],
 		accommodationType: AccommodationType,
 		activities: [Activity],
 		isBusinessTrip: Bool,
 		numberOfPeople: Int,
-		climate: Climate
+		climate: Climate,
+		
 	) {
 		self.id = UUID()
 		self.name = name
 		self.destination = destination
 		self.startDate = startDate
 		self.endDate = endDate
+		
+		self.destinationPlaceId = destinationPlaceId
 		self.transportTypes = transportTypes.map { $0.rawValue }
 		self.accommodationType = accommodationType.rawValue
 		self.activities = activities.map { $0.rawValue }

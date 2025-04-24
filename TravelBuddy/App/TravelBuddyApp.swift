@@ -5,6 +5,10 @@ import SwiftUI
 import FirebaseAnalytics
 import FirebaseCore
 
+import GooglePlacesSwift
+
+// App Delegate
+
 @main
 struct TravelBuddyApp: App {
 	// MARK: - State Objects & Environment
@@ -28,6 +32,18 @@ struct TravelBuddyApp: App {
 			}
 		} else {
 			print("Firebase Analytics disabled via AppConstants.enableAnalytics")
+		}
+
+		if AppConstants.enableGoogleMapsAutocomplete {
+			let activated = PlacesClient.provideAPIKey(Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as! String)
+			if !activated {
+				print("Google Maps Autocomplete API key not provided or invalid")
+			} else {
+				print("Google Maps Autocomplete API key activated")
+			}
+
+		} else {
+			print("Google Maps Autocomplete disabled via AppConstants.enableGoogleMapsAutocomplete")
 		}
 
 		// --- SwiftData Setup ---

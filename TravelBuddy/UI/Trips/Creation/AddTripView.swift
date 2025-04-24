@@ -22,12 +22,17 @@ struct AddTripView: View {
 	@State private var numberOfPeople = 1
 	@State private var selectedClimate: Climate = .moderate
 	
+	@State private var destinationPlaceId: String? = nil
+	
 	// UI state
 	@State private var currentStep = 0
 	@State private var validationMessage: String? = nil
 	@State private var showingClimateInfo = false
 	@State private var isKeyboardVisible = false
 	
+	@StateObject private var autocompleteViewModel = PlacesAutocompleteViewModel() // ViewModel hinzufügen
+	@FocusState private var isDestinationFocused: Bool // FocusState für das neue Feld
+
 	// MARK: - Constants
 
 	private let totalSteps = 4
@@ -118,23 +123,65 @@ struct AddTripView: View {
 	// MARK: - Step Views
 	
 	private var basicInfoView: some View {
-		Form {
-			Section {
+		VStack(alignment: .leading, spacing: 25) { // Use VStack like other steps
+			// Heading text similar to other steps
+			Text("trip_details_prompt") // Use the prompt text
+				.font(.title2.weight(.semibold))
+				.foregroundColor(.tripBuddyText) // Ensure text color matches theme
+				.padding(.top)
+
+			// Section for Trip Name and Destination
+			VStack(alignment: .leading, spacing: 15) { // Group related fields
+				Text("trip_details") // Section Title
+					.font(.headline)
+					.foregroundColor(.tripBuddyText) // Use theme color
+
+				// Trip Name Input
 				TextField(String(localized: "trip_name_placeholder"), text: $tripName)
 					.focused($isFocused)
-				
-				TextField(String(localized: "destination_placeholder"), text: $destination)
-					.focused($isFocused)
-			} header: {
-				Text("trip_details_prompt")
+					.padding(10)
+					.background(Color.tripBuddyCard) // Use card background for consistency
+					.cornerRadius(10)
+					.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.tripBuddyTextSecondary.opacity(0.2), lineWidth: 1)) // Subtle border
+
+				// Destination Autocomplete Input
+				PlacesAutocompleteView(
+					viewModel: autocompleteViewModel,
+					destination: $destination,
+					destinationPlaceID: $destinationPlaceId,
+					isFocused: _isDestinationFocused
+				)
+				.padding(10)
+				.background(Color.tripBuddyCard) // Use card background
+				.cornerRadius(10)
+				.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.tripBuddyTextSecondary.opacity(0.2), lineWidth: 1)) // Subtle border
+				.onChange(of: destination) { _, newValue in
+					if newValue.isEmpty {
+						autocompleteViewModel.searchText = ""
+					}
+				}
 			}
-			
-			Section(header: Text("travel_dates")) {
+
+			Divider().padding(.vertical, 5) // Visual separator
+
+			// Section for Travel Dates
+			VStack(alignment: .leading, spacing: 15) { // Group related fields
+				Text("travel_dates") // Section Title
+					.font(.headline)
+					.foregroundColor(.tripBuddyText) // Use theme color
+
+				// Use HStacks for better layout of DatePickers if needed, or keep Vstack
 				DatePicker("from_date", selection: $startDate, displayedComponents: .date)
+					.tint(.tripBuddyPrimary) // Apply accent color
+
 				DatePicker("to_date", selection: $endDate, in: startDate..., displayedComponents: .date)
+					.tint(.tripBuddyPrimary) // Apply accent color
 			}
+			Spacer()
 		}
-		.scrollDismissesKeyboard(.interactively)
+		.padding(.horizontal) // Add horizontal padding to the ScrollView
+		.background(Color.tripBuddyBackground) // Set the background for the whole step view
+		.scrollDismissesKeyboard(.interactively) // Keep keyboard dismissal behavior
 	}
 	
 	private var transportAccommodationView: some View {
@@ -302,35 +349,42 @@ struct AddTripView: View {
 	
 	private var reviewView: some View {
 		ScrollView {
-			VStack(alignment: .leading, spacing: 20) {
+			VStack(alignment: .leading, spacing: 25) { // Main VStack with spacing
+				// Heading text
 				Text("review_prompt")
 					.font(.title2.weight(.semibold))
-				
-				ReviewSection(title: "trip_details") {
-					ReviewRow(label: "trip_name", value: tripName)
-					ReviewRow(label: "destination", value: destination)
-					ReviewRow(label: "travel_dates", value: dateRangeText)
+					.foregroundColor(.tripBuddyText)
+					.padding(.bottom, 5)
+
+				// Use the new ReviewSectionCard for each section
+				ReviewSectionCard(title: "trip_details") { // Trip Details Section
+					ReviewRowItem(label: "trip_name", value: tripName, iconName: "text.quote")
+					ReviewRowItem(label: "destination", value: destination, iconName: "map")
+					ReviewRowItem(label: "travel_dates", value: dateRangeText, iconName: "calendar")
 				}
-				
-				ReviewSection(title: "transport_and_accommodation") {
-					ReviewRow(label: "transport", value: transportText)
-					ReviewRow(
+
+				ReviewSectionCard(title: "transport_and_accommodation") { // Transport & Accommodation Section
+					ReviewRowItem(label: "transport", value: transportText, iconName: "airplane") // Use a representative icon
+					ReviewRowItem(
 						label: "accommodation",
-						value: selectedAccommodation.localizedName
+						value: selectedAccommodation.localizedName,
+						iconName: selectedAccommodation.iconName // Use accommodation icon
 					)
 				}
-				
-				ReviewSection(title: "activities_and_details") {
-					ReviewRow(label: "activities", value: activitiesText)
-					ReviewRow(label: "climate", value: selectedClimate.localizedName)
-					ReviewRow(label: "business_trip", value: isBusinessTrip ? String(localized: "yes") : String(localized: "no"))
-					ReviewRow(label: "number_of_people", value: "\(numberOfPeople)")
+
+				ReviewSectionCard(title: "activities_and_details") { // Activities & Details Section
+					ReviewRowItem(label: "activities", value: activitiesText, iconName: "figure.walk") // Use a representative icon
+					ReviewRowItem(label: "climate", value: selectedClimate.localizedName, iconName: selectedClimate.iconName)
+					ReviewRowItem(label: "business_trip", value: isBusinessTrip ? String(localized: "yes") : String(localized: "no"), iconName: "briefcase")
+					ReviewRowItem(label: "number_of_people", value: "\(numberOfPeople)", iconName: "person.2")
 				}
 			}
-			.padding()
+			.padding() // Padding for the main VStack content
 		}
+		.padding(.horizontal) // Horizontal padding for the ScrollView
+		.background(Color.tripBuddyBackground) // Background for the whole step
 	}
-	
+
 	private var navigationControlView: some View {
 		VStack(spacing: 5) {
 			// Validation message
@@ -379,7 +433,7 @@ struct AddTripView: View {
 			}
 			.padding()
 		}
-		.background(.thinMaterial)
+		.background(.tripBuddyBackground)
 		.animation(.default, value: validationMessage)
 	}
 	
@@ -432,9 +486,29 @@ struct AddTripView: View {
 		return isValid
 	}
 	
+	private func validateForm() -> Bool {
+		var isValid = true
+		var message: String? = nil
+		
+		if tripName.isEmpty {
+			isValid = false
+			message = String(localized: "validation_missing_trip_name")
+		} else if destination.isEmpty || ((destinationPlaceId?.isEmpty) != nil) {
+			isValid = false
+			message = String(localized: "validation_missing_trip_destination")
+		}
+		
+		validationMessage = isValid ? nil : message
+		return isValid
+	}
+	
 	// MARK: - Trip Creation
 	
 	private func createTrip() -> Bool {
+		if validateForm() {
+			return false
+		}
+		
 		// Create the trip directly with our TripServices
 		let trip = TripServices.createTripWithPackingList(
 			in: modelContext,
@@ -472,41 +546,64 @@ struct StepProgressIndicator: View {
 	}
 }
 
-struct ReviewSection<Content: View>: View {
+// Replaces the old ReviewSection with a card style
+struct ReviewSectionCard<Content: View>: View {
 	let title: LocalizedStringKey
 	@ViewBuilder let content: Content
-	
+
 	var body: some View {
-		VStack(alignment: .leading, spacing: 8) {
+		VStack(alignment: .leading, spacing: 12) { // Increased spacing inside card
+			// Section Title
 			Text(title)
 				.font(.headline)
 				.foregroundColor(.tripBuddyPrimary)
-			
-			Divider()
-			
+				.padding(.bottom, 5) // Space below title
+
+			// Content Rows
 			content
 		}
-		.padding(.bottom)
+		.padding(15) // Padding inside the card
+		.background(Color.tripBuddyCard) // Card background color
+		.cornerRadius(AppConstants.cornerRadius) // Use standard corner radius
+		.shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2) // Subtle shadow
 	}
 }
 
-struct ReviewRow: View {
-	let label: String
+// Replaces the old ReviewRow with a more detailed item style
+struct ReviewRowItem: View {
+	let label: String // Keep label as String for keys
 	let value: String
-	
+	let iconName: String? // Optional icon for visual flair
+
 	var body: some View {
-		HStack(alignment: .top) {
-			Text(label)
-				.font(.subheadline)
-				.foregroundColor(.tripBuddyTextSecondary)
-				.frame(width: 120, alignment: .leading)
-			
-			Text(value.isEmpty ? "-" : value)
-				.font(.subheadline.weight(.medium))
-				.foregroundColor(.tripBuddyText)
-			
-			Spacer()
+		HStack(alignment: .top, spacing: 10) {
+			// Optional Icon
+			if let iconName = iconName {
+				Image(systemName: iconName)
+					.foregroundColor(.tripBuddyPrimary)
+					.frame(width: 20, alignment: .center) // Align icon
+					.padding(.top, 2) // Align icon slightly better with text
+			} else {
+				// Add spacing placeholder if no icon to maintain alignment
+				Spacer().frame(width: 20)
+			}
+
+			// Label and Value
+			VStack(alignment: .leading, spacing: 2) {
+				Text(LocalizedStringKey(label)) // Use LocalizedStringKey here
+					.font(.subheadline)
+					.foregroundColor(.tripBuddyTextSecondary)
+
+				Text(value.isEmpty ? "-" : value)
+					.font(.body) // Slightly larger font for value
+					.foregroundColor(.tripBuddyText)
+					.lineLimit(nil) // Allow multiple lines if needed
+					.fixedSize(horizontal: false, vertical: true) // Prevent text truncation vertically
+			}
+
+			Spacer() // Push content to the left
 		}
+		.padding(.bottom, 5) // Small padding below each row item
 	}
 }
 
