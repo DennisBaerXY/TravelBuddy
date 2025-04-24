@@ -425,6 +425,9 @@
     "add_item_label" : {
 
     },
+    "add_to_calendar_label" : {
+
+    },
     "add.trip.tip" : {
       "localizations" : {
         "de" : {

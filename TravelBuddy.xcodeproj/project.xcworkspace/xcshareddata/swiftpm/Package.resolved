@@ -1,0 +1,15 @@
+{
+  "originHash" : "c47193aaabe3b36d209deadac760e913ccd841d7376b058e84c1f368c563479c",
+  "pins" : [
+    {
+      "identity" : "notificationmanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/timokoethe/NotificationManager.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "d0306e843f73dcbb8424da930ec91458adbc00ab"
+      }
+    }
+  ],
+  "version" : 3
+}
