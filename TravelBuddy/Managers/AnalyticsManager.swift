@@ -10,11 +10,11 @@ import Foundation
 import SwiftUI
 
 /// A service for tracking app usage and events
-class AnalyticsService {
+class AnalyticsManager {
 	// MARK: - Shared Instance
     
 	/// Shared singleton instance
-	static let shared = AnalyticsService()
+	static let shared = AnalyticsManager()
     
 	// MARK: - Properties
     
@@ -318,7 +318,7 @@ extension View {
 	/// - Returns: The view with tracking added
 	func trackScreenView(_ screenName: String) -> some View {
 		onAppear {
-			AnalyticsService.shared.trackScreenView(screenName: screenName)
+			AnalyticsManager.shared.trackScreenView(screenName: screenName)
 		}
 	}
 }
