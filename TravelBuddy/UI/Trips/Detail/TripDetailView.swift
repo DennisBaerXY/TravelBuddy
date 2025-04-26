@@ -8,10 +8,10 @@ struct TripDetailView: View {
 
 	@Environment(\.dismiss) private var dismiss
 	@Environment(\.modelContext) private var modelContext
-	
+
 	// The trip model
 	@Bindable var trip: Trip
-	
+
 	// UI State
 	@State private var selectedCategoryFilter: ItemCategory?
 	@State private var searchText = ""
@@ -19,88 +19,87 @@ struct TripDetailView: View {
 	@State private var showingCompletionAlert = false
 	@State private var currentSortOption: SortOption = UserSettingsManager.shared.defaultSortOption
 	@State private var currentSortOrder: SortOrder = UserSettingsManager.shared.defaultSortOrder
-	
+
 	// Haptic Feedback
 	private let hapticFeedback = HapticFeedback()
-	
+
 	// MARK: - Computed Properties
-	
+
 	private var items: [PackItem] {
-		// First sort by priority if needed
-		let userSettings = UserSettingsManager.shared
-		let sortedByPriority = trip.packingItems?.sorted {
-			if userSettings.prioritizeEssentialItems {
-				if $0.isEssential != $1.isEssential {
-					return $0.isEssential && !$1.isEssential
-				}
-			}
-			return false
-		} ?? []
-		
-		// Apply filters
-		let filtered = sortedByPriority.filter { item in
-			let matchesSearch = searchText.isEmpty ||
-				item.name.localizedStandardContains(searchText)
-			let matchesCategory = selectedCategoryFilter == nil ||
-				item.categoryEnum == selectedCategoryFilter
-			return matchesSearch && matchesCategory
-		}
-		
-		// Apply final sorting
-		return filtered.sorted { itemSortComparator(item1: $0, item2: $1) }
+		PackItemSortingAndFiltering.applySortingAndFiltering(
+			items: trip.packingItems, // Pass the original list of items
+			searchText: searchText,
+			selectedCategoryFilter: selectedCategoryFilter,
+			sortOption: currentSortOption,
+			sortOrder: currentSortOrder,
+			prioritizeEssential: UserSettingsManager.shared.prioritizeEssentialItems // Get prioritization from settings
+		)
 	}
-	
+
 	private var itemsToPack: [PackItem] {
 		items.filter { !$0.isPacked }
 	}
-	
+
 	private var packedItems: [PackItem] {
 		items.filter { $0.isPacked }
 	}
-	
+
 	private var groupedItems: [ItemCategory: [PackItem]] {
 		Dictionary(grouping: items, by: { $0.categoryEnum })
 	}
-	
+
 	private var groupedItemsToPack: [ItemCategory: [PackItem]] {
 		Dictionary(grouping: itemsToPack, by: { $0.categoryEnum })
 	}
-	
+
 	private var groupedPackedItems: [ItemCategory: [PackItem]] {
 		Dictionary(grouping: packedItems, by: { $0.categoryEnum })
 	}
-	
+
 	private var categoriesToShowInSections: [ItemCategory] {
 		let categoriesInToPack = Set(groupedItemsToPack.keys)
 		let categoriesInPacked = Set(groupedPackedItems.keys)
 		let allRelevantCategories = categoriesInToPack.union(categoriesInPacked)
-		return ItemCategory.allCases.filter { allRelevantCategories.contains($0) }
+
+		// Filter by presence in items
+		let filteredCategories = ItemCategory.allCases.filter { allRelevantCategories.contains($0) }
+
+		// Sort categories by name if that's the sort option
+		if currentSortOption == .category {
+			return PackItemSortingAndFiltering.sortCategoriesByName(
+				categories: filteredCategories,
+				sortOrder: currentSortOrder
+			)
+		} else {
+			// Maintain original order from allCases if not sorting by category
+			return filteredCategories
+		}
 	}
-	
+
 	private var categoriesPresentInTrip: [ItemCategory] {
 		guard let allItems = trip.packingItems else { return [] }
 		let uniqueCategories = Set(allItems.map { $0.categoryEnum })
 		return ItemCategory.allCases.filter { uniqueCategories.contains($0) }
 	}
-	
+
 	private var allItemsCompleted: Bool {
 		guard let items = trip.packingItems, !items.isEmpty else { return false }
 		return items.allSatisfy { $0.isPacked }
 	}
-	
+
 	private var isSortingActive: Bool {
 		currentSortOption != UserSettingsManager.shared.defaultSortOption ||
 			currentSortOrder != UserSettingsManager.shared.defaultSortOrder
 	}
-	
+
 	private var sortOrderLabelKey: LocalizedStringKey {
 		currentSortOrder == .ascending ? "sort_ascending" : "sort_descending"
 	}
-	
+
 	private var sortOrderIconName: String {
 		currentSortOrder == .ascending ? "arrow.up.square" : "arrow.down.square"
 	}
-	
+
 	private var noResultsTextKey: LocalizedStringKey {
 		if !searchText.isEmpty {
 			return "no_search_results"
@@ -112,24 +111,24 @@ struct TripDetailView: View {
 			return "all_items_packed"
 		}
 	}
-	
+
 	// MARK: - Body
-	
+
 	var body: some View {
 		ZStack {
 			Color.tripBuddyBackground.ignoresSafeArea()
-			
+
 			ScrollView {
 				VStack(alignment: .leading, spacing: 15) {
-					TripHeaderView(trip: trip)
-					
+					TripHeaderView(trip: trip, isCompact: true)
+
 					searchAndFilterBar
-					
+
 					packingListContent
 				}
 				.padding(.bottom, 80)
 			}
-			
+
 			floatingActionContent
 		}
 		.navigationTitle(trip.name)
@@ -144,9 +143,9 @@ struct TripDetailView: View {
 			// Load initial sort settings
 			currentSortOption = UserSettingsManager.shared.defaultSortOption
 			currentSortOrder = UserSettingsManager.shared.defaultSortOrder
-			
+
 			guard AppConstants.enableAnalytics else { return }
-			
+
 			Analytics.logEvent(AnalyticsEventScreenView, parameters: [
 				AnalyticsParameterScreenName: "TripDetailView", // Predefined parameter
 				AnalyticsParameterScreenClass: "TripDetailView", // Can be same as name for SwiftUI
@@ -159,9 +158,9 @@ struct TripDetailView: View {
 		.animation(.default, value: selectedCategoryFilter)
 		.animation(.default, value: searchText)
 	}
-	
+
 	// MARK: - UI Components
-	
+
 	private var searchAndFilterBar: some View {
 		VStack(spacing: 10) {
 			HStack {
@@ -169,7 +168,7 @@ struct TripDetailView: View {
 				TextField("search_placeholder", text: $searchText)
 					.textFieldStyle(PlainTextFieldStyle())
 					.submitLabel(.search)
-				
+
 				if !searchText.isEmpty {
 					Button { searchText = "" } label: {
 						Image(systemName: "xmark.circle.fill").foregroundColor(.secondary)
@@ -182,14 +181,14 @@ struct TripDetailView: View {
 			.background(Color.tripBuddyCard)
 			.cornerRadius(10)
 			.padding(.horizontal)
-			
+
 			ScrollView(.horizontal, showsIndicators: false) {
 				HStack(spacing: 8) {
 					CategoryFilterButton(
 						title: "all_items",
 						isSelected: selectedCategoryFilter == nil
 					) { withAnimation { selectedCategoryFilter = nil } }
-					
+
 					ForEach(categoriesPresentInTrip, id: \.self) { category in
 						CategoryFilterButton(
 							title: category.localizedName,
@@ -202,7 +201,7 @@ struct TripDetailView: View {
 			}
 		}
 	}
-	
+
 	private var packingListContent: some View {
 		VStack(alignment: .leading, spacing: 25) {
 			// Items to pack
@@ -211,7 +210,7 @@ struct TripDetailView: View {
 					titleKey: "to_pack_section_header \(itemsToPack.count)",
 					color: .tripBuddyPrimary
 				)
-				
+
 				ForEach(categoriesToShowInSections, id: \.self) { category in
 					if let itemsInSection = groupedItems[category], !itemsInSection.isEmpty {
 						CollapsibleCategorySection(
@@ -223,8 +222,19 @@ struct TripDetailView: View {
 						)
 					}
 				}
+
+				// Packed Items Section (remains grouped by category within the collapsible section)
+				if !packedItems.isEmpty {
+					CollapsiblePackedSection(
+						categories: categoriesToShowInSections,
+						groupedPackedItems: groupedPackedItems,
+						isTripCompleted: trip.isCompleted,
+						onUpdate: { item in updateItem(item) },
+						onDelete: { item in deleteItem(item) }
+					)
+				}
 			}
-			
+
 			// Empty state view
 			if items.isEmpty {
 				if trip.packingItems?.isEmpty ?? true {
@@ -235,13 +245,13 @@ struct TripDetailView: View {
 			}
 		}
 	}
-	
+
 	private var emptyStateView: some View {
 		VStack(spacing: 15) {
 			Image(systemName: "archivebox")
 				.font(.system(size: 40))
 				.foregroundColor(.tripBuddyTextSecondary.opacity(0.7))
-			
+
 			Text(noResultsTextKey)
 				.foregroundColor(.tripBuddyTextSecondary)
 				.multilineTextAlignment(.center)
@@ -250,24 +260,24 @@ struct TripDetailView: View {
 		.padding(.vertical, 50)
 		.frame(maxWidth: .infinity)
 	}
-	
+
 	private var noItemsYetView: some View {
 		VStack(spacing: 15) {
 			Image(systemName: "list.bullet.clipboard")
 				.font(.system(size: 40))
 				.foregroundColor(.tripBuddyTextSecondary.opacity(0.7))
-			
+
 			Text("no_items_in_list")
 				.foregroundColor(.tripBuddyTextSecondary)
 				.multilineTextAlignment(.center)
-			
+
 			Button("add_item_label") { showingAddItem = true }
 				.primaryButtonStyle()
 		}
 		.padding(.vertical, 50)
 		.frame(maxWidth: .infinity)
 	}
-	
+
 	private var floatingActionContent: some View {
 		VStack {
 			Spacer()
@@ -283,7 +293,7 @@ struct TripDetailView: View {
 		.animation(.spring(response: 0.4, dampingFraction: 0.6), value: allItemsCompleted)
 		.animation(.default, value: trip.isCompleted)
 	}
-	
+
 	private var completeTripButton: some View {
 		Button { showingCompletionAlert = true } label: {
 			Label("complete_trip_button", systemImage: "checkmark.circle.fill")
@@ -291,7 +301,7 @@ struct TripDetailView: View {
 		.primaryButtonStyle(isWide: true)
 		.padding(.horizontal, 50)
 	}
-	
+
 	private var completedBanner: some View {
 		HStack {
 			Image(systemName: "checkmark.seal.fill")
@@ -305,9 +315,9 @@ struct TripDetailView: View {
 		.cornerRadius(20)
 		.padding(.horizontal, 30)
 	}
-	
+
 	// MARK: - Toolbar and Sheets
-	
+
 	private var toolbarButtons: some ToolbarContent {
 		ToolbarItemGroup(placement: .navigationBarTrailing) {
 			// Sort menu
@@ -317,7 +327,7 @@ struct TripDetailView: View {
 						Text(option.localizedName).tag(option)
 					}
 				}
-				
+
 				Button {
 					currentSortOrder.toggle()
 				} label: {
@@ -327,7 +337,7 @@ struct TripDetailView: View {
 				Label("sort_options_label", systemImage: "arrow.up.arrow.down.circle")
 					.foregroundColor(isSortingActive ? .tripBuddyAccent : .primary)
 			}
-			
+
 			// Add item button
 			if !trip.isCompleted {
 				Button { showingAddItem = true } label: {
@@ -336,76 +346,48 @@ struct TripDetailView: View {
 			}
 		}
 	}
-	
+
 	private var addItemSheet: some View {
 		AddItemView { newItem in
 			addItem(newItem)
 		}
 	}
-	
+
 	@ViewBuilder
 	private var completionAlertButtons: some View {
 		Button("cancel", role: .cancel) {}
 		Button("complete_button") { completeTripAction() }
 	}
-	
+
 	// MARK: - Helper Methods
-	
+
 	private func sectionHeader(titleKey: LocalizedStringKey, color: Color) -> some View {
 		Text(titleKey)
 			.font(.title3.weight(.semibold))
 			.foregroundColor(color)
 			.padding(.horizontal)
 	}
-	
-	private func itemSortComparator(item1: PackItem, item2: PackItem) -> Bool {
-		let orderMultiplier: Int = (currentSortOrder == .ascending) ? 1 : -1
-		let comparison: ComparisonResult
-		
-		switch currentSortOption {
-		case .name:
-			comparison = item1.name.localizedStandardCompare(item2.name)
-		case .category:
-			if item1.categoryEnum.rawValue == item2.categoryEnum.rawValue {
-				comparison = item1.name.localizedStandardCompare(item2.name)
-			} else {
-				let index1 = ItemCategory.allCases.firstIndex(of: item1.categoryEnum) ?? 0
-				let index2 = ItemCategory.allCases.firstIndex(of: item2.categoryEnum) ?? 0
-				comparison = index1 < index2 ? .orderedAscending : .orderedDescending
-			}
-		case .essential:
-			if item1.isEssential != item2.isEssential {
-				return item1.isEssential && !item2.isEssential
-			} else {
-				comparison = item1.name.localizedStandardCompare(item2.name)
-			}
-		case .dateAdded:
-			comparison = item1.modificationDate.compare(item2.modificationDate)
-		}
-		
-		return comparison.rawValue * orderMultiplier < 0
-	}
-	
+
 	// MARK: - Data Actions
-	
+
 	private func updateItem(_ item: PackItem) {
 		guard !trip.isCompleted else { return }
 		hapticFeedback.light()
 		item.update()
 		try? modelContext.save()
 	}
-	
+
 	private func deleteItem(_ item: PackItem) {
 		guard !trip.isCompleted else { return }
 		hapticFeedback.medium()
 		modelContext.delete(item)
 		try? modelContext.save()
 	}
-	
+
 	private func addItem(_ newItem: PackItem) {
 		TripServices.addItemToTrip(trip, in: modelContext, item: newItem)
 	}
-	
+
 	private func completeTripAction() {
 		TripServices.completeTrip(trip, in: modelContext)
 	}
@@ -418,7 +400,7 @@ struct TripDetailView: View {
 	do {
 		let container = try ModelContainer(for: Trip.self, PackItem.self, configurations: config)
 		let context = container.mainContext
-			
+
 		// Create a sample trip for preview
 		let previewTrip = Trip(
 			name: "Preview Vacation",
@@ -433,21 +415,23 @@ struct TripDetailView: View {
 			climate: .hot
 		)
 		context.insert(previewTrip)
-			
+
 		// Add some sample items
 		let items = [
 			PackItem(name: "Passport", category: .documents, isEssential: true),
 			PackItem(name: "T-Shirts", category: .clothing, quantity: 3),
 			PackItem(name: "Sunscreen", category: .toiletries),
 			PackItem(name: "Camera", category: .electronics, isPacked: true),
-			PackItem(name: "Swimwear", category: .clothing)
+			PackItem(name: "Swimwear", category: .clothing),
+			PackItem(name: "Adapter", category: .electronics),
+			PackItem(name: "Book", category: .other)
 		]
-			
+
 		for item in items {
 			context.insert(item)
 			item.trip = previewTrip
 		}
-			
+
 		return NavigationStack {
 			TripDetailView(trip: previewTrip)
 		}

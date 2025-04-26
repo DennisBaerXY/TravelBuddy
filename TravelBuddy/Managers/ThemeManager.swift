@@ -36,8 +36,9 @@ final class ThemeManager: ObservableObject {
 	/// User's preference for light/dark mode.
 	@Published var colorSchemePreference: ColorSchemePreference = .system {
 		didSet {
-			// Update UserSettingsManager if needed (or handle persistence here)
-			syncColorSchemePreferenceToSettings()
+			// Update UserSettingsManager asynchronously to avoid "Publishing changes from within view updates" error
+			// The syncColorSchemePreferenceToSettings function now just contains the logic to write to UserSettingsManager
+			syncColorSchemePreferenceToSettings() // This is safe because syncColorSchemePreferenceToSettings uses DispatchQueue.main.async
 			updateEffectiveColorScheme() // Update the scheme used by the app
 			// Logger.info("Color scheme preference changed to: \(colorSchemePreference.rawValue)")
 		}
@@ -91,24 +92,9 @@ final class ThemeManager: ObservableObject {
 		loadInitialColorSchemePreference()
 		updateEffectiveColorScheme() // Set initial effective scheme
 
-		// Subscribe to UserSettingsManager's prefersDarkMode changes
-		// Note: Ensure UserSettingsManager is initialized before ThemeManager if not using singletons strictly
-		// Since both are initialized as @StateObject in App, this direct observation is okay.
-		UserSettingsManager.shared.$prefersDarkMode
-			.sink { [weak self] preference in
-				guard let self = self else { return }
-				let newPreference: ColorSchemePreference
-				if let prefersDark = preference {
-					newPreference = prefersDark ? .dark : .light
-				} else {
-					newPreference = .system
-				}
-				// Update only if the derived preference is different
-				if newPreference != self.colorSchemePreference {
-					self.colorSchemePreference = newPreference
-				}
-			}
-			.store(in: &cancellables)
+		// REMOVED: Sink observing UserSettingsManager.shared.$prefersDarkMode
+		// ThemeManager should be the source of truth for the active preference,
+		// and update UserSettingsManager, not observe it for this property.
 	}
 
 	// MARK: - Methods
@@ -130,22 +116,28 @@ final class ThemeManager: ObservableObject {
 
 	/// Loads the initial preference from UserSettingsManager during init.
 	private func loadInitialColorSchemePreference() {
-		if let prefersDark = UserSettingsManager.shared.prefersDarkMode {
-			colorSchemePreference = prefersDark ? .dark : .light
-		} else {
-			colorSchemePreference = .system
+		// Use DispatchQueue.main.async to ensure UserSettingsManager is fully initialized
+		DispatchQueue.main.async {
+			if let prefersDark = UserSettingsManager.shared.prefersDarkMode {
+				self.colorSchemePreference = prefersDark ? .dark : .light
+			} else {
+				self.colorSchemePreference = .system
+			}
 		}
 	}
 
 	/// Updates the UserSettingsManager when the preference changes here.
 	private func syncColorSchemePreferenceToSettings() {
-		switch colorSchemePreference {
-		case .light:
-			UserSettingsManager.shared.prefersDarkMode = false
-		case .dark:
-			UserSettingsManager.shared.prefersDarkMode = true
-		case .system:
-			UserSettingsManager.shared.prefersDarkMode = nil
+		// Dispatch asynchronously to avoid publishing changes during view updates
+		DispatchQueue.main.async {
+			switch self.colorSchemePreference {
+			case .light:
+				UserSettingsManager.shared.prefersDarkMode = false
+			case .dark:
+				UserSettingsManager.shared.prefersDarkMode = true
+			case .system:
+				UserSettingsManager.shared.prefersDarkMode = nil
+			}
 		}
 	}
 
@@ -161,5 +153,6 @@ final class ThemeManager: ObservableObject {
 	func setColorSchemePreference(_ preference: ColorSchemePreference) {
 		// This setter will trigger the didSet logic above
 		colorSchemePreference = preference
+		// The didSet now calls syncColorSchemePreferenceToSettings, which is async.
 	}
 }

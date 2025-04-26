@@ -34,6 +34,7 @@ struct TripCard: View {
 					HStack(spacing: 4) {
 						Text(trip.destination)
 							.font(.callout)
+							.foregroundStyle(.white)
 						
 						Spacer()
 						
@@ -291,10 +292,9 @@ struct TripCard: View {
 				// Bild für Querformat-Darstellung optimieren
 				let processedImage = processImageForLandscapeDisplay(uiImage)
 				
-				await MainActor.run {
-					self.placeImage = Image(uiImage: processedImage)
-					self.isLoadingImage = false
-				}
+				self.placeImage = Image(uiImage: processedImage)
+				self.isLoadingImage = false
+				
 			case .failure(let error):
 				print("Error fetching photo: \(error)")
 				isLoadingImage = false

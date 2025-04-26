@@ -4,6 +4,7 @@ import SwiftUI
 struct TripsListView: View {
 	// MARK: - Environment & State
 
+	@EnvironmentObject private var themeManager: ThemeManager
 	@Environment(\.modelContext) private var modelContext
 	@EnvironmentObject private var userSettings: UserSettingsManager
 	
@@ -44,20 +45,11 @@ struct TripsListView: View {
 			
 			.navigationTitle("my.trips")
 			.toolbar {
-				ToolbarItem(placement: .navigationBarLeading) {
+				ToolbarItem(placement: .automatic) {
 					Button {
 						showingSettings = true
 					} label: {
 						Label("Settings", systemImage: "gear")
-					}
-				}
-				
-				ToolbarItem(placement: .navigationBarTrailing) {
-					Button {
-						showingSettings = true
-					} label: {
-						Label("Premium", systemImage: "star.fill")
-							.foregroundColor(userSettings.isPremiumUser ? .yellow : .gray)
 					}
 				}
 			}
@@ -66,6 +58,7 @@ struct TripsListView: View {
 			}
 			.sheet(isPresented: $showingSettings) {
 				SettingsView()
+					.preferredColorScheme(themeManager.colorScheme)
 			}
 		}
 	}

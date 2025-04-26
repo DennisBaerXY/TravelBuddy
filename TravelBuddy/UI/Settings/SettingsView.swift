@@ -24,7 +24,7 @@ struct SettingsView: View {
 	@State private var showingHelpCenter = false
 	@State private var showingPremiumInfo = false
 	@State private var showingResetConfirmation = false
-    
+	
 	// MARK: - Body
     
 	var body: some View {
@@ -84,6 +84,7 @@ struct SettingsView: View {
 				}
 			}
 		}
+		
 		.sheet(isPresented: $showingHelpCenter) {
 			HelpCenterView()
 		}
@@ -127,7 +128,7 @@ struct SettingsView: View {
 		} label: {
 			HStack {
 				Label {
-					Text("get_premium") // Was: "Get Premium"Text("get_premium") // Was: "Get Premium"
+					Text("get_premium")
 				} icon: {
 					Image(systemName: "star.fill")
 						.foregroundColor(.yellow)

@@ -177,6 +177,35 @@ struct AddTripView: View {
 				DatePicker("to_date", selection: $endDate, in: startDate..., displayedComponents: .date)
 					.tint(.tripBuddyPrimary) // Apply accent color
 			}
+			Divider()
+			
+			// Climate selection
+			Section {
+				Picker("climate", selection: $selectedClimate) {
+					ForEach(Climate.allCases) { climate in
+						Label(climate.localizedName, systemImage: climate.iconName)
+							.tag(climate)
+					}
+				}
+				.pickerStyle(SegmentedPickerStyle())
+			} header: {
+				HStack {
+					Text("climate").font(.headline)
+					Spacer()
+					Button {
+						showingClimateInfo = true
+					} label: {
+						Image(systemName: "info.circle")
+							.foregroundColor(.tripBuddyAccent)
+					}
+					.popover(isPresented: $showingClimateInfo, arrowEdge: .top) {
+						Text("climate_info_popover_text")
+							.font(.caption)
+							.padding()
+							.frame(idealWidth: 250)
+					}
+				}
+			}
 			Spacer()
 		}
 		.padding(.horizontal) // Add horizontal padding to the ScrollView
@@ -311,35 +340,6 @@ struct AddTripView: View {
 						.foregroundColor(.tripBuddyPrimary)
 						.buttonStyle(.plain)
 					}
-				}
-				
-				// Climate selection
-				Section {
-					Picker("climate", selection: $selectedClimate) {
-						ForEach(Climate.allCases) { climate in
-							Label(climate.localizedName, systemImage: climate.iconName)
-								.tag(climate)
-						}
-					}
-					.pickerStyle(SegmentedPickerStyle())
-				} header: {
-					HStack {
-						Text("climate").font(.headline)
-						Spacer()
-						Button {
-							showingClimateInfo = true
-						} label: {
-							Image(systemName: "info.circle")
-								.foregroundColor(.tripBuddyAccent)
-						}
-						.popover(isPresented: $showingClimateInfo, arrowEdge: .top) {
-							Text("climate_info_popover_text")
-								.font(.caption)
-								.padding()
-								.frame(idealWidth: 250)
-						}
-					}
-					.padding(.leading, -15)
 				}
 			}
 			.padding()

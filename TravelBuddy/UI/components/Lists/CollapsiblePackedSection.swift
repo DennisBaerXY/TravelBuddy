@@ -63,7 +63,25 @@ struct CollapsiblePackedSection: View {
 		LazyVStack(alignment: .leading, spacing: 10) {
 			ForEach(categories, id: \.self) { category in
 				if let items = groupedPackedItems[category], !items.isEmpty {
-					categorySection(category, items: items)
+					ForEach(items) { item in
+						PackItemRow(
+							item: item,
+							isDisabled: isTripCompleted,
+							onToggle: onUpdate
+						)
+						.padding(.horizontal)
+						
+						.contextMenu {
+							if !isTripCompleted {
+								Button(role: .destructive) {
+									onDelete(item)
+								} label: {
+									Label("delete", systemImage: "trash")
+								}
+							}
+						}
+						.transition(.opacity.combined(with: .move(edge: .bottom)))
+					}
 				}
 			}
 		}
@@ -86,24 +104,6 @@ struct CollapsiblePackedSection: View {
 			.padding(.top, 4)
             
 			// Items in this category
-			ForEach(items) { item in
-				PackItemRow(
-					item: item,
-					isDisabled: isTripCompleted,
-					onToggle: onUpdate
-				)
-				.padding(.horizontal)
-				.contextMenu {
-					if !isTripCompleted {
-						Button(role: .destructive) {
-							onDelete(item)
-						} label: {
-							Label("delete", systemImage: "trash")
-						}
-					}
-				}
-				.transition(.opacity.combined(with: .move(edge: .bottom)))
-			}
 		}
 	}
     
