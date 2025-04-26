@@ -89,6 +89,9 @@
         }
       }
     },
+    "ABGESCHLOSSEN" : {
+
+    },
     "about" : {
       "localizations" : {
         "de" : {
@@ -497,6 +500,9 @@
           }
         }
       }
+    },
+    "AKTIV" : {
+
     },
     "all_items" : {
       "extractionState" : "stale",
@@ -1241,6 +1247,9 @@
           }
         }
       }
+    },
+    "GEPLANT" : {
+
     },
     "get_premium" : {
       "localizations" : {

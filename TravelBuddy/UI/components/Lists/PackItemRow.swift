@@ -24,6 +24,11 @@ struct PackItemRow: View {
 		HStack(spacing: 15) {
 			itemDetails
 			Spacer()
+			if item.isEssential {
+				Image(systemName: "exclamationmark.triangle.fill")
+					.foregroundColor(.tripBuddyAlert)
+					.font(.subheadline)
+			}
 			quantityBadge
 			
 			itemCheckbox
@@ -67,21 +72,13 @@ struct PackItemRow: View {
 	/// The details section showing the item name and category
 	private var itemDetails: some View {
 		VStack(alignment: .leading, spacing: 4) {
-			HStack {
-				if item.isEssential {
-					Image(systemName: "exclamationmark.triangle.fill")
-						.foregroundColor(.tripBuddyAlert)
-						.font(.caption)
-				}
-					
-				Text(item.name)
-					.strikethrough(item.isPacked, color: .tripBuddyTextSecondary)
-					.fontWeight(item.isEssential ? .semibold : .regular)
-					.foregroundColor(item.isPacked ? .tripBuddyTextSecondary : .tripBuddyText)
+			Text(item.name)
+				.strikethrough(item.isPacked, color: .tripBuddyTextSecondary)
+				.fontWeight(item.isEssential ? .semibold : .regular)
+				.foregroundColor(item.isPacked ? .tripBuddyTextSecondary : .tripBuddyText)
 				
-					.strikethrough(isDisabled == true)
-			}
-				
+				.strikethrough(isDisabled == true)
+			
 			Text(item.categoryEnum.localizedName)
 				.font(.caption)
 				.foregroundColor(.tripBuddyTextSecondary)
@@ -173,9 +170,7 @@ struct PackItemRow: View {
 	private var backgroundForItem: Color {
 		if item.isPacked {
 			return Color.tripBuddyCard.opacity(0.7)
-		} else if item.isEssential {
-			return Color.tripBuddyAlert.opacity(0.05)
-			
+		
 		} else if isDisabled {
 			return Color.tripBuddyCard.opacity(0.7)
 		} else {
@@ -203,6 +198,10 @@ struct PackItemRow: View {
 		// Packed item
 		PackItemRow(
 			item: PackItem(name: "Charger", category: .electronics, isPacked: true),
+			isDisabled: false
+		) { _ in }
+		PackItemRow(
+			item: PackItem(name: "Passport", category: .documents, isPacked: true, isEssential: true),
 			isDisabled: false
 		) { _ in }
 			

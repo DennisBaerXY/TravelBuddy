@@ -3,78 +3,173 @@ import SwiftUI
 
 struct TripCard: View {
 	// MARK: - Properties
-
+	
 	let trip: Trip
-	@State private var placeImage: Image? = nil // State to hold the loaded image
-	@State private var isLoadingImage = false // State to track loading
+	@State private var placeImage: Image? = nil
+	@State private var isLoadingImage = false
 	
 	// MARK: - Body
-
+	
 	var body: some View {
-		VStack(alignment: .leading, spacing: 15) {
-			tripHeader
-			
-			// Ortsbild (falls verfügbar)
-			if isLoadingImage {
-				ZStack {
-					RoundedRectangle(cornerRadius: 12)
-						.fill(Color.gray.opacity(0.1))
-						.frame(height: 140)
-					
-					ProgressView()
-						.progressViewStyle(CircularProgressViewStyle(tint: .tripBuddyPrimary))
+		VStack(alignment: .leading, spacing: 0) {
+			// Bild-Bereich
+			ZStack(alignment: .topLeading) {
+				// Bild oder Platzhalter
+				if isLoadingImage {
+					placeholderView
+				} else if let image = placeImage {
+					image
+						.resizable()
+						.aspectRatio(16 / 9, contentMode: .fill)
+						.frame(height: 160)
+						.clipped()
+				} else {
+					defaultImageView
 				}
-				.padding(.vertical, 5)
-			}
-			// Wenn das Bild geladen ist, zeige es
-			else if let image = placeImage {
-				image
-					.resizable()
-					.aspectRatio(contentMode: .fill) // Füllt den Rahmen aus
-					.frame(height: 140)
-					.clipped() // Schneidet Überläufe ab
-					// Verwende overlay mit ZStack für einen Farbverlauf am unteren Rand
-					.overlay(
-						ZStack(alignment: .bottom) {
-							// Farbverlauf für bessere Lesbarkeit des darüberliegenden Textes
-							LinearGradient(
-								gradient: Gradient(colors: [.clear, .black.opacity(0.3)]),
-								startPoint: .top,
-								endPoint: .bottom
-							)
-							.frame(height: 50) // Nur unterer Bereich
+		
+				// Info-Overlay unten
+				VStack(alignment: .leading, spacing: 2) {
+					Spacer()
+					// Transportart-Symbole
+					HStack(spacing: 4) {
+						Text(trip.destination)
+							.font(.callout)
+						
+						Spacer()
+						
+						if !trip.isCompleted {
+							transportIcons
 						}
+					}
+				}
+				
+				.frame(maxWidth: .infinity, alignment: .leading)
+				.padding(12)
+				.padding(.bottom, 4)
+				.background(
+					LinearGradient(
+						gradient: Gradient(colors: [.black.opacity(0.3), .black.opacity(0)]),
+						startPoint: .bottom,
+						endPoint: .top
 					)
-					.clipShape(RoundedRectangle(cornerRadius: 12))
-					.overlay(
-						RoundedRectangle(cornerRadius: 12)
-							.stroke(Color.tripBuddyText.opacity(0.1), lineWidth: 1)
-					)
-					.shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-					.padding(.vertical, 5)
+				)
 			}
-			destinationRow
-			dateRow
-			tripProgressView
+			.frame(height: 160)
+			
+			// Inhalt
+			VStack(alignment: .leading, spacing: 12) {
+				// Titel und Status
+				HStack {
+					Text(trip.name)
+						.font(.headline)
+						.foregroundColor(.tripBuddyText)
+					
+					Spacer()
+					
+					if trip.isCompleted {
+						completedBadge
+					}
+				}
+				
+				Text(trip.destination)
+					.font(.caption)
+				
+				// Datum
+				HStack {
+					Image(systemName: "calendar")
+						.foregroundColor(.tripBuddyPrimary)
+						.font(.subheadline)
+						.opacity(0.7)
+					
+					Text(dateRangeText)
+						.font(.subheadline)
+						.foregroundColor(.tripBuddyTextSecondary)
+				}
+				
+				// Fortschritt
+				if !trip.isCompleted {
+					packingProgress
+						.padding(.top, 5)
+				} else {
+					completedStatus
+						.padding(.top, 5)
+				}
+			}
+			.padding(16)
 		}
-		.padding(20)
 		.background(cardBackground)
-		.opacity(trip.isCompleted ? 0.8 : 1.0)
-		.overlay(
-			RoundedRectangle(cornerRadius: 6)
-				.fill(statusColor)
-				.frame(width: 6)
-				.padding(.vertical, 10),
-			alignment: .leading
-		)
-		.onAppear { // Trigger image loading when the card appears
+		.cornerRadius(16)
+		.shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+		.opacity(trip.isCompleted ? 0.9 : 1.0)
+		.onAppear {
 			if !trip.destinationPlaceId.isEmpty && placeImage == nil && !isLoadingImage {
 				loadImageForPlace()
 			}
 		}
 	}
 	
-	// MARK: - Computed Views & Properties
+	// MARK: - Computed Views
+	
+	private var placeholderView: some View {
+		ZStack {
+			Rectangle()
+				.fill(Color.gray.opacity(0.1))
+				.frame(height: 160)
+			
+			ProgressView()
+				.progressViewStyle(CircularProgressViewStyle(tint: .white))
+		}
+	}
+	
+	private var defaultImageView: some View {
+		ZStack {
+			Rectangle()
+				.fill(Color.tripBuddyAccent.opacity(0.1))
+				.frame(height: 160)
+			
+			Image(systemName: "photo")
+				.font(.system(size: 30))
+				.foregroundColor(.tripBuddyAccent.opacity(0.5))
+		}
+	}
+	
+	private var statusBanner: some View {
+		VStack(alignment: .leading, spacing: 2) {
+			// Status-Badge
+			HStack(spacing: 4) {
+				if trip.isCompleted {
+					Text("ABGESCHLOSSEN")
+				} else if trip.isActive {
+					Text("AKTIV")
+				} else {
+					Text("GEPLANT")
+				}
+			}
+			.font(.caption.bold())
+			.foregroundColor(.white)
+			.padding(.horizontal, 8)
+			.padding(.vertical, 4)
+			.background(statusColor)
+			.cornerRadius(4)
+			
+			// Info mit Pin-Icon
+			if !trip.destination.isEmpty {
+				HStack(spacing: 4) {
+					Image(systemName: "info.circle.fill")
+						.font(.caption2)
+					Text(trip.destination)
+						.font(.caption2)
+						.lineLimit(1)
+				}
+				.foregroundColor(.white)
+				.padding(.horizontal, 8)
+				.padding(.vertical, 4)
+				.background(Color.black.opacity(0.6))
+				.cornerRadius(4)
+			}
+		}
+		.padding(8)
+	}
 	
 	private var statusColor: Color {
 		if trip.isCompleted {
@@ -83,22 +178,6 @@ struct TripCard: View {
 			return .tripBuddyPrimary
 		} else {
 			return .tripBuddyAccent
-		}
-	}
-	
-	private var tripHeader: some View {
-		HStack {
-			Text(trip.name)
-				.font(.title3.weight(.semibold))
-				.foregroundColor(.tripBuddyText)
-			
-			Spacer()
-			
-			if trip.isCompleted {
-				completedBadge
-			} else {
-				transportIcons
-			}
 		}
 	}
 	
@@ -122,34 +201,9 @@ struct TripCard: View {
 				Image(systemName: type.iconName)
 					.font(.callout)
 					.foregroundColor(.tripBuddyAccent)
-					.opacity(0.8)
+					.padding(4)
+					.background(Circle().fill(.tripBuddyBackground.opacity(0.3)))
 			}
-		}
-	}
-	
-	private var destinationRow: some View {
-		HStack {
-			Image(systemName: "map.fill")
-				.foregroundColor(.tripBuddyPrimary)
-				.font(.subheadline)
-				.opacity(0.7)
-			
-			Text(trip.destination)
-				.font(.subheadline)
-				.foregroundColor(.tripBuddyTextSecondary)
-		}
-	}
-	
-	private var dateRow: some View {
-		HStack {
-			Image(systemName: "calendar")
-				.foregroundColor(.tripBuddyPrimary)
-				.font(.subheadline)
-				.opacity(0.7)
-			
-			Text(dateRangeText)
-				.font(.subheadline)
-				.foregroundColor(.tripBuddyTextSecondary)
 		}
 	}
 	
@@ -157,17 +211,6 @@ struct TripCard: View {
 		let startText = trip.startDate.formatted(date: .abbreviated, time: .omitted)
 		let endText = trip.endDate.formatted(date: .abbreviated, time: .omitted)
 		return "\(startText) - \(endText)"
-	}
-	
-	private var tripProgressView: some View {
-		Group {
-			if trip.isCompleted {
-				completedStatus
-			} else {
-				packingProgress
-			}
-		}
-		.padding(.top, 5)
 	}
 	
 	private var completedStatus: some View {
@@ -203,71 +246,141 @@ struct TripCard: View {
 			
 			ProgressView(value: trip.packingProgress)
 				.progressViewStyle(LinearProgressViewStyle(tint: Color.progressColor(for: trip.packingProgress)))
-				.scaleEffect(x: 1, y: 2.5, anchor: .center)
+				.scaleEffect(x: 1, y: 1.5, anchor: .center)
 				.clipShape(Capsule())
 		}
 	}
 	
 	private var cardBackground: some View {
-		RoundedRectangle(cornerRadius: 20)
-			.fill(Color.tripBuddyCard)
-			.shadow(color: .black.opacity(0.08), radius: 10, x: 0, y: 4)
-			.overlay(
-				RoundedRectangle(cornerRadius: 20)
-					.stroke(Color.tripBuddyText.opacity(trip.isCompleted ? 0.1 : 0.05), lineWidth: 1)
-			)
+		Color.tripBuddyCard
 	}
 	
+	// MARK: - Helper Methods
+	
 	private func loadImageForPlace() {
-		print("Starting loading for \(trip.destinationPlaceId) ")
-		// Only load if we have a place ID and haven't loaded yet
 		guard !trip.destinationPlaceId.isEmpty, placeImage == nil, !isLoadingImage else {
-			print("Not loading image")
 			return
 		}
 
 		isLoadingImage = true
 
-		Task { // Perform asynchronous loading in a Task
-			// 1. Fetch Place Details (specifically asking for photos)
+		Task {
 			let placesClient = PlacesClient.shared
-				
 			let fetchPlaceRequest = FetchPlaceRequest(placeID: trip.destinationPlaceId, placeProperties: [.photos])
 				
 			var fetchedPlace: Place
 			switch await placesClient.fetchPlace(with: fetchPlaceRequest) {
 			case .success(let place):
 				fetchedPlace = place
-				
-			case .failure(let placesError):
-				print("Error fetching place details: \(placesError)")
+			case .failure(let error):
+				print("Error fetching place details: \(error)")
 				isLoadingImage = false
 				return
 			}
-				
+			
 			guard let photo = fetchedPlace.photos?.first else {
-				print("Place has no photos")
 				isLoadingImage = false
 				return
 			}
 				
-			let fetchPhotoRequest = FetchPhotoRequest(photo: photo, maxSize: CGSizeMake(400, 300))
-			// 3. Fetch the actual photo image
-			var image: UIImage = .init()
+			// Höhere Auflösung für bessere Bildqualität anfordern
+			let fetchPhotoRequest = FetchPhotoRequest(photo: photo, maxSize: CGSizeMake(800, 450))
+			
 			switch await placesClient.fetchPhoto(with: fetchPhotoRequest) {
 			case .success(let uiImage):
-				image = uiImage
-				print("Photo fetched successfully!")
+				// Bild für Querformat-Darstellung optimieren
+				let processedImage = processImageForLandscapeDisplay(uiImage)
+				
+				await MainActor.run {
+					self.placeImage = Image(uiImage: processedImage)
+					self.isLoadingImage = false
+				}
 			case .failure(let error):
 				print("Error fetching photo: \(error)")
 				isLoadingImage = false
-				return
 			}
-			// 4. Update the state with the loaded image
-			await MainActor.run { // Ensure UI update is on the main thread
-				self.placeImage = Image(uiImage: image)
-				self.isLoadingImage = false
+		}
+	}
+	
+	// Funktion zur Optimierung des Bildes für Querformat-Anzeige
+	private func processImageForLandscapeDisplay(_ image: UIImage) -> UIImage {
+		let aspectRatio = image.size.width / image.size.height
+		
+		// Wenn bereits Querformat (oder annähernd), dann unverändert zurückgeben
+		if aspectRatio >= 1.2 {
+			return image
+		}
+		
+		// Für Hochformatbilder: Mittleren Bereich ausschneiden
+		let desiredAspectRatio: CGFloat = 16 / 9
+		
+		// Bei einem Portrait-Bild: Querformatigen Ausschnitt nehmen
+		let cropHeight = image.size.width / desiredAspectRatio
+		let yOffset = (image.size.height - cropHeight) / 2
+		
+		let cropRect = CGRect(
+			x: 0,
+			y: max(0, yOffset),
+			width: image.size.width,
+			height: min(cropHeight, image.size.height)
+		)
+		
+		if let cgImage = image.cgImage?.cropping(to: cropRect) {
+			return UIImage(cgImage: cgImage, scale: image.scale, orientation: image.imageOrientation)
+		}
+		
+		return image
+	}
+}
+
+struct TripCard_Previews: PreviewProvider {
+	static var previews: some View {
+		Group {
+			// Light Mode
+			ScrollView {
+				VStack(spacing: 20) {
+					// Aktive Reise mit Bild
+					TripCard(trip: Trip.sampleTrip())
+						.padding(.horizontal)
+					
+					// Geplante Reise ohne Bild
+					TripCard(trip: Trip.sampleTrip())
+						.padding(.horizontal)
+					
+					// Abgeschlossene Reise mit Bild
+					TripCard(trip: Trip.sampleTrip())
+						.padding(.horizontal)
+				}
+				.padding(.vertical)
 			}
+			.previewDisplayName("Light Mode")
+			
+			// Dark Mode
+			ScrollView {
+				TripCard(trip: Trip.sampleTrip())
+					.padding()
+			}
+			.preferredColorScheme(.dark)
+			.previewDisplayName("Dark Mode")
+			
+			// Accessibility: Larger Text
+			TripCard(trip: Trip.sampleTrip())
+				.environment(\.sizeCategory, .accessibilityLarge)
+				.previewLayout(.sizeThatFits)
+				.padding()
+				.previewDisplayName("Large Text")
+			
+			// Compact View - iPhone SE
+			TripCard(trip: Trip.sampleTrip())
+				.padding(.horizontal)
+				.previewDevice("iPhone SE (3rd generation)")
+				.previewDisplayName("iPhone SE")
+			
+			// Landscape Preview
+			TripCard(trip: Trip.sampleTrip())
+				.padding(.horizontal)
+				.previewLayout(.fixed(width: 667, height: 375))
+				.previewDisplayName("Landscape iPhone")
 		}
 	}
 }

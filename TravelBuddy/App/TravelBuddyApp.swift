@@ -106,7 +106,7 @@ struct TravelBuddyApp: App {
 				.environmentObject(userSettings) // Already initialized as @StateObject
 				.environmentObject(themeManager) // Already initialized as @StateObject
 				.environmentObject(localizationManager) // Inject the manager
-				.environment(\.locale, localizationManager.appLocale) // <<< APPLY LOCALE HERE
+				.environment(\.locale, localizationManager.appLocale) //
 				.preferredColorScheme(themeManager.colorScheme) // Apply theme preference
 
 			} else {

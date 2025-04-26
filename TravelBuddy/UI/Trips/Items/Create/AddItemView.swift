@@ -19,10 +19,6 @@ struct AddItemView: View {
 	var body: some View {
 		NavigationStack {
 			Form {
-				Section(header: Text("item")) {
-					TextField("name", text: $itemName)
-				}
-				
 				Section(header: Text("category")) {
 					Picker("category", selection: $selectedCategory) {
 						ForEach(ItemCategory.allCases) { category in
@@ -30,6 +26,9 @@ struct AddItemView: View {
 								.tag(category)
 						}
 					}
+				}
+				Section(header: Text("item")) {
+					TextField("name", text: $itemName)
 				}
 				
 				Section(header: Text("details")) {
