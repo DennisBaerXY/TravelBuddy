@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		306A9D762DBAA21D0006740A /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = 306A9D752DBAA21D0006740A /* GooglePlaces */; };
+		306A9D782DBAA21D0006740A /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 306A9D772DBAA21D0006740A /* GooglePlacesSwift */; };
+		307C51612DAC2E4300A68403 /* NotificationManager in Frameworks */ = {isa = PBXBuildFile; productRef = 307C51602DAC2E4300A68403 /* NotificationManager */; };
+		30BA66432DBA662000DBCB02 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 30BA66422DBA662000DBCB02 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		30844B2A2D7C79C80073B539 /* TravelBuddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelBuddy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +43,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				306A9D762DBAA21D0006740A /* GooglePlaces in Frameworks */,
+				307C51612DAC2E4300A68403 /* NotificationManager in Frameworks */,
+				30BA66432DBA662000DBCB02 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				306A9D782DBAA21D0006740A /* GooglePlacesSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,10 @@
 			);
 			name = TravelBuddy;
 			packageProductDependencies = (
+				307C51602DAC2E4300A68403 /* NotificationManager */,
+				30BA66422DBA662000DBCB02 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				306A9D752DBAA21D0006740A /* GooglePlaces */,
+				306A9D772DBAA21D0006740A /* GooglePlacesSwift */,
 			);
 			productName = TravelBuddy;
 			productReference = 30844B2A2D7C79C80073B539 /* TravelBuddy.app */;
@@ -108,6 +123,11 @@
 			);
 			mainGroup = 30844B212D7C79C80073B539;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				307C515F2DAC2E4300A68403 /* XCRemoteSwiftPackageReference "NotificationManager" */,
+				30BA66412DBA662000DBCB02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				306A9D742DBAA21D0006740A /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 30844B2B2D7C79C80073B539 /* Products */;
 			projectDirPath = "";
@@ -141,6 +161,8 @@
 /* Begin XCBuildConfiguration section */
 		30844B362D7C79C90073B539 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 30844B2C2D7C79C80073B539 /* TravelBuddy */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -207,6 +229,8 @@
 		};
 		30844B372D7C79C90073B539 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 30844B2C2D7C79C80073B539 /* TravelBuddy */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -266,6 +290,8 @@
 		};
 		30844B392D7C79C90073B539 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 30844B2C2D7C79C80073B539 /* TravelBuddy */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -273,10 +299,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TravelBuddy/Preview Content\"";
+				DEVELOPMENT_TEAM = XMB95PADF2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TravelBuddy/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Damit du deine Reisedaten direkt in deinem Kalender speichern kannst.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -286,7 +314,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dennisdevlops.TravelBuddy;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.baer-solutions.TravelBuddy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -296,6 +324,8 @@
 		};
 		30844B3A2D7C79C90073B539 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 30844B2C2D7C79C80073B539 /* TravelBuddy */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -303,10 +333,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TravelBuddy/Preview Content\"";
+				DEVELOPMENT_TEAM = XMB95PADF2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TravelBuddy/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "Damit du deine Reisedaten direkt in deinem Kalender speichern kannst.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -316,7 +348,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dennisdevlops.TravelBuddy;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.baer-solutions.TravelBuddy";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -334,7 +366,7 @@
 				30844B372D7C79C90073B539 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		30844B382D7C79C90073B539 /* Build configuration list for PBXNativeTarget "TravelBuddy" */ = {
 			isa = XCConfigurationList;
@@ -343,9 +375,59 @@
 				30844B3A2D7C79C90073B539 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		306A9D742DBAA21D0006740A /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.4.1;
+			};
+		};
+		307C515F2DAC2E4300A68403 /* XCRemoteSwiftPackageReference "NotificationManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/timokoethe/NotificationManager.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		30BA66412DBA662000DBCB02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		306A9D752DBAA21D0006740A /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 306A9D742DBAA21D0006740A /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
+		306A9D772DBAA21D0006740A /* GooglePlacesSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 306A9D742DBAA21D0006740A /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlacesSwift;
+		};
+		307C51602DAC2E4300A68403 /* NotificationManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 307C515F2DAC2E4300A68403 /* XCRemoteSwiftPackageReference "NotificationManager" */;
+			productName = NotificationManager;
+		};
+		30BA66422DBA662000DBCB02 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30BA66412DBA662000DBCB02 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 30844B222D7C79C80073B539 /* Project object */;
 }
