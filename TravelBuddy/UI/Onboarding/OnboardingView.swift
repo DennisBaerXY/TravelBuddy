@@ -21,29 +21,29 @@ struct OnboardingView: View {
 		OnboardingPage(
 			image: nil,
 			customImage: "AppIconLogo",
-			title: "onboarding_welcome_title", // Was: "Willkommen bei TravelBuddy"
-			description: "onboarding_welcome_description", // Was: "Der ultimative Reisebegleiter für deine Abenteuer."
+			title: "onboarding_welcome_title",
+			description: "onboarding_welcome_description",
 			tintColor: .tripBuddyPrimary
 		),
 		OnboardingPage(
 			image: "list.bullet.clipboard",
 			customImage: nil,
-			title: "onboarding_organize_title", // Was: "Organisiere Deine Reisen"
-			description: "onboarding_organize_description", // Was: "Erstelle individuelle Packlisten für jede Reise und behalte den Überblick."
+			title: "onboarding_organize_title",
+			description: "onboarding_organize_description",
 			tintColor: .tripBuddyAccent
 		),
 		OnboardingPage(
 			image: "checkmark.circle.fill",
 			customImage: nil,
-			title: "onboarding_prepared_title", // Was: "Immer vorbereitet"
-			description: "onboarding_prepared_description", // Was: "Nie wieder etwas vergessen! TripBuddy hilft dir, alles Wichtige einzupacken."
+			title: "onboarding_prepared_title",
+			description: "onboarding_prepared_description",
 			tintColor: .tripBuddySuccess
 		),
 		OnboardingPage(
 			image: "arrow.triangle.2.circlepath",
 			customImage: nil,
-			title: "onboarding_completed_title", // Was: "Abgeschlossen? Kein Problem!"
-			description: "onboarding_completed_description", // Was: "Reise beendet? Markiere sie als abgeschlossen, um später darauf zurückzugreifen."
+			title: "onboarding_completed_title",
+			description: "onboarding_completed_description",
 			tintColor: .tripBuddyAlert
 		)
 	]
@@ -93,7 +93,7 @@ struct OnboardingView: View {
 			
 			// Skip/Finish button
 			if currentPage < pages.count - 1 {
-				Button("skip") { // Was: "Überspringen"
+				Button("skip") {
 					withAnimation {
 						finishOnboarding(skipped: true)
 					}
@@ -101,7 +101,7 @@ struct OnboardingView: View {
 				.padding()
 				.foregroundColor(.tripBuddyTextSecondary)
 			} else {
-				Button("finish") { // Was: "Abschließen"
+				Button("finish") {
 					withAnimation {
 						finishOnboarding(skipped: false)
 					}
@@ -140,7 +140,7 @@ struct OnboardingView: View {
 				}
 			}) {
 				HStack {
-					Text(currentPage == pages.count - 1 ? "start" : "next") // Was: "Starten" : "Weiter"
+					Text(currentPage == pages.count - 1 ? "start" : "next")
 						.font(.headline)
 						.fontWeight(.bold)
 					
@@ -184,7 +184,7 @@ struct OnboardingView: View {
 	
 	// --- Helper to log finish/skip ---
 	private func logOnboardingFinished(skipped: Bool) {
-		guard AppConstants.enableAnalytics else { return } //
+		guard AppConstants.enableAnalytics else { return }
 
 		if skipped {
 			// Log a custom "onboarding_skipped" event
@@ -296,13 +296,13 @@ struct OnboardingPageView: View {
 	}
 	
 	private func logOnboardingScreenView() {
-		guard AppConstants.enableAnalytics else { return } //
+		guard AppConstants.enableAnalytics else { return }
 
 		Analytics.logEvent(AnalyticsEventScreenView, parameters: [
-			AnalyticsParameterScreenName: "OnboardingPage_\(pageIndex)", // e.g., OnboardingPage_0
-			AnalyticsParameterScreenClass: "OnboardingView", // The parent view controller/struct name
+			AnalyticsParameterScreenName: "OnboardingPage_\(pageIndex)",
+			AnalyticsParameterScreenClass: "OnboardingView",
 			"onboarding_page_index": pageIndex,
-			"onboarding_page_title": page.title // Log the title if useful
+			"onboarding_page_title": String(describing: page.title) // Convert LocalizedStringKey to String for analytics
 		])
 	}
 }
@@ -313,8 +313,8 @@ struct OnboardingPageView: View {
 struct OnboardingPage {
 	let image: String?
 	let customImage: String?
-	let title: String
-	let description: String
+	let title: LocalizedStringKey // Changed from String to LocalizedStringKey
+	let description: LocalizedStringKey // Changed from String to LocalizedStringKey
 	let tintColor: Color
 }
 

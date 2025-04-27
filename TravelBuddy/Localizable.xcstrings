@@ -52,9 +52,15 @@
     },
     "%lld Gegenstände" : {
       "localizations" : {
-        "en" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "%lldItems"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "%lld items"
           }
         }
@@ -671,7 +677,6 @@
       }
     },
     "all_items" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -752,6 +757,7 @@
       }
     },
     "ascending" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1421,6 +1427,7 @@
       }
     },
     "descending" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2279,7 +2286,6 @@
       }
     },
     "onboarding_completed_description" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2296,7 +2302,6 @@
       }
     },
     "onboarding_completed_title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2313,7 +2318,6 @@
       }
     },
     "onboarding_organize_description" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2330,7 +2334,6 @@
       }
     },
     "onboarding_organize_title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2347,7 +2350,6 @@
       }
     },
     "onboarding_prepared_description" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2364,7 +2366,6 @@
       }
     },
     "onboarding_prepared_title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2381,7 +2382,6 @@
       }
     },
     "onboarding_welcome_description" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2398,7 +2398,6 @@
       }
     },
     "onboarding_welcome_title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2981,6 +2980,39 @@
         }
       }
     },
+    "sort_by_category" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Kategorie"
+          }
+        }
+      }
+    },
+    "sort_by_date" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Datum"
+          }
+        }
+      }
+    },
+    "sort_by_essential" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Wichtigkeit"
+          }
+        }
+      }
+    },
     "sort_by_name" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3047,7 +3079,14 @@
       }
     },
     "sort_order" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortierreihenfolge"
+          }
+        }
+      }
     },
     "Standard" : {
       "comment" : "Color theme name",

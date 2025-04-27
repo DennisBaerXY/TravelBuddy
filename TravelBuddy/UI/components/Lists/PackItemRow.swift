@@ -79,7 +79,7 @@ struct PackItemRow: View {
 				
 				.strikethrough(isDisabled == true)
 			
-			Text(item.categoryEnum.localizedName)
+			Text(item.categoryEnum.displayName())
 				.font(.caption)
 				.foregroundColor(.tripBuddyTextSecondary)
 		}

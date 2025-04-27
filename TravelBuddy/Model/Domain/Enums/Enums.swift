@@ -1,10 +1,26 @@
 import Foundation
 import SwiftUI
 
+// First, create a protocol for localized enums
+protocol LocalizedEnum {
+	var localizedKey: String { get }
+}
+
+// Provide a default implementation
+extension LocalizedEnum {
+	func displayName() -> LocalizedStringKey {
+		LocalizedStringKey(localizedKey)
+	}
+
+	func localizedString() -> String {
+		NSLocalizedString(localizedKey, comment: "")
+	}
+}
+
 // MARK: - Transport Types
 
 // Added Codable conformance for potential future use/consistency
-enum TransportType: String, CaseIterable, Identifiable, Codable {
+enum TransportType: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 	// Changed raw values to stable identifiers
 	case plane
 	case car
@@ -29,7 +45,7 @@ enum TransportType: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .plane: return "transport_plane"
 		case .car: return "transport_car"
@@ -45,7 +61,7 @@ enum TransportType: String, CaseIterable, Identifiable, Codable {
 // MARK: - Accommodation Types
 
 // Added Codable conformance for potential future use/consistency
-enum AccommodationType: String, CaseIterable, Identifiable, Codable {
+enum AccommodationType: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 	// Changed raw values to stable identifiers
 	case hotel
 	case apartment
@@ -68,7 +84,7 @@ enum AccommodationType: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .hotel: return "accommodation_hotel"
 		case .apartment: return "accommodation_apartment"
@@ -83,7 +99,7 @@ enum AccommodationType: String, CaseIterable, Identifiable, Codable {
 // MARK: - Activity Types
 
 // Added Codable conformance for potential future use/consistency
-enum Activity: String, CaseIterable, Identifiable, Codable {
+enum Activity: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 	// Changed raw values to stable identifiers
 	case business
 	case swimming
@@ -110,7 +126,7 @@ enum Activity: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .business: return "activity_business"
 		case .swimming: return "activity_swimming"
@@ -127,7 +143,7 @@ enum Activity: String, CaseIterable, Identifiable, Codable {
 // MARK: - Item Categories
 
 // Added Codable conformance (useful if categories are ever saved/synced)
-enum ItemCategory: String, CaseIterable, Identifiable, Codable {
+enum ItemCategory: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 	// Changed raw values to stable identifiers
 	case clothing
 	case documents
@@ -151,7 +167,7 @@ enum ItemCategory: String, CaseIterable, Identifiable, Codable {
 		}
 	}
 
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .clothing: return "category_clothing"
 		case .documents: return "category_documents"
@@ -167,7 +183,7 @@ enum ItemCategory: String, CaseIterable, Identifiable, Codable {
 // MARK: - Climate Types
 
 // Added Codable conformance for potential future use/consistency
-enum Climate: String, CaseIterable, Identifiable, Codable {
+enum Climate: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 	// Changed raw values to stable identifiers
 	case hot
 	case warm
@@ -188,7 +204,7 @@ enum Climate: String, CaseIterable, Identifiable, Codable {
 	}
 
 	// Changed to return LocalizedStringKey
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .hot: return "climate_hot"
 		case .warm: return "climate_warm"
@@ -216,7 +232,7 @@ enum Climate: String, CaseIterable, Identifiable, Codable {
 // MARK: - Sort Options
 
 // Already Codable
-enum SortOption: String, CaseIterable, Identifiable, Codable {
+enum SortOption: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 	// Raw values are already stable identifiers
 	case name = "Name"
 	case category = "Category"
@@ -225,7 +241,7 @@ enum SortOption: String, CaseIterable, Identifiable, Codable {
 
 	var id: String { rawValue }
 
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .name: return "sort_by_name"
 		case .category: return "sort_by_category"
@@ -247,14 +263,14 @@ enum SortOption: String, CaseIterable, Identifiable, Codable {
 // MARK: - Sort Order
 
 // Already Codable
-enum SortOrder: String, CaseIterable, Identifiable, Codable {
+enum SortOrder: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 	// Changed raw values to stable identifiers
 	case ascending
 	case descending
 
 	var id: String { rawValue }
 
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .ascending: return "sort_ascending"
 		case .descending: return "sort_descending"
@@ -282,7 +298,7 @@ enum SortOrder: String, CaseIterable, Identifiable, Codable {
 // MARK: - Trip Status
 
 // This enum seems purely for display logic, Codable might not be needed unless persisted
-enum TripStatus: String, Identifiable {
+enum TripStatus: String, Identifiable, LocalizedEnum {
 	// Raw values are already stable identifiers
 	case upcoming = "Upcoming"
 	case active = "Active"
@@ -291,7 +307,7 @@ enum TripStatus: String, Identifiable {
 
 	var id: String { rawValue }
 
-	var localizedName: String {
+	var localizedKey: String {
 		switch self {
 		case .upcoming: return "status_upcoming"
 		case .active: return "status_active"

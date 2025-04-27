@@ -75,7 +75,7 @@ final class PackItem {
 	}
 	
 	var categoryName: String {
-		categoryEnum.localizedName
+		categoryEnum.localizedString()
 	}
 	
 	var description: String {

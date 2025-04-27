@@ -67,7 +67,7 @@ struct AddTripView: View {
 		if selectedTransport.isEmpty {
 			return String(localized: "none")
 		} else {
-			return selectedTransport.map { $0.localizedName }.joined(separator: ", ")
+			return selectedTransport.map { NSLocalizedString($0.localizedString(), comment: "") }.joined(separator: ", ")
 		}
 	}
 	
@@ -75,7 +75,7 @@ struct AddTripView: View {
 		if selectedActivities.isEmpty {
 			return String(localized: "none")
 		} else {
-			return selectedActivities.map { $0.localizedName }.joined(separator: ", ")
+			return selectedActivities.map { $0.localizedString() }.joined(separator: ", ")
 		}
 	}
 	
@@ -183,7 +183,7 @@ struct AddTripView: View {
 			Section {
 				Picker("climate", selection: $selectedClimate) {
 					ForEach(Climate.allCases) { climate in
-						Label(climate.localizedName, systemImage: climate.iconName)
+						Label(climate.displayName(), systemImage: climate.iconName)
 							.tag(climate)
 					}
 				}
@@ -240,7 +240,7 @@ struct AddTripView: View {
 					SelectableButton(
 						systemImage: type.iconName,
 						// Convert LocalizedStringKey to String
-						text: type.localizedName,
+						text: type.localizedString(),
 						isSelected: selectedTransport.contains(type)
 					) {
 						if selectedTransport.contains(type) {
@@ -265,7 +265,7 @@ struct AddTripView: View {
 					SelectableButton(
 						systemImage: type.iconName,
 						// Convert LocalizedStringKey to String
-						text: type.localizedName,
+						text: type.localizedString(),
 						isSelected: selectedAccommodation == type
 					) {
 						selectedAccommodation = type
@@ -291,7 +291,7 @@ struct AddTripView: View {
 						ForEach(Activity.allCases) { activity in
 							SelectableButton(
 								systemImage: activity.iconName,
-								text: activity.localizedName,
+								text: activity.localizedString(),
 								isSelected: selectedActivities.contains(activity)
 							) {
 								if selectedActivities.contains(activity) {
@@ -367,14 +367,14 @@ struct AddTripView: View {
 					ReviewRowItem(label: "transport", value: transportText, iconName: "airplane") // Use a representative icon
 					ReviewRowItem(
 						label: "accommodation",
-						value: selectedAccommodation.localizedName,
+						value: selectedAccommodation.localizedString(),
 						iconName: selectedAccommodation.iconName // Use accommodation icon
 					)
 				}
 
 				ReviewSectionCard(title: "activities_and_details") { // Activities & Details Section
 					ReviewRowItem(label: "activities", value: activitiesText, iconName: "figure.walk") // Use a representative icon
-					ReviewRowItem(label: "climate", value: selectedClimate.localizedName, iconName: selectedClimate.iconName)
+					ReviewRowItem(label: "climate", value: selectedClimate.localizedString(), iconName: selectedClimate.iconName)
 					ReviewRowItem(label: "business_trip", value: isBusinessTrip ? String(localized: "yes") : String(localized: "no"), iconName: "briefcase")
 					ReviewRowItem(label: "number_of_people", value: "\(numberOfPeople)", iconName: "person.2")
 				}

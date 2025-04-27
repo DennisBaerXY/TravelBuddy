@@ -22,7 +22,7 @@ struct AddItemView: View {
 				Section(header: Text("category")) {
 					Picker("category", selection: $selectedCategory) {
 						ForEach(ItemCategory.allCases) { category in
-							Label(category.localizedName, systemImage: category.iconName)
+							Label(category.displayName(), systemImage: category.iconName)
 								.tag(category)
 						}
 					}

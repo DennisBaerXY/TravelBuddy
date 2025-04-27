@@ -81,7 +81,7 @@ struct CollapsibleCategorySection: View {
 			Image(systemName: category.iconName)
 				.foregroundColor(.tripBuddyPrimary)
             
-			Text(category.localizedName)
+			Text(category.displayName())
 				.font(.headline)
 				.foregroundColor(.tripBuddyText)
             

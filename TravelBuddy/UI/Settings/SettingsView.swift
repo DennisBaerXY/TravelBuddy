@@ -193,13 +193,13 @@ struct SettingsView: View {
 			// Sort preferences
 			Picker("default_sort", selection: $userSettings.defaultSortOption) {
 				ForEach(SortOption.allCases) { option in
-					Text(option.localizedName).tag(option)
+					Text(option.displayName()).tag(option)
 				}
 			}
             
 			Picker("sort_order", selection: $userSettings.defaultSortOrder) {
-				Text("ascending").tag(SortOrder.ascending)
-				Text("descending").tag(SortOrder.descending)
+				Text(SortOrder.ascending.displayName()).tag(SortOrder.ascending)
+				Text(SortOrder.descending.displayName()).tag(SortOrder.descending)
 			}
             
 			// Essential items priority

@@ -58,7 +58,7 @@ struct PackItemSortingAndFiltering {
 			case .category:
 				// Sort by category name first
 
-				let categoryComparison = item1.categoryEnum.localizedName.localizedStandardCompare(item2.categoryEnum.localizedName)
+				let categoryComparison = item1.categoryEnum.localizedString().localizedStandardCompare(item2.categoryEnum.localizedString())
 				if categoryComparison != .orderedSame {
 					return categoryComparison.rawValue * orderMultiplier < 0
 				} else {
@@ -92,7 +92,7 @@ struct PackItemSortingAndFiltering {
 		sortOrder: SortOrder
 	) -> [ItemCategory] {
 		categories.sorted { cat1, cat2 in
-			let comparison = cat1.localizedName.localizedStandardCompare(cat2.localizedName)
+			let comparison = cat1.localizedString().localizedStandardCompare(cat2.localizedString())
 			return (sortOrder == .ascending) ? comparison == .orderedAscending : comparison == .orderedDescending
 		}
 	}

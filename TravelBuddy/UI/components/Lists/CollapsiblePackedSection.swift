@@ -96,7 +96,7 @@ struct CollapsiblePackedSection: View {
 				Image(systemName: category.iconName)
 					.foregroundColor(.tripBuddyTextSecondary)
                 
-				Text(category.localizedName)
+				Text(category.displayName())
 					.font(.footnote.weight(.medium))
 					.foregroundColor(.tripBuddyTextSecondary)
 			}

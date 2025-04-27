@@ -191,7 +191,7 @@ struct TripDetailView: View {
 
 					ForEach(categoriesPresentInTrip, id: \.self) { category in
 						CategoryFilterButton(
-							title: category.localizedName,
+							title: category.displayName(),
 							iconName: category.iconName,
 							isSelected: selectedCategoryFilter == category
 						) { withAnimation { selectedCategoryFilter = category } }
@@ -324,7 +324,7 @@ struct TripDetailView: View {
 			Menu {
 				Picker("sort_by_picker_label", selection: $currentSortOption) {
 					ForEach(SortOption.allCases) { option in
-						Text(option.localizedName).tag(option)
+						Text(option.localizedString()).tag(option)
 					}
 				}
 
