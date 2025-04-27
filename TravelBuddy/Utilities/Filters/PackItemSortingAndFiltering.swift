@@ -57,6 +57,7 @@ struct PackItemSortingAndFiltering {
 				return comparison.rawValue * orderMultiplier < 0
 			case .category:
 				// Sort by category name first
+
 				let categoryComparison = item1.categoryEnum.localizedName.localizedStandardCompare(item2.categoryEnum.localizedName)
 				if categoryComparison != .orderedSame {
 					return categoryComparison.rawValue * orderMultiplier < 0

@@ -33,9 +33,9 @@ struct TripCard: View {
 					// Transportart-Symbole
 					HStack(spacing: 4) {
 						Text(trip.destination)
-							.font(.callout)
+							.font(.callout).bold()
 							.foregroundStyle(.white)
-						
+							
 						Spacer()
 						
 						if !trip.isCompleted {
@@ -72,9 +72,6 @@ struct TripCard: View {
 					}
 				}
 				
-				Text(trip.destination)
-					.font(.caption)
-				
 				// Datum
 				HStack {
 					Image(systemName: "calendar")
@@ -84,7 +81,7 @@ struct TripCard: View {
 					
 					Text(dateRangeText)
 						.font(.subheadline)
-						.foregroundColor(.tripBuddyTextSecondary)
+						.foregroundColor(.tripBuddyText)
 				}
 				
 				// Fortschritt
