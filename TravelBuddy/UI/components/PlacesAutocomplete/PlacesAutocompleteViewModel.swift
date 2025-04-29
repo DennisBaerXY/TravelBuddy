@@ -80,7 +80,7 @@ class PlacesAutocompleteViewModel: ObservableObject {
 		defer { isLoading = false }
 		
 		// Filter für relevante Ortstypen
-		let filter = AutocompleteFilter(types: [.regions])
+		let filter = AutocompleteFilter(types: [.regions], regionCode: LocalizationManager.shared.currentLanguage.countryCode)
 		
 		// Anfrage mit Session-Token vorbereiten
 		let request = AutocompleteRequest(

@@ -4,13 +4,26 @@ import SwiftUI
 
 import FirebaseAnalytics
 import FirebaseCore
+import GoogleMobileAds
 
 import GooglePlacesSwift
 
 // App Delegate
+class AppDelegate: UIResponder, UIApplicationDelegate {
+	func application(_ application: UIApplication,
+	                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
+	{
+		MobileAds.shared.start(completionHandler: nil)
+		MobileAds.shared.requestConfiguration.testDeviceIdentifiers = ["21fade3f7a75ba7f7e112da1fae8f83b"]
+
+		return true
+	}
+}
 
 @main
 struct TravelBuddyApp: App {
+	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
 	// MARK: - State Objects & Environment
 
 	// Use the UserSettingsManager singleton as the source of truth for settings

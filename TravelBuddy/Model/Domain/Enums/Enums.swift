@@ -390,9 +390,9 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 	case system
 	case english = "en"
 	case german = "de"
-	case spanish = "es"
-	case french = "fr"
-	case italian = "it"
+//	case spanish = "es"
+//	case french = "fr"
+//	case italian = "it"
 
 	var id: String { rawValue }
 
@@ -402,9 +402,9 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 		case .system: return "System Language" // Needs localization: "language_system"
 		case .english: return "English" // Needs localization: "language_english"
 		case .german: return "Deutsch" // Needs localization: "language_german"
-		case .spanish: return "Español" // Needs localization: "language_spanish"
-		case .french: return "Français" // Needs localization: "language_french"
-		case .italian: return "Italiano" // Needs localization: "language_italian"
+//		case .spanish: return "Español" // Needs localization: "language_spanish"
+//		case .french: return "Français" // Needs localization: "language_french"
+//		case .italian: return "Italiano" // Needs localization: "language_italian"
 		}
 		// Consider using Locale(identifier: self.rawValue).localizedString(forLanguageCode: self.rawValue)
 		// or providing LocalizedStringKey for these display names if they need to be localized themselves.
@@ -417,9 +417,18 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 		case .system: return "🌐"
 		case .english: return "🇺🇸" // Or 🇬🇧
 		case .german: return "🇩🇪"
-		case .spanish: return "🇪🇸"
-		case .french: return "🇫🇷"
-		case .italian: return "🇮🇹"
+//		case .spanish: return "🇪🇸"
+//		case .french: return "🇫🇷"
+//		case .italian: return "🇮🇹"
+		}
+	}
+
+	// Needed for Places API (DOMAIN ENDING)
+	var countryCode: String {
+		switch self {
+		case .system: return "us"
+		case .english: return "us"
+		case .german: return "de"
 		}
 	}
 }

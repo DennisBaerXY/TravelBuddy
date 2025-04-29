@@ -1203,6 +1203,7 @@
       }
     },
     "color_theme" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2988,6 +2989,12 @@
             "state" : "translated",
             "value" : "Nach Kategorie"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By Category"
+          }
         }
       }
     },
@@ -2999,6 +3006,12 @@
             "state" : "translated",
             "value" : "Nach Datum"
           }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By Date"
+          }
         }
       }
     },
@@ -3009,6 +3022,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nach Wichtigkeit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By Importance"
           }
         }
       }
@@ -3084,6 +3103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sortierreihenfolge"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort Order"
           }
         }
       }

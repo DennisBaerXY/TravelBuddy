@@ -1,6 +1,8 @@
 import SwiftData
 import SwiftUI
 
+import GoogleMobileAds
+
 import FirebaseAnalytics
 
 struct TripDetailView: View {
@@ -115,22 +117,34 @@ struct TripDetailView: View {
 	// MARK: - Body
 
 	var body: some View {
-		ZStack {
-			Color.tripBuddyBackground.ignoresSafeArea()
+		GeometryReader { geometry in
+			let adSize = currentOrientationAnchoredAdaptiveBanner(width: geometry.size.width)
+			ZStack {
+				Color.tripBuddyBackground.ignoresSafeArea()
+				VStack {
+					ScrollView {
+						VStack(alignment: .leading, spacing: 15) {
+							TripHeaderView(trip: trip, isCompact: true)
 
-			ScrollView {
-				VStack(alignment: .leading, spacing: 15) {
-					TripHeaderView(trip: trip, isCompact: true)
+							searchAndFilterBar
 
-					searchAndFilterBar
+							packingListContent
+						}
+						.padding(.bottom, 80)
+					}
 
-					packingListContent
-				}
-				.padding(.bottom, 80)
+					// MONETIZATION: Add Ad Banner Here
+					if !UserSettingsManager.shared.isPremiumUser {
+						Spacer()
+						BannerViewContainer(adSize)
+							.frame(height: adSize.size.height)
+					}
+				}.padding(0)
+
+				floatingActionContent
 			}
-
-			floatingActionContent
 		}
+
 		.navigationTitle(trip.name)
 		.toolbar { toolbarButtons }
 		.sheet(isPresented: $showingAddItem) { addItemSheet }

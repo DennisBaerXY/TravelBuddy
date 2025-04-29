@@ -30,7 +30,6 @@ struct SettingsView: View {
 	var body: some View {
 		NavigationStack {
 			List {
-				// Account section
 				Section(header: Text("account")) { // Was: "Account"
 					if userSettings.isPremiumUser {
 						premiumAccountRow
@@ -105,19 +104,28 @@ struct SettingsView: View {
     
 	/// Row showing premium status
 	private var premiumAccountRow: some View {
-		HStack {
-			Label {
-				Text("premium_account") // Was: "Premium Account"
-			} icon: {
-				Image(systemName: "star.fill")
-					.foregroundColor(.yellow)
+		VStack {
+			HStack {
+				Label {
+					Text("premium_account") // Was: "Premium Account"
+				} icon: {
+					Image(systemName: "star.fill")
+						.foregroundColor(.yellow)
+				}
+				
+				Spacer()
+				
+				Text("Active")
+					.font(.caption)
+					.foregroundColor(.tripBuddySuccess)
 			}
-            
-			Spacer()
-            
-			Text("Active")
-				.font(.caption)
-				.foregroundColor(.tripBuddySuccess)
+			#if DEBUG
+			
+			Button("Reset") {
+				UserSettingsManager.shared.isPremiumUser = false
+			}
+			
+			#endif
 		}
 	}
     
@@ -149,11 +157,11 @@ struct SettingsView: View {
 	private var appearanceRows: some View {
 		Group {
 			// Theme picker
-			Picker("color_theme", selection: $themeManager.colorTheme) {
-				ForEach(ColorTheme.allCases) { theme in
-					Text(theme.displayName).tag(theme)
-				}
-			}
+//			Picker("color_theme", selection: $themeManager.colorTheme) {
+//				ForEach(ColorTheme.allCases) { theme in
+//					Text(theme.displayName).tag(theme)
+//				}
+//			}
             
 			// Dark mode toggle
 			Picker("appearance", selection: $themeManager.colorSchemePreference) {
@@ -202,23 +210,13 @@ struct SettingsView: View {
 				Text(SortOrder.descending.displayName()).tag(SortOrder.descending)
 			}
             
-			// Essential items priority
-			Toggle("prioritize_essential_items", isOn: $userSettings.prioritizeEssentialItems)
-				.tint(.tripBuddyPrimary)
-            
 			// Show completed trips
 			Toggle("show_completed_trips", isOn: $userSettings.showCompletedTrips)
 				.tint(.tripBuddyPrimary)
             
-			// Auto-suggest packing lists
-			Toggle("auto_suggest_packing_lists", isOn: $userSettings.autoSuggestPackingLists)
-				.tint(.tripBuddyPrimary)
-            
-			// Measurement system
-			Picker("measurement_system", selection: $userSettings.preferredMeasurementSystem) {
-				Text("metric").tag(MeasurementSystem.metric)
-				Text("imperial").tag(MeasurementSystem.imperial)
-			}
+//			// Auto-suggest packing lists
+//			Toggle("auto_suggest_packing_lists", isOn: $userSettings.autoSuggestPackingLists)
+//				.tint(.tripBuddyPrimary)
 		}
 	}
     
