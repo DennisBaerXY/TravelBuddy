@@ -16,6 +16,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		MobileAds.shared.start(completionHandler: nil)
 		MobileAds.shared.requestConfiguration.testDeviceIdentifiers = ["21fade3f7a75ba7f7e112da1fae8f83b"]
 
+		if AppConstants.enableGoogleMapsAutocomplete {
+			let activated = PlacesClient.provideAPIKey(Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as! String)
+			if !activated {
+				print("Google Maps Autocomplete API key not provided or invalid")
+			} else {
+				print("Google Maps Autocomplete API key activated")
+			}
+
+		} else {
+			print("Google Maps Autocomplete disabled via AppConstants.enableGoogleMapsAutocomplete")
+		}
+
+		if AppConstants.enableAnalytics {
+			FirebaseApp.configure()
+			if AppConstants.enableDebugLogging {
+				print("Firebase configured for Analytics")
+			}
+		} else {
+			print("Firebase Analytics disabled via AppConstants.enableAnalytics")
+		}
+
 		return true
 	}
 }
@@ -38,27 +59,6 @@ struct TravelBuddyApp: App {
 	// MARK: - Initialization
 
 	init() {
-		if AppConstants.enableAnalytics {
-			FirebaseApp.configure()
-			if AppConstants.enableDebugLogging {
-				print("Firebase configured for Analytics")
-			}
-		} else {
-			print("Firebase Analytics disabled via AppConstants.enableAnalytics")
-		}
-
-		if AppConstants.enableGoogleMapsAutocomplete {
-			let activated = PlacesClient.provideAPIKey(Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as! String)
-			if !activated {
-				print("Google Maps Autocomplete API key not provided or invalid")
-			} else {
-				print("Google Maps Autocomplete API key activated")
-			}
-
-		} else {
-			print("Google Maps Autocomplete disabled via AppConstants.enableGoogleMapsAutocomplete")
-		}
-
 		// --- SwiftData Setup ---
 		let schema = Schema([Trip.self, PackItem.self])
 		let modelConfiguration = ModelConfiguration(

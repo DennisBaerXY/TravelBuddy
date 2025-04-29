@@ -107,7 +107,7 @@ struct PlacesAutocompleteView: View {
 	private func suggestionRow(for place: AutocompletePlaceSuggestion) -> some View {
 		HStack(alignment: .center, spacing: 12) {
 			// Icon
-			Image(systemName: "mappin.circle.fill")
+			Image(systemName: "mappin")
 				.foregroundColor(.accentColor)
 				.font(.headline)
 			

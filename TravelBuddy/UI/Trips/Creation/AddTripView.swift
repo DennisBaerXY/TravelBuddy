@@ -192,18 +192,6 @@ struct AddTripView: View {
 				HStack {
 					Text("climate").font(.headline)
 					Spacer()
-					Button {
-						showingClimateInfo = true
-					} label: {
-						Image(systemName: "info.circle")
-							.foregroundColor(.tripBuddyAccent)
-					}
-					.popover(isPresented: $showingClimateInfo, arrowEdge: .top) {
-						Text("climate_info_popover_text")
-							.font(.caption)
-							.padding()
-							.frame(idealWidth: 250)
-					}
 				}
 			}
 			Spacer()
@@ -390,9 +378,12 @@ struct AddTripView: View {
 			// Validation message
 			if let message = validationMessage {
 				Text(message)
-					.font(.caption)
-					.foregroundColor(.tripBuddyAlert)
-					.padding(.horizontal)
+					.font(.callout)
+					.foregroundColor(.tripBuddyText)
+					.padding()
+					.background(.tripBuddyAlert)
+					.clipShape(.buttonBorder)
+					
 					.transition(.opacity.combined(with: .scale(scale: 0.9, anchor: .top)))
 			}
 			
@@ -490,12 +481,15 @@ struct AddTripView: View {
 		var isValid = true
 		var message: String? = nil
 		
-		if tripName.isEmpty {
+		if tripName.isEmpty || ((destinationPlaceId?.isEmpty) != nil) {
 			isValid = false
 			message = String(localized: "validation_missing_trip_name")
 		} else if destination.isEmpty || ((destinationPlaceId?.isEmpty) != nil) {
 			isValid = false
 			message = String(localized: "validation_missing_trip_destination")
+		} else if selectedTransport.isEmpty {
+			isValid = false
+			message = String(localized: "validation_missing_transport")
 		}
 		
 		validationMessage = isValid ? nil : message
@@ -505,7 +499,7 @@ struct AddTripView: View {
 	// MARK: - Trip Creation
 	
 	private func createTrip() -> Bool {
-		if validateForm() {
+		if !validateForm() {
 			return false
 		}
 		

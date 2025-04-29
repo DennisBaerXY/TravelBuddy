@@ -139,7 +139,7 @@ struct TripDetailView: View {
 						BannerViewContainer(adSize)
 							.frame(height: adSize.size.height)
 					}
-				}.padding(0)
+				}
 
 				floatingActionContent
 			}

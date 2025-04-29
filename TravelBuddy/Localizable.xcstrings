@@ -774,6 +774,7 @@
       }
     },
     "auto_suggest_packing_lists" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1120,6 +1121,7 @@
       }
     },
     "climate_info_popover_text" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1868,6 +1870,7 @@
       }
     },
     "imperial" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1948,6 +1951,7 @@
       }
     },
     "measurement_system" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1964,6 +1968,7 @@
       }
     },
     "metric" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2611,6 +2616,7 @@
       }
     },
     "prioritize_essential_items" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
