@@ -65,3 +65,7 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+
+TravelBuddy/Config.xcconfig
+TravelBuddy/GoogleService-Info.plist
