@@ -66,7 +66,7 @@ enum AccommodationType: String, CaseIterable, Identifiable, Codable, LocalizedEn
 	case hotel
 	case apartment
 	case camping
-	case hostels = "hostel" // Corrected pluralization in identifier
+	case hostel
 	case friends
 	case airbnb
 
@@ -77,7 +77,7 @@ enum AccommodationType: String, CaseIterable, Identifiable, Codable, LocalizedEn
 		case .hotel: return "building.2"
 		case .apartment: return "house"
 		case .camping: return "tent"
-		case .hostels: return "bed.double"
+		case .hostel: return "bed.double"
 		case .friends: return "person.2"
 		case .airbnb: return "house.lodge"
 		}
@@ -89,7 +89,7 @@ enum AccommodationType: String, CaseIterable, Identifiable, Codable, LocalizedEn
 		case .hotel: return "accommodation_hotel"
 		case .apartment: return "accommodation_apartment"
 		case .camping: return "accommodation_camping"
-		case .hostels: return "accommodation_hostel"
+		case .hostel: return "accommodation_hostel"
 		case .friends: return "accommodation_friends"
 		case .airbnb: return "accommodation_airbnb"
 		}
@@ -125,7 +125,6 @@ enum Activity: String, CaseIterable, Identifiable, Codable, LocalizedEnum {
 		}
 	}
 
-	// Changed to return LocalizedStringKey
 	var localizedKey: String {
 		switch self {
 		case .business: return "activity_business"

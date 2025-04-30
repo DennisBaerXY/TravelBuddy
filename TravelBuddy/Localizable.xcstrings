@@ -839,6 +839,7 @@
       }
     },
     "business_trip" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2162,9 +2163,6 @@
         }
       }
     },
-    "Nie mehr Packstress! TravelBuddy erstellt deine optimale Packliste – einfach, smart, überzeugend" : {
-
-    },
     "no" : {
       "localizations" : {
         "de" : {
@@ -2399,7 +2397,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create your first trip and experience stress-free packing."
+            "value" : "TravelBuddy ist bereit, dir zu helfen, smarter zu packen und besser zu reisen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your personal travel companion is ready to go. Where to first?"
           }
         }
       }
@@ -2409,7 +2413,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ready to Pack Smarter?"
+            "value" : "Bereit für stressfreies Reisen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready for Stress-Free Travel?"
           }
         }
       }
@@ -2417,10 +2427,16 @@
     "onboarding_smart_description" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Von Geschäftsreisen bis hin zu Strandurlaub – TravelBuddy erstellt in Sekundenschnelle die perfekte Packliste für jedes Abenteuer."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From business trips to beach vacations, TravelBuddy crafts the perfect packing list for every adventure in seconds."
           }
         }
       }
@@ -2438,6 +2454,38 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Smart Suggestions, Perfect Packing"
+          }
+        }
+      }
+    },
+    "onboarding_start_description" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie mehr Packstress! TravelBuddy erstellt deine optimale Packliste – einfach, smart, überzeugend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No more packing stress! TravelBuddy creates your optimal packing list - simple, smart, convincing\n"
+          }
+        }
+      }
+    },
+    "onboarding_start_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intelligente Packlisten für jede Reise"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Smart Packinglists for Any Trip"
           }
         }
       }
@@ -3025,9 +3073,6 @@
           }
         }
       }
-    },
-    "Smart Packinglist for Any Trip" : {
-
     },
     "Socks" : {
       "localizations" : {

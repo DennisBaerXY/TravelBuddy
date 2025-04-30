@@ -12,7 +12,7 @@ struct SelectableButton: View {
 	// MARK: - Properties
     
 	let systemImage: String
-	let text: String
+	let text: LocalizedStringKey
 	let isSelected: Bool
 	let action: () -> Void
     

@@ -228,7 +228,7 @@ struct AddTripView: View {
 					SelectableButton(
 						systemImage: type.iconName,
 						// Convert LocalizedStringKey to String
-						text: type.localizedString(),
+						text: type.displayName(),
 						isSelected: selectedTransport.contains(type)
 					) {
 						if selectedTransport.contains(type) {
@@ -253,7 +253,7 @@ struct AddTripView: View {
 					SelectableButton(
 						systemImage: type.iconName,
 						// Convert LocalizedStringKey to String
-						text: type.localizedString(),
+						text: type.displayName(),
 						isSelected: selectedAccommodation == type
 					) {
 						selectedAccommodation = type
@@ -279,7 +279,7 @@ struct AddTripView: View {
 						ForEach(Activity.allCases) { activity in
 							SelectableButton(
 								systemImage: activity.iconName,
-								text: activity.localizedString(),
+								text: activity.displayName(),
 								isSelected: selectedActivities.contains(activity)
 							) {
 								if selectedActivities.contains(activity) {
@@ -296,9 +296,6 @@ struct AddTripView: View {
 				
 				// Additional details
 				Section(header: Text("other_details").font(.headline).padding(.leading, -15)) {
-					Toggle("business_trip", isOn: $isBusinessTrip)
-						.tint(.tripBuddyPrimary)
-					
 					// Number of people
 					HStack {
 						Text("number_of_people")

@@ -38,7 +38,7 @@ struct PackingListGenerator {
 		case .hotel: suggestedItems.append(contentsOf: loader.items(for: "hotel"))
 		case .camping: suggestedItems.append(contentsOf: loader.items(for: "camping"))
 		case .apartment, .airbnb: suggestedItems.append(contentsOf: loader.items(for: "apartment")) // Merged key
-		case .hostels: suggestedItems.append(contentsOf: loader.items(for: "hostel"))
+		case .hostel: suggestedItems.append(contentsOf: loader.items(for: "hostel"))
 		case .friends: suggestedItems.append(contentsOf: loader.items(for: "friends"))
 		}
 

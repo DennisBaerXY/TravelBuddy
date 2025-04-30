@@ -74,6 +74,10 @@ struct OnboardingPageViewContent: View {
 							.frame(width: 250, height: 300) // Give it a size
 					} else if page.animationIdentifier == "weather" {
 						ClimateAnimationView()
+
+					} else if page.animationIdentifier == "selectable" {
+						SelectableExampleView()
+
 					} else {
 						// Fallback if animationIdentifier doesn't match a known SwiftUI animation
 						Image(systemName: page.iconName ?? "questionmark.circle")
@@ -164,8 +168,8 @@ struct OnboardingView: View {
 			imageName: "AppLogoIcon", // Placeholder image name (add to Assets)
 			animationIdentifier: nil, // No SwiftUI animation on this page
 			iconName: nil,
-			title: "Smart Packinglist for Any Trip", // Add this key to Localizable.strings
-			description: "Nie mehr Packstress! TravelBuddy erstellt deine optimale Packliste – einfach, smart, überzeugend", // Add this key to Localizable.strings
+			title: "onboarding_start_title", // Add this key to Localizable.strings
+			description: "onboarding_start_description", // Add this key to Localizable.strings
 			tintColor: Color("TripBuddyPrimary"), // Use color from assets
 			showNameInput: true, // Show name input on this page
 			showTravelStyleSelection: false,
@@ -184,7 +188,7 @@ struct OnboardingView: View {
 		),
 		OnboardingPageData(
 			imageName: nil,
-			animationIdentifier: nil, // Use this identifier to trigger the Smart Packing SwiftUI animation
+			animationIdentifier: "selectable", // Use this identifier to trigger the Smart Packing SwiftUI animation
 			iconName: "hourglass.tophalf.filled", // Fallback icon
 			title: "onboarding_smart_title", // Add this key to Localizable.strings
 			description: "onboarding_smart_description", // Add this key to Localizable.strings
