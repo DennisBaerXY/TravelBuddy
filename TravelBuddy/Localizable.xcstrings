@@ -2162,6 +2162,9 @@
         }
       }
     },
+    "Nie mehr Packstress! TravelBuddy erstellt deine optimale Packliste – einfach, smart, überzeugend" : {
+
+    },
     "no" : {
       "localizations" : {
         "de" : {
@@ -2325,21 +2328,18 @@
         }
       }
     },
-    "onboarding_name_placeholder" : {
-
-    },
     "onboarding_organize_description" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erstelle individuelle Packlisten für jede Reise und behalte den Überblick."
+            "value" : "Wichtige Gegenstände werden automatisch markiert, so dass du nie ohne die wichtigen Dinge das Haus verlässt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create custom packing lists for each trip and keep track of everything."
+            "value" : "Critical items are automatically flagged so you never leave home without the important stuff."
           }
         }
       }
@@ -2349,34 +2349,36 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Organisiere Deine Reisen"
+            "value" : "Organisiere deine Reise"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organize Your Trips"
+            "state" : "needs_review",
+            "value" : "Always the right stuff with you"
           }
         }
       }
     },
     "onboarding_prepared_description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie wieder etwas vergessen! TripBuddy hilft dir, alles Wichtige einzupacken."
+            "value" : "Vergesse nie wieder etwas! TripBuddy hilft dir alles wichtige zu packen."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Never forget anything again! TripBuddy helps you pack all the essentials."
+            "state" : "needs_review",
+            "value" : "Pack appropriately with recommendations based on your accommodation and other options"
           }
         }
       }
     },
     "onboarding_prepared_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2393,21 +2395,66 @@
       }
     },
     "onboarding_ready_description" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create your first trip and experience stress-free packing."
+          }
+        }
+      }
     },
     "onboarding_ready_title" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready to Pack Smarter?"
+          }
+        }
+      }
     },
-    "onboarding_tailor_description" : {
-
+    "onboarding_smart_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von Geschäftsreisen bis hin zu Strandurlaub – TravelBuddy erstellt in Sekundenschnelle die perfekte Packliste für jedes Abenteuer."
+          }
+        }
+      }
     },
-    "onboarding_tailor_title" : {
-
+    "onboarding_smart_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smarte Vorschläge. Einfaches Packen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Smart Suggestions, Perfect Packing"
+          }
+        }
+      }
     },
-    "onboarding_travel_style_prompt" : {
-
+    "onboarding_weather_description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von"
+          }
+        }
+      }
     },
     "onboarding_welcome_description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2424,6 +2471,7 @@
       }
     },
     "onboarding_welcome_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2812,6 +2860,9 @@
         }
       }
     },
+    "Rome" : {
+
+    },
     "Sample Beach Vacation" : {
       "comment" : "Sample trip name",
       "localizations" : {
@@ -2974,6 +3025,9 @@
           }
         }
       }
+    },
+    "Smart Packinglist for Any Trip" : {
+
     },
     "Socks" : {
       "localizations" : {

@@ -58,24 +58,22 @@ struct OnboardingPageViewContent: View {
 
 			Group {
 				switch page.visualAssetType {
-				case .image(let name):
-					// Use a placeholder image name. You will need to add these to your Assets.xcassets.
-					Image(name)
+				case .image:
+					Image("personStanding")
 						.resizable()
-						.scaledToFit() // Or .scaledToFill() depending on desired effect
-						.frame(maxWidth: .infinity, maxHeight: 300) // Adjust size as needed
-						.cornerRadius(20) // Apply corner radius for a modern look
-						.shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5) // Add subtle shadow
-
+						.scaledToFit()
+						.frame(width: 300, height: 300)
 				case .swiftUIAnimation:
 					// --- SwiftUI Animation Integration Point ---
 					// Use the appropriate SwiftUI animation view based on the page's concept
 					if page.animationIdentifier == "organize" {
 						OrganizeAnimationView() // Use the Organize SwiftUI animation
-							.frame(width: 250, height: 300) // Give it a size
+							.frame(maxHeight: 200)
 					} else if page.animationIdentifier == "smart_packing" {
 						SmartPackingAnimationView() // Use the Smart Packing SwiftUI animation
 							.frame(width: 250, height: 300) // Give it a size
+					} else if page.animationIdentifier == "weather" {
+						ClimateAnimationView()
 					} else {
 						// Fallback if animationIdentifier doesn't match a known SwiftUI animation
 						Image(systemName: page.iconName ?? "questionmark.circle")
@@ -108,6 +106,8 @@ struct OnboardingPageViewContent: View {
 			.opacity(isAnimating ? 1 : 0)
 			.animation(.easeOut(duration: 0.8).delay(0.2), value: isAnimating) // Apply animation
 
+			Spacer()
+
 			// MARK: - Title
 
 			Text(page.title)
@@ -130,45 +130,7 @@ struct OnboardingPageViewContent: View {
 				.opacity(isAnimating ? 1 : 0)
 				.animation(.easeOut(duration: 0.8).delay(0.4), value: isAnimating)
 
-			// MARK: - Interactive Elements (Conditional)
-
-			if page.showNameInput {
-				TextField(String(localized: "onboarding_name_placeholder"), text: $userName) // Add this key to Localizable.strings
-					.padding()
-					.background(Color.tripBuddyCard) // Use card background
-					.cornerRadius(10)
-					.shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: 2)
-					.padding(.horizontal, 40)
-					.transition(.opacity.combined(with: .slide)) // Add transition
-					.animation(.easeIn.delay(0.5), value: page.showNameInput) // Animate appearance
-			}
-
-			if page.showTravelStyleSelection {
-				VStack(alignment: .leading, spacing: 15) {
-					Text("onboarding_travel_style_prompt") // Add this key to Localizable.strings
-						.font(.headline)
-						.foregroundColor(.tripBuddyText)
-						.padding(.leading, 40) // Align with buttons
-
-					LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 2), spacing: 15) { // Use 2 columns
-						ForEach(TravelStyle.allCases.filter { $0 != .unknown }) { style in // Exclude .unknown from selection
-							SelectableButton( // Reuse your existing SelectableButton component
-								systemImage: style.iconName,
-								text: style.localizedString(),
-								isSelected: selectedTravelStyle == style
-							) {
-								onTravelStyleSelected(style) // Call the action when tapped
-							}
-						}
-					}
-					.padding(.horizontal, 40) // Add horizontal padding to the grid
-				}
-				.transition(.opacity.combined(with: .slide)) // Add transition
-				.animation(.easeIn.delay(0.5), value: page.showTravelStyleSelection) // Animate appearance
-			}
-
 			Spacer() // Pushes content up
-			Spacer() // Extra spacer for more vertical space
 		}
 		.onAppear {
 			isAnimating = true // Start animation when view appears
@@ -199,11 +161,11 @@ struct OnboardingView: View {
 	// Define the content for each onboarding page
 	private let pages: [OnboardingPageData] = [
 		OnboardingPageData(
-			imageName: "OnboardingBackground1", // Placeholder image name (add to Assets)
+			imageName: "AppLogoIcon", // Placeholder image name (add to Assets)
 			animationIdentifier: nil, // No SwiftUI animation on this page
 			iconName: nil,
-			title: "onboarding_welcome_title", // Add this key to Localizable.strings
-			description: "onboarding_welcome_description", // Add this key to Localizable.strings
+			title: "Smart Packinglist for Any Trip", // Add this key to Localizable.strings
+			description: "Nie mehr Packstress! TravelBuddy erstellt deine optimale Packliste – einfach, smart, überzeugend", // Add this key to Localizable.strings
 			tintColor: Color("TripBuddyPrimary"), // Use color from assets
 			showNameInput: true, // Show name input on this page
 			showTravelStyleSelection: false,
@@ -222,36 +184,26 @@ struct OnboardingView: View {
 		),
 		OnboardingPageData(
 			imageName: nil,
-			animationIdentifier: "smart_packing", // Use this identifier to trigger the Smart Packing SwiftUI animation
-			iconName: "checkmark.circle.fill", // Fallback icon
-			title: "onboarding_prepared_title", // Add this key to Localizable.strings
-			description: "onboarding_prepared_description", // Add this key to Localizable.strings
+			animationIdentifier: nil, // Use this identifier to trigger the Smart Packing SwiftUI animation
+			iconName: "hourglass.tophalf.filled", // Fallback icon
+			title: "onboarding_smart_title", // Add this key to Localizable.strings
+			description: "onboarding_smart_description", // Add this key to Localizable.strings
 			tintColor: Color("TripBuddySuccess"), // Use color from assets
 			showNameInput: false,
 			showTravelStyleSelection: false,
 			pageIndex: 2
 		),
+
 		OnboardingPageData(
 			imageName: nil,
-			animationIdentifier: nil, // No SwiftUI animation on this page
-			iconName: "figure.walk", // Use a travel-related icon
-			title: "onboarding_tailor_title", // Add this key to Localizable.strings
-			description: "onboarding_tailor_description", // Add this key to Localizable.strings
-			tintColor: Color("TripBuddyPrimary"), // Use color from assets
-			showNameInput: false,
-			showTravelStyleSelection: true, // Show travel style selection on this page
-			pageIndex: 3
-		),
-		OnboardingPageData(
-			imageName: "OnboardingBackground2", // Placeholder image name (add to Assets)
-			animationIdentifier: nil, // No SwiftUI animation on this page
+			animationIdentifier: "smart_packing", // No SwiftUI animation on this page
 			iconName: nil,
 			title: "onboarding_ready_title", // Add this key to Localizable.strings
 			description: "onboarding_ready_description", // Add this key to Localizable.strings
 			tintColor: Color("TripBuddyAccent"), // Use color from assets
 			showNameInput: false,
 			showTravelStyleSelection: false,
-			pageIndex: 4 // This is the final page
+			pageIndex: 3 // This is the final page
 		)
 	]
 
@@ -264,7 +216,7 @@ struct OnboardingView: View {
 
 	// Determine if it's the last page
 	private var isLastPage: Bool {
-		currentPage == pages.count - 1
+		currentPage == pages.last?.pageIndex
 	}
 
 	// Get the tint color for the current page
@@ -454,6 +406,4 @@ extension Collection {
 	// Need to provide UserSettingsManager in the environment for the preview
 	OnboardingView()
 		.environmentObject(UserSettingsManager.shared)
-	// You might also need ThemeManager if colors are dynamic based on theme
-	// .environmentObject(ThemeManager.shared)
 }

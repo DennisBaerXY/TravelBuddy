@@ -23,7 +23,7 @@ struct PlacesAutocompleteView: View {
 		VStack(alignment: .leading, spacing: 0) {
 			// Suchfeld
 			TextField(
-				String(localized: "destination_placeholder"),
+				"destination_placeholder",
 				text: $viewModel.searchText
 			)
 			.focused($isFocused)

@@ -137,7 +137,7 @@ struct AddTripView: View {
 					.foregroundColor(.tripBuddyText) // Use theme color
 
 				// Trip Name Input
-				TextField(String(localized: "trip_name_placeholder"), text: $tripName)
+				TextField("trip_name_placeholder", text: $tripName)
 					.focused($isFocused)
 					.padding(10)
 					.background(Color.tripBuddyCard) // Use card background for consistency
