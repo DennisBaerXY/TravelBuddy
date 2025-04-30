@@ -73,18 +73,21 @@ struct PackItemRow: View {
 	private var itemDetails: some View {
 		VStack(alignment: .leading, spacing: 4) {
 			Text(item.name)
-				.strikethrough(item.isPacked, color: .tripBuddyTextSecondary)
+				// Removed the .strikethrough modifier
 				.fontWeight(item.isEssential ? .semibold : .regular)
-				.foregroundColor(item.isPacked ? .tripBuddyTextSecondary : .tripBuddyText)
-				
-				.strikethrough(isDisabled == true)
+				.foregroundColor(item.isPacked || isDisabled ? .tripBuddyTextSecondary : .tripBuddyText) // Dim the text when packed or disabled
+				.opacity(isDisabled ? 0.6 : 1.0) // Add opacity for disabled state
+			
+				.strikethrough(item.isPacked)
 			
 			Text(item.categoryEnum.displayName())
 				.font(.caption)
 				.foregroundColor(.tripBuddyTextSecondary)
+				.strikethrough(item.isPacked)
 		}
+		.animation(.default, value: item.isPacked)
 	}
-		
+
 	/// The quantity badge shown for items with quantity > 1
 	@ViewBuilder
 	private var quantityBadge: some View {

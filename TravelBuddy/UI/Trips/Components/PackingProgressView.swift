@@ -20,7 +20,7 @@ struct PackingProgressView: View {
 	var height: CGFloat = 0
 
 	/// Animation duration for progress changes
-	var animationDuration: Double = 0.3
+	var animationDuration: Double = 0.5 // Slightly increased duration for emphasis
 
 	/// Whether to show a percentage label
 	var showPercentage: Bool = false
@@ -46,7 +46,7 @@ struct PackingProgressView: View {
 		trackColor: Color = Color.tripBuddyPrimary.opacity(0.1),
 		progressColor: Color? = nil,
 		height: CGFloat = 0,
-		animationDuration: Double = 0.3,
+		animationDuration: Double = 0.5, // Use the updated default
 		showPercentage: Bool = false,
 		showCompletionIcon: Bool = false
 	) {
@@ -100,18 +100,18 @@ struct PackingProgressView: View {
 						.frame(height: barHeight)
 						.frame(maxWidth: .infinity) // Ensure background takes full width
 
-					// Progress fill
+					// Progress fill with spring animation
 					Capsule()
 						.fill(calculatedProgressColor)
 						// Calculate width based on GeometryReader's width
 						.frame(width: max(barHeight, min(CGFloat(progress), 1.0) * geometry.size.width), height: barHeight)
-						.animation(.easeInOut(duration: animationDuration), value: progress)
+						.animation(.spring(response: animationDuration, dampingFraction: 0.7), value: progress) // Changed animation
 
 					// Optional completion icon
 					if showCompletionIcon && progress >= 1.0 {
 						completionCheckmark
 							// Position checkmark at the end of the progress bar
-							.position(x: geometry.size.width - barHeight, y: geometry.size.height / 2)
+							.position(x: geometry.size.width - barHeight * 0.6, y: geometry.size.height / 2) // Adjust position slightly
 					}
 				}
 			}
@@ -136,9 +136,8 @@ struct PackingProgressView: View {
 				.foregroundColor(.tripBuddySuccess)
 				.font(.system(size: barHeight * 2))
 				.shadow(color: .black.opacity(0.1), radius: 1, x: 0, y: 1)
-				.transition(.scale.combined(with: .opacity))
+				.transition(.scale.combined(with: .opacity)) // Keep the transition
 		}
-		// Removed the .padding(.trailing, barHeight / 2) here as positioning is now handled by .position in ZStack
 	}
 
 	// MARK: - Helper Methods
@@ -155,22 +154,6 @@ struct PackingProgressView: View {
 			return .tripBuddySuccess
 		}
 	}
-
-	// The progressWidth function is no longer needed
-	/*
-	 /// Calculates the width of the progress bar based on the progress value
-	 /// - Parameter progress: The progress value (0.0 to 1.0)
-	 /// - Returns: The width of the progress bar
-	 private func progressWidth(for progress: Double) -> CGFloat? {
-	 // Return nil for full width when progress is 100%
-	 if progress >= 1.0 {
-	 return nil
-	 }
-
-	 // Calculate proportional width
-	 return progress * 100.0 // This was the incorrect calculation
-	 }
-	 */
 }
 
 // MARK: - Alternative Styles
