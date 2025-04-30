@@ -130,7 +130,11 @@
         }
       }
     },
+    "© 2025 Baer Solutions" : {
+
+    },
     "© 2025 Dennis DevLops" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1383,6 +1387,7 @@
       }
     },
     "data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

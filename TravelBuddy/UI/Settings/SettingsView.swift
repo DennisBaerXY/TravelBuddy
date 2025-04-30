@@ -48,11 +48,6 @@ struct SettingsView: View {
 					behaviorRows
 				}
                 
-				// Data section
-				Section(header: Text("data")) { // Was: "Data"
-					dataRows
-				}
-                
 				// Support section
 				Section(header: Text("support")) { // Was: "Support"
 					supportRows
@@ -348,7 +343,7 @@ struct SettingsView: View {
 				.font(.caption)
 				.foregroundColor(.secondary)
             
-			Text("© 2025 Dennis DevLops")
+			Text("© 2025 Baer Solutions")
 				.font(.caption2)
 				.foregroundColor(.secondary)
 				.padding(.top, 8)

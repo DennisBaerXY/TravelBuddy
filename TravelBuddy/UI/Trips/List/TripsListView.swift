@@ -34,13 +34,15 @@ struct TripsListView: View {
 			ZStack {
 				Group {
 					if trips.isEmpty {
-						emptyStateView
+						AddTripView(noTrips: true)
 					} else {
 						tripsListView
 					}
 				}.padding(.horizontal)
 				
-				floatingAddButton
+				if !trips.isEmpty {
+					floatingAddButton
+				}
 			}
 			
 			.navigationTitle("my.trips")

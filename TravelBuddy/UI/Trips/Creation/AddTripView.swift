@@ -2,6 +2,11 @@ import SwiftData
 import SwiftUI
 
 struct AddTripView: View {
+	var tripsEmpty: Bool = false
+	init(noTrips: Bool = false) {
+		tripsEmpty = noTrips
+	}
+
 	// MARK: - Environment
 
 	@Environment(\.dismiss) private var dismiss
@@ -109,10 +114,13 @@ struct AddTripView: View {
 			.navigationTitle(navigationTitle)
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				ToolbarItem(placement: .navigationBarLeading) {
-					Button("cancel") { dismiss() }
+				if tripsEmpty == false {
+					ToolbarItem(placement: .navigationBarLeading) {
+						Button("cancel") { dismiss() }
+					}
 				}
 			}
+			
 			.onChange(of: isFocused) { _, newValue in
 				isKeyboardVisible = newValue
 			}
@@ -478,10 +486,10 @@ struct AddTripView: View {
 		var isValid = true
 		var message: String? = nil
 		
-		if tripName.isEmpty || ((destinationPlaceId?.isEmpty) != nil) {
+		if tripName.isEmpty {
 			isValid = false
 			message = String(localized: "validation_missing_trip_name")
-		} else if destination.isEmpty || ((destinationPlaceId?.isEmpty) != nil) {
+		} else if destination.isEmpty || destinationPlaceId?.isEmpty ?? true {
 			isValid = false
 			message = String(localized: "validation_missing_trip_destination")
 		} else if selectedTransport.isEmpty {
