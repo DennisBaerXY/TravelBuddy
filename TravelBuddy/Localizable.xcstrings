@@ -2292,6 +2292,7 @@
       }
     },
     "onboarding_completed_description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2308,6 +2309,7 @@
       }
     },
     "onboarding_completed_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2322,6 +2324,9 @@
           }
         }
       }
+    },
+    "onboarding_name_placeholder" : {
+
     },
     "onboarding_organize_description" : {
       "localizations" : {
@@ -2386,6 +2391,21 @@
           }
         }
       }
+    },
+    "onboarding_ready_description" : {
+
+    },
+    "onboarding_ready_title" : {
+
+    },
+    "onboarding_tailor_description" : {
+
+    },
+    "onboarding_tailor_title" : {
+
+    },
+    "onboarding_travel_style_prompt" : {
+
     },
     "onboarding_welcome_description" : {
       "localizations" : {

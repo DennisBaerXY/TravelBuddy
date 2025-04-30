@@ -25,6 +25,7 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		static let showCompletedTrips = "showCompletedTrips"
 		static let preferredMeasurementSystem = "preferredMeasurementSystem"
 		static let lastUsedDate = "lastUsedDate" // Keep if needed outside settings data
+		static let preferredTravelStyle = "preferredTravelStyle"
 	}
 
 	// MARK: - Published Properties (Using @AppStorage where possible)
@@ -44,6 +45,8 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 			}
 		}
 	}
+
+	@AppStorage(Keys.preferredTravelStyle) var preferredTravelStyle: TravelStyle = .unknown
 
 	/// User's preferred sort option for packing lists. Defaults to name.
 	@AppStorage(Keys.defaultSortOption) var defaultSortOption: SortOption = .name
@@ -108,6 +111,7 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		UserDefaults.standard.removeObject(forKey: Keys.showCompletedTrips)
 		UserDefaults.standard.removeObject(forKey: Keys.preferredMeasurementSystem)
 		UserDefaults.standard.removeObject(forKey: Keys.prefersDarkMode)
+		UserDefaults.standard.removeObject(forKey: Keys.preferredTravelStyle)
 
 		// Manually trigger updates for @Published vars if needed, though @AppStorage handles its own
 		// Reset prefersDarkMode explicitly
