@@ -37,8 +37,9 @@ struct TripsListView: View {
 						AddTripView(noTrips: true)
 					} else {
 						tripsListView
+							.padding(.horizontal)
 					}
-				}.padding(.horizontal)
+				}
 				
 				if !trips.isEmpty {
 					floatingAddButton

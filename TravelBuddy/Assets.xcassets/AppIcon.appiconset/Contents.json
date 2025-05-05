@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "logo.png",
+      "filename" : "TravelBuddyIcon (4).png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "TravelBuddyIcon (4) 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -24,6 +25,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "TravelBuddyIcon Dark.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
