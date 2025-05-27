@@ -106,12 +106,7 @@ struct TravelBuddyApp: App {
 						TripsListView()
 
 					} else {
-						OnboardingView {
-							// Update onboarding status via the manager
-							withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
-								userSettings.hasCompletedOnboarding = true
-							}
-						}
+						OnboardingView()
 					}
 				}
 				// Inject ModelContainer and Managers into the environment

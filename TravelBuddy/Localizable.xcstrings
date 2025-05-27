@@ -130,7 +130,11 @@
         }
       }
     },
+    "© 2025 Baer Solutions" : {
+
+    },
     "© 2025 Dennis DevLops" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -839,6 +843,7 @@
       }
     },
     "business_trip" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1382,6 +1387,7 @@
       }
     },
     "data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2292,6 +2298,7 @@
       }
     },
     "onboarding_completed_description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2308,6 +2315,7 @@
       }
     },
     "onboarding_completed_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2328,13 +2336,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erstelle individuelle Packlisten für jede Reise und behalte den Überblick."
+            "value" : "Wichtige Gegenstände werden automatisch markiert, so dass du nie ohne die wichtigen Dinge das Haus verlässt."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create custom packing lists for each trip and keep track of everything."
+            "value" : "Critical items are automatically flagged so you never leave home without the important stuff."
           }
         }
       }
@@ -2344,34 +2352,36 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Organisiere Deine Reisen"
+            "value" : "Organisiere deine Reise"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Organize Your Trips"
+            "state" : "needs_review",
+            "value" : "Always the right stuff with you"
           }
         }
       }
     },
     "onboarding_prepared_description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nie wieder etwas vergessen! TripBuddy hilft dir, alles Wichtige einzupacken."
+            "value" : "Vergesse nie wieder etwas! TripBuddy hilft dir alles wichtige zu packen."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Never forget anything again! TripBuddy helps you pack all the essentials."
+            "state" : "needs_review",
+            "value" : "Pack appropriately with recommendations based on your accommodation and other options"
           }
         }
       }
     },
     "onboarding_prepared_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2387,7 +2397,117 @@
         }
       }
     },
+    "onboarding_ready_description" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TravelBuddy ist bereit, dir zu helfen, smarter zu packen und besser zu reisen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Your personal travel companion is ready to go. Where to first?"
+          }
+        }
+      }
+    },
+    "onboarding_ready_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bereit für stressfreies Reisen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready for Stress-Free Travel?"
+          }
+        }
+      }
+    },
+    "onboarding_smart_description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von Geschäftsreisen bis hin zu Strandurlaub – TravelBuddy erstellt in Sekundenschnelle die perfekte Packliste für jedes Abenteuer."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From business trips to beach vacations, TravelBuddy crafts the perfect packing list for every adventure in seconds."
+          }
+        }
+      }
+    },
+    "onboarding_smart_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smarte Vorschläge. Einfaches Packen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Smart Suggestions, Perfect Packing"
+          }
+        }
+      }
+    },
+    "onboarding_start_description" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie mehr Packstress! TravelBuddy erstellt deine optimale Packliste – einfach, smart, überzeugend"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No more packing stress! TravelBuddy creates your optimal packing list - simple, smart, convincing\n"
+          }
+        }
+      }
+    },
+    "onboarding_start_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intelligente Packlisten für jede Reise"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Smart Packinglists for Any Trip"
+          }
+        }
+      }
+    },
+    "onboarding_weather_description" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von"
+          }
+        }
+      }
+    },
     "onboarding_welcome_description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2404,6 +2524,7 @@
       }
     },
     "onboarding_welcome_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2791,6 +2912,9 @@
           }
         }
       }
+    },
+    "Rome" : {
+
     },
     "Sample Beach Vacation" : {
       "comment" : "Sample trip name",

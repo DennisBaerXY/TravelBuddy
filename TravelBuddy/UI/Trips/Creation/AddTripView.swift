@@ -2,6 +2,11 @@ import SwiftData
 import SwiftUI
 
 struct AddTripView: View {
+	var tripsEmpty: Bool = false
+	init(noTrips: Bool = false) {
+		tripsEmpty = noTrips
+	}
+
 	// MARK: - Environment
 
 	@Environment(\.dismiss) private var dismiss
@@ -109,10 +114,13 @@ struct AddTripView: View {
 			.navigationTitle(navigationTitle)
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
-				ToolbarItem(placement: .navigationBarLeading) {
-					Button("cancel") { dismiss() }
+				if tripsEmpty == false {
+					ToolbarItem(placement: .navigationBarLeading) {
+						Button("cancel") { dismiss() }
+					}
 				}
 			}
+			
 			.onChange(of: isFocused) { _, newValue in
 				isKeyboardVisible = newValue
 			}
@@ -137,7 +145,7 @@ struct AddTripView: View {
 					.foregroundColor(.tripBuddyText) // Use theme color
 
 				// Trip Name Input
-				TextField(String(localized: "trip_name_placeholder"), text: $tripName)
+				TextField("trip_name_placeholder", text: $tripName)
 					.focused($isFocused)
 					.padding(10)
 					.background(Color.tripBuddyCard) // Use card background for consistency
@@ -228,7 +236,7 @@ struct AddTripView: View {
 					SelectableButton(
 						systemImage: type.iconName,
 						// Convert LocalizedStringKey to String
-						text: type.localizedString(),
+						text: type.displayName(),
 						isSelected: selectedTransport.contains(type)
 					) {
 						if selectedTransport.contains(type) {
@@ -253,7 +261,7 @@ struct AddTripView: View {
 					SelectableButton(
 						systemImage: type.iconName,
 						// Convert LocalizedStringKey to String
-						text: type.localizedString(),
+						text: type.displayName(),
 						isSelected: selectedAccommodation == type
 					) {
 						selectedAccommodation = type
@@ -279,7 +287,7 @@ struct AddTripView: View {
 						ForEach(Activity.allCases) { activity in
 							SelectableButton(
 								systemImage: activity.iconName,
-								text: activity.localizedString(),
+								text: activity.displayName(),
 								isSelected: selectedActivities.contains(activity)
 							) {
 								if selectedActivities.contains(activity) {
@@ -296,9 +304,6 @@ struct AddTripView: View {
 				
 				// Additional details
 				Section(header: Text("other_details").font(.headline).padding(.leading, -15)) {
-					Toggle("business_trip", isOn: $isBusinessTrip)
-						.tint(.tripBuddyPrimary)
-					
 					// Number of people
 					HStack {
 						Text("number_of_people")
@@ -481,10 +486,10 @@ struct AddTripView: View {
 		var isValid = true
 		var message: String? = nil
 		
-		if tripName.isEmpty || ((destinationPlaceId?.isEmpty) != nil) {
+		if tripName.isEmpty {
 			isValid = false
 			message = String(localized: "validation_missing_trip_name")
-		} else if destination.isEmpty || ((destinationPlaceId?.isEmpty) != nil) {
+		} else if destination.isEmpty || destinationPlaceId?.isEmpty ?? true {
 			isValid = false
 			message = String(localized: "validation_missing_trip_destination")
 		} else if selectedTransport.isEmpty {
