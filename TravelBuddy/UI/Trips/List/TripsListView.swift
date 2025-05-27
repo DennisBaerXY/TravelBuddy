@@ -31,37 +31,37 @@ struct TripsListView: View {
 
 	var body: some View {
 		NavigationStack {
-			ZStack {
-				Group {
-					if trips.isEmpty {
-						AddTripView(noTrips: true)
-					} else {
+			if trips.isEmpty {
+				AddTripView(noTrips: true)
+			} else {
+				ZStack {
+					Group {
 						tripsListView
 							.padding(.horizontal)
 					}
-				}
-				
-				if !trips.isEmpty {
-					floatingAddButton
-				}
-			}
-			
-			.navigationTitle("my.trips")
-			.toolbar {
-				ToolbarItem(placement: .automatic) {
-					Button {
-						showingSettings = true
-					} label: {
-						Label("Settings", systemImage: "gear")
+					
+					if !trips.isEmpty {
+						floatingAddButton
 					}
 				}
-			}
-			.sheet(isPresented: $showingAddTrip) {
-				AddTripView()
-			}
-			.sheet(isPresented: $showingSettings) {
-				SettingsView()
-					.preferredColorScheme(themeManager.colorScheme)
+				
+				.navigationTitle("my.trips")
+				.toolbar {
+					ToolbarItem(placement: .automatic) {
+						Button {
+							showingSettings = true
+						} label: {
+							Label("Settings", systemImage: "gear")
+						}
+					}
+				}
+				.sheet(isPresented: $showingAddTrip) {
+					AddTripView()
+				}
+				.sheet(isPresented: $showingSettings) {
+					SettingsView()
+						.preferredColorScheme(themeManager.colorScheme)
+				}
 			}
 		}
 	}
