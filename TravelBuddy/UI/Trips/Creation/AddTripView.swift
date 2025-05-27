@@ -509,7 +509,7 @@ struct AddTripView: View {
 		}
 		
 		// Create the trip directly with our TripServices
-		let trip = TripServices.createTripWithPackingList(
+		let trip = TripServices.createTripWithSmartPackingList(
 			in: modelContext,
 			name: tripName,
 			destination: destination,

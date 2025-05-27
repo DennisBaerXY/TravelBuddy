@@ -31,6 +31,10 @@ struct TripServices {
 		numberOfPeople: Int,
 		climate: Climate
 	) -> Trip {
+		if AppConstants.enableSmartPackingSystem {
+			return createTripWithSmartPackingList(in: modelContext, name: name, destination: destination, startDate: startDate, endDate: endDate, transportTypes: transportTypes, accommodationType: accommodationType, activities: activities, isBusinessTrip: isBusinessTrip, numberOfPeople: numberOfPeople, climate: climate)
+		}
+		
 		// Create new trip
 		let newTrip = Trip(
 			name: name,
@@ -69,6 +73,60 @@ struct TripServices {
 		newTrip.update()
 		try? modelContext.save()
 		
+		return newTrip
+	}
+	
+	static func createTripWithSmartPackingList(
+		in modelContext: ModelContext,
+		name: String,
+		destination: String,
+		startDate: Date,
+		endDate: Date,
+		destinationPlaceId: String = "",
+		transportTypes: [TransportType],
+		accommodationType: AccommodationType,
+		activities: [Activity],
+		isBusinessTrip: Bool,
+		numberOfPeople: Int,
+		climate: Climate
+	) -> Trip {
+		// Create new trip
+		let newTrip = Trip(
+			name: name,
+			destination: destination,
+			startDate: startDate,
+			endDate: endDate,
+			destinationPlaceId: destinationPlaceId,
+			transportTypes: transportTypes,
+			accommodationType: accommodationType,
+			activities: activities,
+			isBusinessTrip: isBusinessTrip,
+			numberOfPeople: numberOfPeople,
+			climate: climate
+		)
+			
+		// Insert trip into context
+		modelContext.insert(newTrip)
+			
+		// Generate SMART packing items
+		let packingItems = SmartPackingListGenerator.generateSmartPackingList(for: newTrip)
+			
+		// Ensure packingItems array exists
+		if newTrip.packingItems == nil {
+			newTrip.packingItems = []
+		}
+			
+		// Add all items to the trip
+		for item in packingItems {
+			modelContext.insert(item)
+			item.trip = newTrip
+			newTrip.packingItems?.append(item)
+		}
+			
+		// Update and save
+		newTrip.update()
+		try? modelContext.save()
+			
 		return newTrip
 	}
 	

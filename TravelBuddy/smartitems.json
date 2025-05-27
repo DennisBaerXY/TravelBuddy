@@ -1,0 +1,2374 @@
+[
+	{
+		"id": "passport",
+		"nameKey": "item_passport",
+		"category": "documents",
+		"tags": ["travel", "international", "essential", "identification"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["id_card"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "id_card",
+		"nameKey": "item_id_card",
+		"category": "documents",
+		"tags": ["identification", "domestic", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["car", "train", "bus"],
+				"conOperator": "contains",
+				"weight": 0.9
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["passport"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "drivers_license",
+		"nameKey": "item_drivers_license",
+		"category": "documents",
+		"tags": ["driving", "car", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["car"],
+				"conOperator": "contains",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "travel_insurance",
+		"nameKey": "item_travel_insurance",
+		"category": "documents",
+		"tags": ["insurance", "international", "safety"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "duration",
+				"values": ["7"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "boarding_pass",
+		"nameKey": "item_boarding_pass",
+		"category": "documents",
+		"tags": ["flight", "airline", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "hotel_confirmation",
+		"nameKey": "item_hotel_confirmation",
+		"category": "documents",
+		"tags": ["accommodation", "booking", "confirmation"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "accommodation",
+				"values": ["hotel"],
+				"conOperator": "contains",
+				"weight": 0.9
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+
+	{
+		"id": "underwear",
+		"nameKey": "item_underwear",
+		"category": "clothing",
+		"tags": ["clothing", "underwear", "daily", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "perDay",
+				"minQuantity": 2,
+				"maxQuantity": 10
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "socks",
+		"nameKey": "item_socks",
+		"category": "clothing",
+		"tags": ["clothing", "socks", "daily", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "perDay",
+				"minQuantity": 2,
+				"maxQuantity": 10
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "tshirts",
+		"nameKey": "item_tshirts",
+		"category": "clothing",
+		"tags": ["clothing", "shirts", "tops", "casual", "daily"],
+		"baseQuantity": 2,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 2,
+				"maxQuantity": 8
+			}
+		],
+		"alternatives": ["shirts", "tops"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "pants",
+		"nameKey": "item_pants",
+		"category": "clothing",
+		"tags": ["clothing", "pants", "bottoms", "daily"],
+		"baseQuantity": 2,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 4
+			}
+		],
+		"alternatives": ["jeans", "trousers"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "jeans",
+		"nameKey": "item_jeans",
+		"category": "clothing",
+		"tags": ["clothing", "pants", "bottoms", "casual", "durable"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["pants"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "shorts",
+		"nameKey": "item_shorts",
+		"category": "clothing",
+		"tags": ["clothing", "bottoms", "summer", "hot", "casual"],
+		"baseQuantity": 2,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["hot", "warm"],
+				"conOperator": "contains",
+				"weight": 0.9
+			},
+			{
+				"type": "season",
+				"values": ["summer"],
+				"conOperator": "equals",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 4
+			}
+		],
+		"alternatives": [],
+		"seasonality": "summer",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "long_sleeve_shirts",
+		"nameKey": "item_long_sleeve_shirts",
+		"category": "clothing",
+		"tags": ["clothing", "shirts", "long_sleeve", "cool", "protection"],
+		"baseQuantity": 2,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cool", "cold"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "season",
+				"values": ["autumn", "winter"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 4
+			}
+		],
+		"alternatives": ["sweaters"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "sweaters",
+		"nameKey": "item_sweaters",
+		"category": "clothing",
+		"tags": ["clothing", "warm", "winter", "pullover"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cold", "cool"],
+				"conOperator": "contains",
+				"weight": 0.9
+			},
+			{
+				"type": "season",
+				"values": ["winter", "autumn"],
+				"conOperator": "contains",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": ["hoodies"],
+		"seasonality": "winter",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "hoodies",
+		"nameKey": "item_hoodies",
+		"category": "clothing",
+		"tags": ["clothing", "casual", "warm", "comfortable"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cool", "moderate"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["sweaters"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "winter_jacket",
+		"nameKey": "item_winter_jacket",
+		"category": "clothing",
+		"tags": ["winter", "cold", "jacket", "outerwear", "warm"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cold"],
+				"conOperator": "contains",
+				"weight": 1.0
+			},
+			{
+				"type": "season",
+				"values": ["winter"],
+				"conOperator": "equals",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["heavy_coat"],
+		"seasonality": "winter",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "rain_jacket",
+		"nameKey": "item_rain_jacket",
+		"category": "clothing",
+		"tags": ["rain", "weather", "protection", "jacket", "cool"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cool", "moderate"],
+				"conOperator": "contains",
+				"weight": 0.7
+			},
+			{
+				"type": "season",
+				"values": ["autumn", "spring"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["umbrella"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "light_jacket",
+		"nameKey": "item_light_jacket",
+		"category": "clothing",
+		"tags": ["clothing", "jacket", "light", "moderate", "evening"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["moderate", "warm"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["cardigan"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "swimwear",
+		"nameKey": "item_swimwear",
+		"category": "clothing",
+		"tags": ["swimming", "beach", "water", "summer"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["swimming", "beach"],
+				"conOperator": "contains",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": [],
+		"seasonality": "summer",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "casual_shoes",
+		"nameKey": "item_casual_shoes",
+		"category": "clothing",
+		"tags": ["footwear", "shoes", "casual", "walking"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["sneakers"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "dress_shoes",
+		"nameKey": "item_dress_shoes",
+		"category": "clothing",
+		"tags": ["footwear", "formal", "business", "dress"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 0.9
+			},
+			{
+				"type": "activity",
+				"values": ["business"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "hiking_boots",
+		"nameKey": "item_hiking_boots",
+		"category": "clothing",
+		"tags": ["hiking", "outdoor", "footwear", "sports", "boots"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["hiking"],
+				"conOperator": "contains",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["sturdy_shoes"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "flip_flops",
+		"nameKey": "item_flip_flops",
+		"category": "clothing",
+		"tags": ["footwear", "summer", "beach", "casual", "sandals"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["beach", "swimming"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "climate",
+				"values": ["hot", "warm"],
+				"conOperator": "contains",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["sandals"],
+		"seasonality": "summer",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "business_suit",
+		"nameKey": "item_business_suit",
+		"category": "clothing",
+		"tags": ["business", "formal", "professional", "suit"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 1.0
+			},
+			{
+				"type": "activity",
+				"values": ["business"],
+				"conOperator": "contains",
+				"weight": 0.9
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": ["formal_dress"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "dress_shirt",
+		"nameKey": "item_dress_shirt",
+		"category": "clothing",
+		"tags": ["business", "formal", "shirt", "professional"],
+		"baseQuantity": 2,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 0.9
+			},
+			{
+				"type": "activity",
+				"values": ["business"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 5
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "tie",
+		"nameKey": "item_tie",
+		"category": "clothing",
+		"tags": ["business", "formal", "accessory", "professional"],
+		"baseQuantity": 2,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 0.8
+			},
+			{
+				"type": "activity",
+				"values": ["business"],
+				"conOperator": "contains",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "male"
+	},
+	{
+		"id": "pajamas",
+		"nameKey": "item_pajamas",
+		"category": "clothing",
+		"tags": ["clothing", "sleepwear", "night", "comfortable"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "perPerson",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": ["sleepwear"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "scarf",
+		"nameKey": "item_scarf",
+		"category": "clothing",
+		"tags": ["accessory", "warm", "winter", "neck"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cold", "cool"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "season",
+				"values": ["winter", "autumn"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "winter",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "gloves",
+		"nameKey": "item_gloves",
+		"category": "clothing",
+		"tags": ["accessory", "warm", "winter", "hands"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cold"],
+				"conOperator": "contains",
+				"weight": 0.9
+			},
+			{
+				"type": "season",
+				"values": ["winter"],
+				"conOperator": "equals",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "winter",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "hat",
+		"nameKey": "item_hat",
+		"category": "clothing",
+		"tags": ["accessory", "head", "sun", "protection"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["hot", "warm"],
+				"conOperator": "contains",
+				"weight": 0.7
+			},
+			{
+				"type": "activity",
+				"values": ["sightseeing", "hiking", "beach"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["cap"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "winter_hat",
+		"nameKey": "item_winter_hat",
+		"category": "clothing",
+		"tags": ["accessory", "warm", "winter", "head"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cold"],
+				"conOperator": "contains",
+				"weight": 0.9
+			},
+			{
+				"type": "season",
+				"values": ["winter"],
+				"conOperator": "equals",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "winter",
+		"genderSpecific": "unisex"
+	},
+
+	{
+		"id": "phone_charger",
+		"nameKey": "item_phone_charger",
+		"category": "electronics",
+		"tags": ["electronics", "essential", "daily", "charging", "phone"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["power_bank"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "power_bank",
+		"nameKey": "item_power_bank",
+		"category": "electronics",
+		"tags": ["electronics", "charging", "portable", "backup"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			},
+			{
+				"type": "activity",
+				"values": ["hiking", "sightseeing"],
+				"conOperator": "contains",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "laptop",
+		"nameKey": "item_laptop",
+		"category": "electronics",
+		"tags": ["electronics", "work", "business", "computer", "needs_charger"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 0.9
+			},
+			{
+				"type": "activity",
+				"values": ["business"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["tablet"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "laptop_charger",
+		"nameKey": "item_laptop_charger",
+		"category": "electronics",
+		"tags": ["electronics", "charger", "laptop", "business"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 0.9
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "tablet",
+		"nameKey": "item_tablet",
+		"category": "electronics",
+		"tags": ["electronics", "entertainment", "work", "portable"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["laptop"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "camera",
+		"nameKey": "item_camera",
+		"category": "electronics",
+		"tags": [
+			"electronics",
+			"photography",
+			"sightseeing",
+			"memories",
+			"needs_charger"
+		],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["sightseeing", "beach", "hiking"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "headphones",
+		"nameKey": "item_headphones",
+		"category": "electronics",
+		"tags": ["electronics", "audio", "entertainment", "travel"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane", "train"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["earbuds"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "travel_adapter",
+		"nameKey": "item_travel_adapter",
+		"category": "electronics",
+		"tags": ["electronics", "international", "adapter", "charging"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "e_reader",
+		"nameKey": "item_e_reader",
+		"category": "electronics",
+		"tags": ["electronics", "reading", "entertainment", "books"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			},
+			{
+				"type": "activity",
+				"values": ["relaxing"],
+				"conOperator": "contains",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["books"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "portable_speaker",
+		"nameKey": "item_portable_speaker",
+		"category": "electronics",
+		"tags": ["electronics", "audio", "entertainment", "group"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "groupSize",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			},
+			{
+				"type": "activity",
+				"values": ["beach", "relaxing"],
+				"conOperator": "contains",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+
+	{
+		"id": "toothbrush",
+		"nameKey": "item_toothbrush",
+		"category": "toiletries",
+		"tags": ["toiletries", "dental", "daily", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "perPerson",
+				"minQuantity": 1,
+				"maxQuantity": 4
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "toothpaste",
+		"nameKey": "item_toothpaste",
+		"category": "toiletries",
+		"tags": ["toiletries", "dental", "daily", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "shampoo",
+		"nameKey": "item_shampoo",
+		"category": "toiletries",
+		"tags": ["toiletries", "hair", "washing", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 0.9
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["2in1_shampoo"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "body_wash",
+		"nameKey": "item_body_wash",
+		"category": "toiletries",
+		"tags": ["toiletries", "washing", "body", "essential"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 0.9
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["soap"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "deodorant",
+		"nameKey": "item_deodorant",
+		"category": "toiletries",
+		"tags": ["toiletries", "daily", "essential", "hygiene"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 0.9
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "sunscreen",
+		"nameKey": "item_sunscreen",
+		"category": "toiletries",
+		"tags": ["sun", "protection", "summer", "beach", "hot"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["hot", "warm"],
+				"conOperator": "contains",
+				"weight": 0.9
+			},
+			{
+				"type": "activity",
+				"values": ["beach", "swimming", "sightseeing"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "weatherDependent",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": [],
+		"seasonality": "summer",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "moisturizer",
+		"nameKey": "item_moisturizer",
+		"category": "toiletries",
+		"tags": ["toiletries", "skin", "care", "daily"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "razor",
+		"nameKey": "item_razor",
+		"category": "toiletries",
+		"tags": ["toiletries", "shaving", "grooming"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["electric_razor"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "shaving_cream",
+		"nameKey": "item_shaving_cream",
+		"category": "toiletries",
+		"tags": ["toiletries", "shaving", "grooming"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "towel",
+		"nameKey": "item_towel",
+		"category": "toiletries",
+		"tags": ["toiletries", "drying", "swimming", "beach"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["swimming", "beach", "hiking"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "accommodation",
+				"values": ["camping", "hostel"],
+				"conOperator": "contains",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "perPerson",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "hair_brush",
+		"nameKey": "item_hair_brush",
+		"category": "toiletries",
+		"tags": ["toiletries", "hair", "grooming", "daily"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "perPerson",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["comb"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "perfume_cologne",
+		"nameKey": "item_perfume_cologne",
+		"category": "toiletries",
+		"tags": ["toiletries", "fragrance", "personal", "optional"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			},
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "lip_balm",
+		"nameKey": "item_lip_balm",
+		"category": "toiletries",
+		"tags": ["toiletries", "lips", "protection", "dry"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["cold", "dry"],
+				"conOperator": "contains",
+				"weight": 0.7
+			},
+			{
+				"type": "activity",
+				"values": ["skiing", "hiking"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+
+	{
+		"id": "sunglasses",
+		"nameKey": "item_sunglasses",
+		"category": "accessories",
+		"tags": ["sun", "protection", "accessories", "summer"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "climate",
+				"values": ["hot", "warm"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "activity",
+				"values": ["beach", "sightseeing", "hiking"],
+				"conOperator": "contains",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "summer",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "watch",
+		"nameKey": "item_watch",
+		"category": "accessories",
+		"tags": ["accessories", "time", "daily", "personal"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["2"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "backpack",
+		"nameKey": "item_backpack",
+		"category": "accessories",
+		"tags": ["bag", "carrying", "hiking", "day_bag"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["hiking", "sightseeing"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["day_bag"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "umbrella",
+		"nameKey": "item_umbrella",
+		"category": "accessories",
+		"tags": ["rain", "weather", "protection", "portable"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "season",
+				"values": ["autumn", "spring"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["rain_jacket"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "water_bottle",
+		"nameKey": "item_water_bottle",
+		"category": "accessories",
+		"tags": ["hydration", "hiking", "sports", "health"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["hiking", "sports", "sightseeing"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "climate",
+				"values": ["hot", "warm"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "travel_pillow",
+		"nameKey": "item_travel_pillow",
+		"category": "accessories",
+		"tags": ["comfort", "travel", "sleep", "plane"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 0.7
+			},
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "eye_mask",
+		"nameKey": "item_eye_mask",
+		"category": "accessories",
+		"tags": ["sleep", "travel", "comfort", "plane"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "earplugs",
+		"nameKey": "item_earplugs",
+		"category": "accessories",
+		"tags": ["sleep", "noise", "comfort", "travel"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "accommodation",
+				"values": ["hostel"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+
+	{
+		"id": "basic_first_aid",
+		"nameKey": "item_basic_first_aid",
+		"category": "medication",
+		"tags": ["medical", "safety", "emergency", "bandages"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "activity",
+				"values": ["hiking", "sports"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "pain_medication",
+		"nameKey": "item_pain_medication",
+		"category": "medication",
+		"tags": ["medical", "pain", "headache", "basic"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "allergy_medication",
+		"nameKey": "item_allergy_medication",
+		"category": "medication",
+		"tags": ["medical", "allergy", "antihistamine"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "situational",
+		"conditions": [
+			{
+				"type": "season",
+				"values": ["spring", "summer"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "stomach_medication",
+		"nameKey": "item_stomach_medication",
+		"category": "medication",
+		"tags": ["medical", "stomach", "digestion", "travel"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 0.6
+			},
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "prescription_medication",
+		"nameKey": "item_prescription_medication",
+		"category": "medication",
+		"tags": ["medical", "prescription", "essential", "personal"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+
+	{
+		"id": "wallet",
+		"nameKey": "item_wallet",
+		"category": "other",
+		"tags": ["money", "cards", "essential", "daily"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["0"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "keys",
+		"nameKey": "item_keys",
+		"category": "other",
+		"tags": ["essential", "access", "home", "car"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "critical",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["0"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "cash",
+		"nameKey": "item_cash",
+		"category": "other",
+		"tags": ["money", "payment", "essential", "emergency"],
+		"baseQuantity": 1,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["0"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "credit_cards",
+		"nameKey": "item_credit_cards",
+		"category": "other",
+		"tags": ["payment", "cards", "essential", "backup"],
+		"baseQuantity": 2,
+		"isEssential": true,
+		"priority": "essential",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["1"],
+				"conOperator": "greaterThan",
+				"weight": 1.0
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "snacks",
+		"nameKey": "item_snacks",
+		"category": "other",
+		"tags": ["food", "travel", "energy", "hunger"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["car", "train"],
+				"conOperator": "contains",
+				"weight": 0.7
+			},
+			{
+				"type": "activity",
+				"values": ["hiking"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "conditional",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "entertainment",
+		"nameKey": "item_entertainment",
+		"category": "other",
+		"tags": ["books", "games", "magazines", "leisure"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "transport",
+				"values": ["plane", "train"],
+				"conOperator": "contains",
+				"weight": 0.6
+			},
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 2
+			}
+		],
+		"alternatives": ["books", "magazines"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "business_cards",
+		"nameKey": "item_business_cards",
+		"category": "other",
+		"tags": ["business", "networking", "professional", "cards"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "businessTrip",
+				"values": ["true"],
+				"conOperator": "equals",
+				"weight": 0.9
+			},
+			{
+				"type": "activity",
+				"values": ["business"],
+				"conOperator": "contains",
+				"weight": 0.8
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "laundry_bag",
+		"nameKey": "item_laundry_bag",
+		"category": "other",
+		"tags": ["laundry", "organization", "dirty", "clothes"],
+		"baseQuantity": 1,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["5"],
+				"conOperator": "greaterThan",
+				"weight": 0.7
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 1
+			}
+		],
+		"alternatives": ["plastic_bags"],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "travel_locks",
+		"nameKey": "item_travel_locks",
+		"category": "other",
+		"tags": ["security", "luggage", "safety", "locks"],
+		"baseQuantity": 2,
+		"isEssential": false,
+		"priority": "recommended",
+		"conditions": [
+			{
+				"type": "accommodation",
+				"values": ["hostel"],
+				"conOperator": "contains",
+				"weight": 0.8
+			},
+			{
+				"type": "transport",
+				"values": ["plane"],
+				"conOperator": "contains",
+				"weight": 0.6
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	},
+	{
+		"id": "reusable_bags",
+		"nameKey": "item_reusable_bags",
+		"category": "other",
+		"tags": ["shopping", "environmental", "carrying", "bags"],
+		"baseQuantity": 2,
+		"isEssential": false,
+		"priority": "optional",
+		"conditions": [
+			{
+				"type": "duration",
+				"values": ["3"],
+				"conOperator": "greaterThan",
+				"weight": 0.5
+			}
+		],
+		"quantityRules": [
+			{
+				"condition": null,
+				"formula": "fixed",
+				"minQuantity": 1,
+				"maxQuantity": 3
+			}
+		],
+		"alternatives": [],
+		"seasonality": "yearRound",
+		"genderSpecific": "unisex"
+	}
+]

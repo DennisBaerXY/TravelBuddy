@@ -91,6 +91,10 @@ struct TravelBuddyApp: App {
 			_modelContainer = State(initialValue: nil) // Ensure container is nil on error
 			print("❌ FATAL ERROR: Could not create ModelContainer: \(error.localizedDescription)")
 		}
+
+		if AppConstants.enableDebugLogging {
+			SmartItemRegistry.shared.printStats()
+		}
 	}
 
 	// MARK: - App Scene Body
