@@ -110,7 +110,9 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		UserDefaults.standard.removeObject(forKey: Keys.autoSuggestPackingLists)
 		UserDefaults.standard.removeObject(forKey: Keys.showCompletedTrips)
 		UserDefaults.standard.removeObject(forKey: Keys.preferredMeasurementSystem)
+
 		UserDefaults.standard.removeObject(forKey: Keys.prefersDarkMode)
+
 		UserDefaults.standard.removeObject(forKey: Keys.preferredTravelStyle)
 
 		// Manually trigger updates for @Published vars if needed, though @AppStorage handles its own

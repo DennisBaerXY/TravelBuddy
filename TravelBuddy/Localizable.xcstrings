@@ -130,6 +130,9 @@
         }
       }
     },
+    "•" : {
+
+    },
     "© 2025 Baer Solutions" : {
 
     },
@@ -859,6 +862,9 @@
         }
       }
     },
+    "By using TravelBuddy, you agree to these terms." : {
+
+    },
     "cancel" : {
       "localizations" : {
         "de" : {
@@ -1042,7 +1048,11 @@
         }
       }
     },
+    "Children's Privacy" : {
+
+    },
     "Choose a Plan" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1194,6 +1204,7 @@
       }
     },
     "Close" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1353,6 +1364,9 @@
           }
         }
       }
+    },
+    "Contact Us" : {
+
     },
     "create_list" : {
       "localizations" : {
@@ -1874,6 +1888,9 @@
           }
         }
       }
+    },
+    "If you have questions about this privacy policy, please contact us at:" : {
+
     },
     "imperial" : {
       "extractionState" : "stale",
@@ -3250,6 +3267,7 @@
       }
     },
     "language" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3264,6 +3282,9 @@
           }
         }
       }
+    },
+    "Last updated: %@" : {
+
     },
     "measurement_system" : {
       "extractionState" : "stale",
@@ -3930,6 +3951,7 @@
       }
     },
     "Premium" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4030,6 +4052,7 @@
       }
     },
     "premium_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4191,6 +4214,7 @@
       }
     },
     "Restore Purchases" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4597,6 +4621,7 @@
       }
     },
     "Subscribe Now" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4627,6 +4652,9 @@
           }
         }
       }
+    },
+    "support@travelbuddy.app" : {
+
     },
     "T-Shirts" : {
       "localizations" : {
@@ -4661,6 +4689,7 @@
       }
     },
     "Terms of Use" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4940,6 +4969,9 @@
         }
       }
     },
+    "TravelBuddy is not intended for children under 13. We do not knowingly collect personal information from children under 13." : {
+
+    },
     "trip_details" : {
       "localizations" : {
         "de" : {
@@ -5128,6 +5160,9 @@
         }
       }
     },
+    "View Full Privacy Policy" : {
+
+    },
     "Weiter" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5186,6 +5221,9 @@
           }
         }
       }
+    },
+    "Your privacy is important to us. This policy explains how TravelBuddy collects, uses, and protects your information." : {
+
     }
   },
   "version" : "1.0"

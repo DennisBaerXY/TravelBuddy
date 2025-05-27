@@ -251,7 +251,7 @@ class SmartItemRegistry {
 extension SmartItemRegistry {
 	/// Get localized name for item
 	func localizedName(for item: RegistryPackingItem) -> String {
-		return NSLocalizedString(item.nameKey, comment: "Packing item: \(item.id)")
+		return NSLocalizedString(item.nameKey, comment: "Packing item with id \(item.id)")
 	}
     
 	/// Get all localized names for debugging

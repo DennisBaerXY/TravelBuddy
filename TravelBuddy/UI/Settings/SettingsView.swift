@@ -39,9 +39,9 @@ struct SettingsView: View {
 				}
                 
 				// Appearance section
-				Section(header: Text("appearance")) { // Was: "Appearance"
-					appearanceRows
-				}
+//				Section(header: Text("appearance")) { // Was: "Appearance"
+//					appearanceRows
+//				}
                 
 				// Behavior section
 				Section(header: Text("behavior")) { // Was: "Behavior"
@@ -82,9 +82,7 @@ struct SettingsView: View {
 		.sheet(isPresented: $showingHelpCenter) {
 			HelpCenterView()
 		}
-		.sheet(isPresented: $showingPremiumInfo) {
-			PremiumInfoView()
-		}
+		.sheet(isPresented: $showingPremiumInfo) {}
 		.alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
 			Button("Cancel", role: .cancel) {}
 			Button("Reset", role: .destructive) {
@@ -165,26 +163,26 @@ struct SettingsView: View {
 				}
 			}
             
-			// Language picker
-			Button {
-				showingLanguagePicker = true
-			} label: {
-				HStack {
-					Text("language") // Was: Sprache
-                    
-					Spacer()
-                    
-					Text(LocalizationManager.shared.currentLanguage.displayName)
-						.foregroundColor(.secondary)
-                    
-					Image(systemName: "chevron.right")
-						.font(.caption)
-						.foregroundColor(.secondary)
-				}
-			}
-			.sheet(isPresented: $showingLanguagePicker) {
-				LanguagePickerView()
-			}
+//			// Language picker
+//			Button {
+//				showingLanguagePicker = true
+//			} label: {
+//				HStack {
+//					Text("language") // Was: Sprache
+//
+//					Spacer()
+//
+//					Text(LocalizationManager.shared.currentLanguage.displayName)
+//						.foregroundColor(.secondary)
+//
+//					Image(systemName: "chevron.right")
+//						.font(.caption)
+//						.foregroundColor(.secondary)
+//				}
+//			}
+//			.sheet(isPresented: $showingLanguagePicker) {
+//				LanguagePickerView()
+//			}
 		}
 	}
     

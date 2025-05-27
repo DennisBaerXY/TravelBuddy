@@ -266,7 +266,7 @@ struct SmartPackingListGenerator {
 				name: localizedName,
 				category: registryItem.category,
 				isPacked: false,
-				isEssential: registryItem.isEssential || recommendation.confidence > 0.8,
+				isEssential: registryItem.isEssential,
 				quantity: recommendation.recommendedQuantity
 			)
 		}

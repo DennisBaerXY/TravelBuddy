@@ -11,7 +11,8 @@ struct TripsListView: View {
 	// SwiftData Query for trips
 	@Query(sort: [
 		SortDescriptor(\Trip.isCompleted, order: .forward),
-		SortDescriptor(\Trip.startDate, order: .forward)
+		SortDescriptor(\Trip.startDate, order: .forward),
+		SortDescriptor(\Trip.createdAt, order: .forward),
 	]) private var trips: [Trip]
 	
 	@State private var showingAddTrip = false
@@ -72,7 +73,7 @@ struct TripsListView: View {
 		LinearGradient(
 			gradient: Gradient(colors: [
 				Color.tripBuddyBackground.opacity(0.5),
-				Color.tripBuddyBackground
+				Color.tripBuddyBackground,
 			]),
 			startPoint: .topLeading,
 			endPoint: .bottomTrailing
