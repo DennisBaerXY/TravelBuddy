@@ -13,28 +13,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication,
 	                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
 	{
-		MobileAds.shared.start(completionHandler: nil)
+		// Initialize Mobile Ads with consent handling
+		MobileAds.shared.start { _ in
+			// Check tracking status before configuring ads
+			AppTrackingManager.shared.updateTrackingStatus()
+		}
+
+		// Configure test devices
 		MobileAds.shared.requestConfiguration.testDeviceIdentifiers = ["21fade3f7a75ba7f7e112da1fae8f83b"]
 
+		// Google Places configuration remains the same
 		if AppConstants.enableGoogleMapsAutocomplete {
 			let activated = PlacesClient.provideAPIKey(Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as! String)
 			if !activated {
 				print("Google Maps Autocomplete API key not provided or invalid")
-			} else {
-				print("Google Maps Autocomplete API key activated")
 			}
-
-		} else {
-			print("Google Maps Autocomplete disabled via AppConstants.enableGoogleMapsAutocomplete")
 		}
 
+		// Firebase configuration
 		if AppConstants.enableAnalytics {
 			FirebaseApp.configure()
-			if AppConstants.enableDebugLogging {
-				print("Firebase configured for Analytics")
-			}
-		} else {
-			print("Firebase Analytics disabled via AppConstants.enableAnalytics")
+
+			// Configure analytics based on initial tracking status
+			AppTrackingManager.shared.updateTrackingStatus()
 		}
 
 		return true
@@ -44,17 +45,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 @main
 struct TravelBuddyApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
-	// MARK: - State Objects & Environment
-
-	// Use the UserSettingsManager singleton as the source of truth for settings
 	@StateObject private var userSettings = UserSettingsManager.shared
 	@StateObject private var themeManager = ThemeManager.shared
 	@StateObject private var localizationManager = LocalizationManager.shared
+	@StateObject private var trackingManager = AppTrackingManager.shared
 
-	// State variable to hold the initialized ModelContainer or nil if setup failed
 	@State private var modelContainer: ModelContainer?
 	@State private var initializationError: Error? = nil
+	@State private var showingTrackingRequest = false
 
 	// MARK: - Initialization
 
@@ -103,46 +101,66 @@ struct TravelBuddyApp: App {
 		WindowGroup {
 			// --- UI Content ---
 			if let container = modelContainer {
-				// If container setup was successful, show main content
 				Group {
-					// Check onboarding status from the single source of truth: UserSettingsManager
-					if userSettings.hasCompletedOnboarding {
-						TripsListView()
-
-					} else {
+					// Main app flow
+					if !userSettings.hasCompletedOnboarding {
 						OnboardingView()
+							.onAppear {
+								checkTrackingRequest()
+							}
+					} else if showingTrackingRequest {
+						TrackingRequestView {
+							showingTrackingRequest = false
+						}
+					} else {
+						TripsListView()
+							.onAppear {
+								checkTrackingRequest()
+							}
 					}
 				}
-				// Inject ModelContainer and Managers into the environment
 				.modelContainer(container)
-				.environmentObject(userSettings) // Already initialized as @StateObject
-				.environmentObject(themeManager) // Already initialized as @StateObject
-				.environmentObject(localizationManager) // Inject the manager
-				.environment(\.locale, localizationManager.appLocale) //
-				.preferredColorScheme(themeManager.colorScheme) // Apply theme preference
-
+				.environmentObject(userSettings)
+				.environmentObject(themeManager)
+				.environmentObject(localizationManager)
+				.environmentObject(trackingManager)
+				.environment(\.locale, localizationManager.appLocale)
+				.preferredColorScheme(themeManager.colorScheme)
 			} else {
-				// If container setup failed, show an error message
-				VStack {
-					Image(systemName: "exclamationmark.triangle.fill")
-						.resizable()
-						.scaledToFit()
-						.frame(width: 50, height: 50)
-						.foregroundColor(.red)
-					Text("App Initialization Failed")
-						.font(.title)
-						.padding(.bottom)
-					Text("TravelBuddy could not start correctly. Please try restarting the app.")
-						.multilineTextAlignment(.center)
-						.foregroundColor(.secondary)
-						.padding(.horizontal)
-					if let error = initializationError {
-						Text("Error: \(error.localizedDescription)")
-							.font(.caption)
-							.foregroundColor(.gray)
-							.padding()
-					}
-				}
+				errorView
+			}
+		}
+	}
+
+	private func checkTrackingRequest() {
+		// Only show tracking request once after onboarding
+		if trackingManager.shouldRequestTracking && userSettings.hasCompletedOnboarding {
+			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+				showingTrackingRequest = true
+			}
+		}
+	}
+
+	private var errorView: some View {
+		// If container setup failed, show an error message
+		VStack {
+			Image(systemName: "exclamationmark.triangle.fill")
+				.resizable()
+				.scaledToFit()
+				.frame(width: 50, height: 50)
+				.foregroundColor(.red)
+			Text("App Initialization Failed")
+				.font(.title)
+				.padding(.bottom)
+			Text("TravelBuddy could not start correctly. Please try restarting the app.")
+				.multilineTextAlignment(.center)
+				.foregroundColor(.secondary)
+				.padding(.horizontal)
+			if let error = initializationError {
+				Text("Error: \(error.localizedDescription)")
+					.font(.caption)
+					.foregroundColor(.gray)
+					.padding()
 			}
 		}
 	}

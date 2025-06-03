@@ -3300,6 +3300,9 @@
     "Last updated: %@" : {
 
     },
+    "learn_more_privacy" : {
+
+    },
     "measurement_system" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4771,6 +4774,76 @@
         }
       }
     },
+    "tracking_benefit_ads" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relevant Ads"
+          }
+        }
+      }
+    },
+    "tracking_benefit_ads_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See ads that match your interests instead of random ones"
+          }
+        }
+      }
+    },
+    "tracking_benefit_analytics" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Better App Experience"
+          }
+        }
+      }
+    },
+    "tracking_benefit_analytics_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help us understand how you use the app to make it better"
+          }
+        }
+      }
+    },
+    "tracking_benefit_privacy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Privacy Protected"
+          }
+        }
+      }
+    },
+    "tracking_benefit_privacy_desc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We never share your personal data with third parties"
+          }
+        }
+      }
+    },
+    "tracking_request_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn more about our privacy policy"
+          }
+        }
+      }
+    },
     "transport" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -5182,7 +5255,6 @@
 
     },
     "Weiter" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

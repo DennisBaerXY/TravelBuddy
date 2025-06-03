@@ -26,6 +26,7 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		static let preferredMeasurementSystem = "preferredMeasurementSystem"
 		static let lastUsedDate = "lastUsedDate" // Keep if needed outside settings data
 		static let preferredTravelStyle = "preferredTravelStyle"
+		static let trackingRequestedKey = "has_requested_att_permission"
 	}
 
 	// MARK: - Published Properties (Using @AppStorage where possible)
@@ -45,6 +46,8 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 			}
 		}
 	}
+
+	@AppStorage(Keys.trackingRequestedKey) var trackingRequested: Bool = false
 
 	@AppStorage(Keys.preferredTravelStyle) var preferredTravelStyle: TravelStyle = .unknown
 
@@ -112,6 +115,7 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		UserDefaults.standard.removeObject(forKey: Keys.preferredMeasurementSystem)
 
 		UserDefaults.standard.removeObject(forKey: Keys.prefersDarkMode)
+		UserDefaults.standard.removeObject(forKey: Keys.trackingRequestedKey)
 
 		UserDefaults.standard.removeObject(forKey: Keys.preferredTravelStyle)
 
@@ -128,6 +132,7 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		autoSuggestPackingLists = true
 		showCompletedTrips = true
 		preferredMeasurementSystem = Locale.current.measurementSystem == .metric ? .metric : .imperial
+		trackingRequested = false
 
 		// Need to manually update the @AppStorage properties if they don't automatically pick up the removal
 		// by assigning their default values again to trigger updates.
