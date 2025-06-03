@@ -134,7 +134,7 @@ struct TripDetailView: View {
 					}
 
 					// MONETIZATION: Add Ad Banner Here
-					if !UserSettingsManager.shared.isPremiumUser {
+					if !UserSettingsManager.shared.isPremiumUser && AppTrackingManager.shared.canRequestAds {
 						Spacer()
 						BannerViewContainer(adSize)
 							.frame(width: adSize.size.width, height: adSize.size.height)
@@ -218,6 +218,7 @@ struct TripDetailView: View {
 
 	private var packingListContent: some View {
 		VStack(alignment: .leading, spacing: 25) {
+			// TODO: GetYourGuide Integration link
 			// Items to pack
 			if !items.isEmpty {
 				sectionHeader(

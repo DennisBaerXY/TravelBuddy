@@ -669,6 +669,9 @@
         }
       }
     },
+    "affiliate_link_disclosure" : {
+
+    },
     "AKTIV" : {
       "localizations" : {
         "de" : {
@@ -1552,6 +1555,12 @@
         }
       }
     },
+    "discover_activities_description" : {
+
+    },
+    "discover_activities_title %@" : {
+
+    },
     "done" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1588,6 +1597,9 @@
     "edit_item" : {
 
     },
+    "error_creating_link" : {
+
+    },
     "Error: %@" : {
       "localizations" : {
         "de" : {
@@ -1620,6 +1632,9 @@
         }
       }
     },
+    "explore_on_getyourguide_button" : {
+
+    },
     "Export Data" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1636,6 +1651,9 @@
           }
         }
       }
+    },
+    "Find activities for your trip!" : {
+
     },
     "finish" : {
       "localizations" : {
