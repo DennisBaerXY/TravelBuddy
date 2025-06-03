@@ -21,40 +21,29 @@ struct SettingsView: View {
 	@ObservedObject private var localeManager = LocalizationManager.shared
 	@State private var showingThemePicker = false
 	@State private var showingLanguagePicker = false
-	@State private var showingHelpCenter = false
+	
 	@State private var showingPremiumInfo = false
 	@State private var showingResetConfirmation = false
+	
+	@State private var isShowingError = false
 	
 	// MARK: - Body
     
 	var body: some View {
 		NavigationStack {
 			List {
-				Section(header: Text("account")) { // Was: "Account"
-					if userSettings.isPremiumUser {
-						premiumAccountRow
-					} else {
-						getPremiumRow
-					}
-				}
-                
-				// Appearance section
-				Section(header: Text("appearance")) { // Was: "Appearance"
-					appearanceRows
-				}
-                
 				// Behavior section
-				Section(header: Text("behavior")) { // Was: "Behavior"
+				Section(header: Text("behavior")) {
 					behaviorRows
 				}
                 
 				// Support section
-				Section(header: Text("support")) { // Was: "Support"
+				Section(header: Text("support")) {
 					supportRows
 				}
                 
 				// About section
-				Section(header: Text("about")) { // Was: "About"
+				Section(header: Text("about")) {
 					aboutRows
 				}
                 
@@ -68,6 +57,10 @@ struct SettingsView: View {
 				// App information
 				appInfoFooter
 			}
+			.foregroundStyle(.tripBuddyText)
+			.listStyle(.grouped)
+			.scrollContentBackground(.hidden)
+			
 			.navigationTitle("Settings")
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
@@ -78,13 +71,12 @@ struct SettingsView: View {
 				}
 			}
 		}
+		.alert("Something went wrong", isPresented: $isShowingError) {
+			Button("OK", role: .cancel) {}
+		} message: {
+			Text("Please try again later.")
+		}
 		
-		.sheet(isPresented: $showingHelpCenter) {
-			HelpCenterView()
-		}
-		.sheet(isPresented: $showingPremiumInfo) {
-			PremiumInfoView()
-		}
 		.alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
 			Button("Cancel", role: .cancel) {}
 			Button("Reset", role: .destructive) {
@@ -124,66 +116,16 @@ struct SettingsView: View {
 		}
 	}
     
-	/// Row for upgrading to premium
-	private var getPremiumRow: some View {
-		Button {
-			showingPremiumInfo = true
-		} label: {
-			HStack {
-				Label {
-					Text("get_premium")
-				} icon: {
-					Image(systemName: "star.fill")
-						.foregroundColor(.yellow)
-				}
-                
-				Spacer()
-                
-				Image(systemName: "chevron.right")
-					.font(.caption)
-					.foregroundColor(.secondary)
-			}
-		}
-	}
-    
 	// MARK: - Appearance Section
     
 	/// Rows for appearance settings
 	private var appearanceRows: some View {
 		Group {
-			// Theme picker
-//			Picker("color_theme", selection: $themeManager.colorTheme) {
-//				ForEach(ColorTheme.allCases) { theme in
-//					Text(theme.displayName).tag(theme)
-//				}
-//			}
-            
 			// Dark mode toggle
 			Picker("appearance", selection: $themeManager.colorSchemePreference) {
 				ForEach(ColorSchemePreference.allCases, id: \.self) { preference in
 					Text(preference.displayName).tag(preference)
 				}
-			}
-            
-			// Language picker
-			Button {
-				showingLanguagePicker = true
-			} label: {
-				HStack {
-					Text("language") // Was: Sprache
-                    
-					Spacer()
-                    
-					Text(LocalizationManager.shared.currentLanguage.displayName)
-						.foregroundColor(.secondary)
-                    
-					Image(systemName: "chevron.right")
-						.font(.caption)
-						.foregroundColor(.secondary)
-				}
-			}
-			.sheet(isPresented: $showingLanguagePicker) {
-				LanguagePickerView()
 			}
 		}
 	}
@@ -215,52 +157,11 @@ struct SettingsView: View {
 		}
 	}
     
-	// MARK: - Data Section
-    
-	/// Rows for data settings
-	private var dataRows: some View {
-		Group {
-			Button {
-				// Backup data action
-				print("Backup data tapped")
-			} label: {
-				Label("Backup Data", systemImage: "arrow.up.doc")
-			}
-            
-			Button {
-				// Restore data action
-				print("Restore data tapped")
-			} label: {
-				Label("Restore from Backup", systemImage: "arrow.down.doc")
-			}
-            
-			Button {
-				// Export data action
-				print("Export data tapped")
-			} label: {
-				Label("Export Data", systemImage: "square.and.arrow.up")
-			}
-		}
-	}
-    
 	// MARK: - Support Section
     
 	/// Rows for support options
 	private var supportRows: some View {
 		Group {
-			Button {
-				showingHelpCenter = true
-			} label: {
-				Label("Help Center", systemImage: "questionmark.circle")
-			}
-            
-			Button {
-				// Contact support action
-				print("Contact support tapped")
-			} label: {
-				Label("Contact Support", systemImage: "envelope")
-			}
-            
 			Button {
 				// Rate app action
 				print("Rate app tapped")
@@ -283,6 +184,19 @@ struct SettingsView: View {
 	private var aboutRows: some View {
 		Group {
 			Button {
+				// Share app action
+				Task {
+					do {
+						try await AppTrackingManager.shared.presentPrivacyOptionsForm()
+					} catch {
+						isShowingError = true
+					}
+				}
+			} label: {
+				Label("Privacy Settings", systemImage: "switch.2")
+			}
+			
+			Button {
 				// Privacy policy action
 				print("Privacy policy tapped")
 			} label: {
@@ -294,13 +208,6 @@ struct SettingsView: View {
 				print("Terms tapped")
 			} label: {
 				Label("Terms of Service", systemImage: "doc.text")
-			}
-            
-			Button {
-				// Acknowledgements action
-				print("Acknowledgements tapped")
-			} label: {
-				Label("Acknowledgements", systemImage: "text.book.closed")
 			}
 		}
 	}
@@ -350,22 +257,6 @@ struct SettingsView: View {
 		}
 		.frame(maxWidth: .infinity)
 		.padding()
-	}
-}
-
-// MARK: - Premium Plan
-
-/// Available premium subscription plans
-enum PremiumPlan {
-	case monthly
-	case yearly
-    
-	/// Display name for the plan
-	var displayName: String {
-		switch self {
-		case .monthly: return "Monthly"
-		case .yearly: return "Yearly"
-		}
 	}
 }
 

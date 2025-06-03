@@ -23,6 +23,10 @@ enum AppConstants {
 	
 	/// Controls wheather google maps autocomplete is used
 	static let enableGoogleMapsAutocomplete: Bool = true
+	
+	static let enableSmartPackingSystem = true
+	
+	static let trackingRequestedKey = "has_requested_att_permission"
     
 	// MARK: - UI Constants
     

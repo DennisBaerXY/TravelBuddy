@@ -31,6 +31,10 @@ struct TripServices {
 		numberOfPeople: Int,
 		climate: Climate
 	) -> Trip {
+		if AppConstants.enableSmartPackingSystem {
+			return createTripWithSmartPackingList(in: modelContext, name: name, destination: destination, startDate: startDate, endDate: endDate, transportTypes: transportTypes, accommodationType: accommodationType, activities: activities, isBusinessTrip: isBusinessTrip, numberOfPeople: numberOfPeople, climate: climate)
+		}
+		
 		// Create new trip
 		let newTrip = Trip(
 			name: name,
@@ -72,6 +76,60 @@ struct TripServices {
 		return newTrip
 	}
 	
+	static func createTripWithSmartPackingList(
+		in modelContext: ModelContext,
+		name: String,
+		destination: String,
+		startDate: Date,
+		endDate: Date,
+		destinationPlaceId: String = "",
+		transportTypes: [TransportType],
+		accommodationType: AccommodationType,
+		activities: [Activity],
+		isBusinessTrip: Bool,
+		numberOfPeople: Int,
+		climate: Climate
+	) -> Trip {
+		// Create new trip
+		let newTrip = Trip(
+			name: name,
+			destination: destination,
+			startDate: startDate,
+			endDate: endDate,
+			destinationPlaceId: destinationPlaceId,
+			transportTypes: transportTypes,
+			accommodationType: accommodationType,
+			activities: activities,
+			isBusinessTrip: isBusinessTrip,
+			numberOfPeople: numberOfPeople,
+			climate: climate
+		)
+			
+		// Insert trip into context
+		modelContext.insert(newTrip)
+			
+		// Generate SMART packing items
+		let packingItems = SmartPackingListGenerator.generateSmartPackingList(for: newTrip)
+			
+		// Ensure packingItems array exists
+		if newTrip.packingItems == nil {
+			newTrip.packingItems = []
+		}
+			
+		// Add all items to the trip
+		for item in packingItems {
+			modelContext.insert(item)
+			item.trip = newTrip
+			newTrip.packingItems?.append(item)
+		}
+			
+		// Update and save
+		newTrip.update()
+		try? modelContext.save()
+			
+		return newTrip
+	}
+	
 	// Complete a trip
 	static func completeTrip(_ trip: Trip, in modelContext: ModelContext) {
 		trip.isCompleted = true
@@ -81,9 +139,8 @@ struct TripServices {
 		// --- Log Trip Completion Event ---
 		if AppConstants.enableAnalytics {
 			let params: [String: Any] = [
-				"trip_id": trip.id.uuidString,
-				"item_count": trip.packingItems?.count ?? 0,
-				"duration_days": trip.numberOfDays
+				"duration_days": trip.numberOfDays,
+				"business": trip.isBusinessTrip || trip.activities.contains(where: { $0.contains("business") }),
 			]
 			Analytics.logEvent("trip_completed", parameters: params) // Custom event name
 		}
@@ -111,7 +168,7 @@ struct TripServices {
 				"trip_destination": trip.destination,
 				AnalyticsParameterQuantity: item.quantity,
 				// Standard param
-				"trip_id": trip.id.uuidString
+				"trip_id": trip.id.uuidString,
 			]
 			// Could use AnalyticsEventAddToCart if it fits, or a custom one
 			Analytics.logEvent("pack_item_added", parameters: params)

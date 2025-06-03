@@ -137,7 +137,7 @@ struct TripDetailView: View {
 					if !UserSettingsManager.shared.isPremiumUser {
 						Spacer()
 						BannerViewContainer(adSize)
-							.frame(height: adSize.size.height)
+							.frame(width: adSize.size.width, height: adSize.size.height)
 					}
 				}
 

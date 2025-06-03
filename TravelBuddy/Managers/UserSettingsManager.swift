@@ -4,6 +4,8 @@ import FirebaseAnalytics
 import Foundation
 import SwiftUI
 
+import UserMessagingPlatform
+
 /// A centralized manager for user settings and preferences, leveraging @AppStorage.
 final class UserSettingsManager: ObservableObject { // Mark final for performance
 	// MARK: - Shared Instance
@@ -26,6 +28,7 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		static let preferredMeasurementSystem = "preferredMeasurementSystem"
 		static let lastUsedDate = "lastUsedDate" // Keep if needed outside settings data
 		static let preferredTravelStyle = "preferredTravelStyle"
+		static let trackingRequestedKey = "has_requested_att_permission"
 	}
 
 	// MARK: - Published Properties (Using @AppStorage where possible)
@@ -45,6 +48,8 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 			}
 		}
 	}
+
+	@AppStorage(Keys.trackingRequestedKey) var trackingRequested: Bool = false
 
 	@AppStorage(Keys.preferredTravelStyle) var preferredTravelStyle: TravelStyle = .unknown
 
@@ -110,7 +115,10 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		UserDefaults.standard.removeObject(forKey: Keys.autoSuggestPackingLists)
 		UserDefaults.standard.removeObject(forKey: Keys.showCompletedTrips)
 		UserDefaults.standard.removeObject(forKey: Keys.preferredMeasurementSystem)
+
 		UserDefaults.standard.removeObject(forKey: Keys.prefersDarkMode)
+		UserDefaults.standard.removeObject(forKey: Keys.trackingRequestedKey)
+
 		UserDefaults.standard.removeObject(forKey: Keys.preferredTravelStyle)
 
 		// Manually trigger updates for @Published vars if needed, though @AppStorage handles its own
@@ -126,6 +134,9 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 		autoSuggestPackingLists = true
 		showCompletedTrips = true
 		preferredMeasurementSystem = Locale.current.measurementSystem == .metric ? .metric : .imperial
+		trackingRequested = false
+
+		ConsentInformation.shared.reset()
 
 		// Need to manually update the @AppStorage properties if they don't automatically pick up the removal
 		// by assigning their default values again to trigger updates.
@@ -148,71 +159,4 @@ final class UserSettingsManager: ObservableObject { // Mark final for performanc
 	}
 
 	// MARK: - Import/Export using Codable
-
-	/// Defines the structure for encoding/decoding settings data.
-	struct SettingsData: Codable {
-		var hasCompletedOnboarding: Bool
-		var isPremiumUser: Bool
-		var defaultSortOption: SortOption // Ensure Enums are Codable
-		var defaultSortOrder: SortOrder // Ensure Enums are Codable
-		var prefersDarkMode: Bool? // Optional Bool is Codable
-		var prioritizeEssentialItems: Bool
-		var autoSuggestPackingLists: Bool
-		var showCompletedTrips: Bool
-		var preferredMeasurementSystem: MeasurementSystem // Ensure Enum is Codable
-	}
-
-	/// Exports the current settings as JSON data.
-	/// - Returns: Data object containing the JSON representation of settings, or nil on failure.
-	func exportSettings() -> Data? {
-		let currentSettings = SettingsData(
-			hasCompletedOnboarding: hasCompletedOnboarding,
-			isPremiumUser: isPremiumUser,
-			defaultSortOption: defaultSortOption,
-			defaultSortOrder: defaultSortOrder,
-			prefersDarkMode: prefersDarkMode,
-			prioritizeEssentialItems: prioritizeEssentialItems,
-			autoSuggestPackingLists: autoSuggestPackingLists,
-			showCompletedTrips: showCompletedTrips,
-			preferredMeasurementSystem: preferredMeasurementSystem
-		)
-		let encoder = JSONEncoder()
-		encoder.outputFormatting = .prettyPrinted // Optional: for readability
-		do {
-			return try encoder.encode(currentSettings)
-		} catch {
-			// Logger.error("Failed to export settings: \(error.localizedDescription)")
-			print("Error exporting settings: \(error)")
-			return nil
-		}
-	}
-
-	/// Imports settings from JSON data.
-	/// - Parameter data: Data object containing the JSON representation of settings.
-	/// - Returns: True if import was successful, false otherwise.
-	@discardableResult
-	func importSettings(from data: Data) -> Bool {
-		let decoder = JSONDecoder()
-		do {
-			let importedSettings = try decoder.decode(SettingsData.self, from: data)
-
-			// Apply imported settings - this will trigger @AppStorage updates
-			hasCompletedOnboarding = importedSettings.hasCompletedOnboarding
-			isPremiumUser = importedSettings.isPremiumUser
-			defaultSortOption = importedSettings.defaultSortOption
-			defaultSortOrder = importedSettings.defaultSortOrder
-			prefersDarkMode = importedSettings.prefersDarkMode // Update the @Published var
-			prioritizeEssentialItems = importedSettings.prioritizeEssentialItems
-			autoSuggestPackingLists = importedSettings.autoSuggestPackingLists
-			showCompletedTrips = importedSettings.showCompletedTrips
-			preferredMeasurementSystem = importedSettings.preferredMeasurementSystem
-
-			objectWillChange.send() // Notify subscribers of potential bulk change
-			return true
-		} catch {
-			// Logger.error("Failed to import settings: \(error.localizedDescription)")
-			print("Error importing settings: \(error)")
-			return false
-		}
-	}
 }
