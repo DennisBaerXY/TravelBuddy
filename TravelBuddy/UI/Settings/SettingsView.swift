@@ -25,28 +25,25 @@ struct SettingsView: View {
 	@State private var showingPremiumInfo = false
 	@State private var showingResetConfirmation = false
 	
+	@State private var isShowingError = false
+	
 	// MARK: - Body
     
 	var body: some View {
 		NavigationStack {
 			List {
-				// Appearance section
-//				Section(header: Text("appearance")) { // Was: "Appearance"
-//					appearanceRows
-//				}
-                
 				// Behavior section
-				Section(header: Text("behavior")) { // Was: "Behavior"
+				Section(header: Text("behavior")) {
 					behaviorRows
 				}
                 
 				// Support section
-				Section(header: Text("support")) { // Was: "Support"
+				Section(header: Text("support")) {
 					supportRows
 				}
                 
 				// About section
-				Section(header: Text("about")) { // Was: "About"
+				Section(header: Text("about")) {
 					aboutRows
 				}
                 
@@ -60,6 +57,10 @@ struct SettingsView: View {
 				// App information
 				appInfoFooter
 			}
+			.foregroundStyle(.tripBuddyText)
+			.listStyle(.grouped)
+			.scrollContentBackground(.hidden)
+			
 			.navigationTitle("Settings")
 			.navigationBarTitleDisplayMode(.inline)
 			.toolbar {
@@ -69,6 +70,11 @@ struct SettingsView: View {
 					}
 				}
 			}
+		}
+		.alert("Something went wrong", isPresented: $isShowingError) {
+			Button("OK", role: .cancel) {}
+		} message: {
+			Text("Please try again later.")
 		}
 		
 		.alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
@@ -110,67 +116,17 @@ struct SettingsView: View {
 		}
 	}
     
-	/// Row for upgrading to premium
-	private var getPremiumRow: some View {
-		Button {
-			showingPremiumInfo = true
-		} label: {
-			HStack {
-				Label {
-					Text("get_premium")
-				} icon: {
-					Image(systemName: "star.fill")
-						.foregroundColor(.yellow)
-				}
-                
-				Spacer()
-                
-				Image(systemName: "chevron.right")
-					.font(.caption)
-					.foregroundColor(.secondary)
-			}
-		}
-	}
-    
 	// MARK: - Appearance Section
     
 	/// Rows for appearance settings
 	private var appearanceRows: some View {
 		Group {
-			// Theme picker
-//			Picker("color_theme", selection: $themeManager.colorTheme) {
-//				ForEach(ColorTheme.allCases) { theme in
-//					Text(theme.displayName).tag(theme)
-//				}
-//			}
-            
 			// Dark mode toggle
 			Picker("appearance", selection: $themeManager.colorSchemePreference) {
 				ForEach(ColorSchemePreference.allCases, id: \.self) { preference in
 					Text(preference.displayName).tag(preference)
 				}
 			}
-            
-//			// Language picker
-//			Button {
-//				showingLanguagePicker = true
-//			} label: {
-//				HStack {
-//					Text("language") // Was: Sprache
-//
-//					Spacer()
-//
-//					Text(LocalizationManager.shared.currentLanguage.displayName)
-//						.foregroundColor(.secondary)
-//
-//					Image(systemName: "chevron.right")
-//						.font(.caption)
-//						.foregroundColor(.secondary)
-//				}
-//			}
-//			.sheet(isPresented: $showingLanguagePicker) {
-//				LanguagePickerView()
-//			}
 		}
 	}
     
@@ -228,6 +184,19 @@ struct SettingsView: View {
 	private var aboutRows: some View {
 		Group {
 			Button {
+				// Share app action
+				Task {
+					do {
+						try await AppTrackingManager.shared.presentPrivacyOptionsForm()
+					} catch {
+						isShowingError = true
+					}
+				}
+			} label: {
+				Label("Privacy Settings", systemImage: "switch.2")
+			}
+			
+			Button {
 				// Privacy policy action
 				print("Privacy policy tapped")
 			} label: {
@@ -236,7 +205,7 @@ struct SettingsView: View {
             
 			Button {
 				// Terms of service action
-				print("Terms tapped")	
+				print("Terms tapped")
 			} label: {
 				Label("Terms of Service", systemImage: "doc.text")
 			}
@@ -288,22 +257,6 @@ struct SettingsView: View {
 		}
 		.frame(maxWidth: .infinity)
 		.padding()
-	}
-}
-
-// MARK: - Premium Plan
-
-/// Available premium subscription plans
-enum PremiumPlan {
-	case monthly
-	case yearly
-    
-	/// Display name for the plan
-	var displayName: String {
-		switch self {
-		case .monthly: return "Monthly"
-		case .yearly: return "Yearly"
-		}
 	}
 }
 

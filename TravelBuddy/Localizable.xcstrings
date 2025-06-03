@@ -1702,6 +1702,7 @@
       }
     },
     "get_premium" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3644,6 +3645,9 @@
         }
       }
     },
+    "OK" : {
+
+    },
     "onboarding_completed_description" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3967,6 +3971,9 @@
         }
       }
     },
+    "Please try again later." : {
+
+    },
     "Premium" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4114,6 +4121,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy Policy"
+          }
+        }
+      }
+    },
+    "Privacy Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenschutzeinstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Settings"
           }
         }
       }
@@ -4448,6 +4471,9 @@
           }
         }
       }
+    },
+    "Something went wrong" : {
+
     },
     "sort_ascending" : {
       "localizations" : {

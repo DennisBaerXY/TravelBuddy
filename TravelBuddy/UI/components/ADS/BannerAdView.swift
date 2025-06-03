@@ -4,6 +4,7 @@ import SwiftUI
 import UserMessagingPlatform // Ensure UMP is imported
 
 struct BannerViewContainer: UIViewRepresentable {
+	typealias UIViewType = BannerView
 	let adSize: AdSize
 	// No longer need to observe trackingManager here for consent, UMP handles it globally for ads.
 
@@ -11,22 +12,19 @@ struct BannerViewContainer: UIViewRepresentable {
 		self.adSize = adSize
 	}
 
-	func makeUIView(context: Context) -> UIView {
-		let view = UIView() // Create a simple UIView as the container
-		// Add the banner view to the UIView hierarchy
-		view.addSubview(context.coordinator.bannerView)
-		// Set constraints for the banner to fill the container view
-		context.coordinator.bannerView.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			context.coordinator.bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			context.coordinator.bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			context.coordinator.bannerView.topAnchor.constraint(equalTo: view.topAnchor),
-			context.coordinator.bannerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-		])
-		return view
+	func makeUIView(context: Context) -> BannerView {
+		let banner = BannerView(adSize: adSize)
+		// [START load_ad]
+		banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+		banner.load(Request())
+		// [END load_ad]
+		// [START set_delegate]
+		banner.delegate = context.coordinator
+		// [END set_delegate]
+		return banner
 	}
 
-	func updateUIView(_ uiView: UIView, context: Context) {
+	func updateUIView(_ uiView: BannerView, context: Context) {
 		// Check if the adSize has changed and update if necessary
 		if context.coordinator.bannerView.adSize.size != adSize.size ||
 			context.coordinator.bannerView.adSize.flags != adSize.flags
