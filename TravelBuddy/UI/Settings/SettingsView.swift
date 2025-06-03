@@ -21,7 +21,7 @@ struct SettingsView: View {
 	@ObservedObject private var localeManager = LocalizationManager.shared
 	@State private var showingThemePicker = false
 	@State private var showingLanguagePicker = false
-	@State private var showingHelpCenter = false
+	
 	@State private var showingPremiumInfo = false
 	@State private var showingResetConfirmation = false
 	
@@ -30,14 +30,6 @@ struct SettingsView: View {
 	var body: some View {
 		NavigationStack {
 			List {
-				Section(header: Text("account")) { // Was: "Account"
-					if userSettings.isPremiumUser {
-						premiumAccountRow
-					} else {
-						getPremiumRow
-					}
-				}
-                
 				// Appearance section
 //				Section(header: Text("appearance")) { // Was: "Appearance"
 //					appearanceRows
@@ -79,10 +71,6 @@ struct SettingsView: View {
 			}
 		}
 		
-		.sheet(isPresented: $showingHelpCenter) {
-			HelpCenterView()
-		}
-		.sheet(isPresented: $showingPremiumInfo) {}
 		.alert("Reset All Settings?", isPresented: $showingResetConfirmation) {
 			Button("Cancel", role: .cancel) {}
 			Button("Reset", role: .destructive) {
@@ -213,52 +201,11 @@ struct SettingsView: View {
 		}
 	}
     
-	// MARK: - Data Section
-    
-	/// Rows for data settings
-	private var dataRows: some View {
-		Group {
-			Button {
-				// Backup data action
-				print("Backup data tapped")
-			} label: {
-				Label("Backup Data", systemImage: "arrow.up.doc")
-			}
-            
-			Button {
-				// Restore data action
-				print("Restore data tapped")
-			} label: {
-				Label("Restore from Backup", systemImage: "arrow.down.doc")
-			}
-            
-			Button {
-				// Export data action
-				print("Export data tapped")
-			} label: {
-				Label("Export Data", systemImage: "square.and.arrow.up")
-			}
-		}
-	}
-    
 	// MARK: - Support Section
     
 	/// Rows for support options
 	private var supportRows: some View {
 		Group {
-			Button {
-				showingHelpCenter = true
-			} label: {
-				Label("Help Center", systemImage: "questionmark.circle")
-			}
-            
-			Button {
-				// Contact support action
-				print("Contact support tapped")
-			} label: {
-				Label("Contact Support", systemImage: "envelope")
-			}
-            
 			Button {
 				// Rate app action
 				print("Rate app tapped")
@@ -289,16 +236,9 @@ struct SettingsView: View {
             
 			Button {
 				// Terms of service action
-				print("Terms tapped")
+				print("Terms tapped")	
 			} label: {
 				Label("Terms of Service", systemImage: "doc.text")
-			}
-            
-			Button {
-				// Acknowledgements action
-				print("Acknowledgements tapped")
-			} label: {
-				Label("Acknowledgements", systemImage: "text.book.closed")
 			}
 		}
 	}

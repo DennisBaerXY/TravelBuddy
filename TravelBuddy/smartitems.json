@@ -2156,7 +2156,7 @@
 		"nameKey": "item_credit_cards",
 		"category": "other",
 		"tags": ["payment", "cards", "essential", "backup"],
-		"baseQuantity": 2,
+		"baseQuantity": 1,
 		"isEssential": true,
 		"priority": "essential",
 		"conditions": [

@@ -354,6 +354,7 @@
       }
     },
     "account" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -370,6 +371,7 @@
       }
     },
     "Acknowledgements" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -814,6 +816,7 @@
       }
     },
     "Backup Data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1350,6 +1353,7 @@
       }
     },
     "Contact Support" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1614,6 +1618,7 @@
       }
     },
     "Export Data" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1727,6 +1732,7 @@
       }
     },
     "Help Center" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1760,6 +1766,7 @@
       }
     },
     "help_getting_started" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1776,6 +1783,7 @@
       }
     },
     "help_packing_lists" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1792,6 +1800,7 @@
       }
     },
     "help_settings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1808,6 +1817,7 @@
       }
     },
     "help_trip_planning" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1824,6 +1834,7 @@
       }
     },
     "help_troubleshooting" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4198,6 +4209,7 @@
       }
     },
     "Restore from Backup" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
