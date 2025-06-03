@@ -139,9 +139,8 @@ struct TripServices {
 		// --- Log Trip Completion Event ---
 		if AppConstants.enableAnalytics {
 			let params: [String: Any] = [
-				"trip_id": trip.id.uuidString,
-				"item_count": trip.packingItems?.count ?? 0,
-				"duration_days": trip.numberOfDays
+				"duration_days": trip.numberOfDays,
+				"business": trip.isBusinessTrip || trip.activities.contains(where: { $0.contains("business") }),
 			]
 			Analytics.logEvent("trip_completed", parameters: params) // Custom event name
 		}
@@ -169,7 +168,7 @@ struct TripServices {
 				"trip_destination": trip.destination,
 				AnalyticsParameterQuantity: item.quantity,
 				// Standard param
-				"trip_id": trip.id.uuidString
+				"trip_id": trip.id.uuidString,
 			]
 			// Could use AnalyticsEventAddToCart if it fits, or a custom one
 			Analytics.logEvent("pack_item_added", parameters: params)

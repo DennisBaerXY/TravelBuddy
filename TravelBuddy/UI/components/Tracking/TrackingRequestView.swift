@@ -55,7 +55,7 @@ struct TrackingRequestView: View {
 			VStack(spacing: 12) {
 				Button {
 					showingRequest = true
-					trackingManager.requestTrackingAuthorization { _ in
+					trackingManager.gatherConsent { _ in
 						onComplete()
 					}
 				} label: {

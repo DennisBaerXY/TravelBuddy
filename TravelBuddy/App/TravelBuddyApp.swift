@@ -13,16 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication,
 	                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
 	{
-		// Initialize Mobile Ads with consent handling
-		MobileAds.shared.start { _ in
-			// Check tracking status before configuring ads
-			AppTrackingManager.shared.updateTrackingStatus()
-		}
-
-		// Configure test devices
-		MobileAds.shared.requestConfiguration.testDeviceIdentifiers = ["21fade3f7a75ba7f7e112da1fae8f83b"]
-
-		// Google Places configuration remains the same
+		// --- Google Places Configuration (remains the same) ---
 		if AppConstants.enableGoogleMapsAutocomplete {
 			let activated = PlacesClient.provideAPIKey(Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as! String)
 			if !activated {
@@ -30,13 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			}
 		}
 
-		// Firebase configuration
+		// --- Firebase Configuration (remains, but consent modifies its behavior) ---
 		if AppConstants.enableAnalytics {
 			FirebaseApp.configure()
-
-			// Configure analytics based on initial tracking status
-			AppTrackingManager.shared.updateTrackingStatus()
+			// Initial analytics configuration based on consent will be handled by AppTrackingManager
 		}
+
+		// --- Mobile Ads Configuration (Test devices can be set here) ---
+		MobileAds.shared.requestConfiguration.testDeviceIdentifiers = ["21fade3f7a75ba7f7e112da1fae8f83b"]
+		// The actual MobileAds.shared.start() will be called *after* consent is gathered.
 
 		return true
 	}
@@ -52,7 +45,8 @@ struct TravelBuddyApp: App {
 
 	@State private var modelContainer: ModelContainer?
 	@State private var initializationError: Error? = nil
-	@State private var showingTrackingRequest = false
+
+	@State private var isConsentFlowComplete = false // New state to manage content display
 
 	// MARK: - Initialization
 
@@ -103,22 +97,20 @@ struct TravelBuddyApp: App {
 			if let container = modelContainer {
 				Group {
 					// Main app flow
+
 					if !userSettings.hasCompletedOnboarding {
 						OnboardingView()
-							.onAppear {
-								checkTrackingRequest()
-							}
-					} else if showingTrackingRequest {
-						TrackingRequestView {
-							showingTrackingRequest = false
-						}
 					} else {
 						TripsListView()
 							.onAppear {
-								checkTrackingRequest()
+								AppTrackingManager.shared.gatherConsent { _ in
+
+									AppTrackingManager.shared.startGoogleMobileAdsSDK()
+								}
 							}
 					}
 				}
+
 				.modelContainer(container)
 				.environmentObject(userSettings)
 				.environmentObject(themeManager)
@@ -128,15 +120,6 @@ struct TravelBuddyApp: App {
 				.preferredColorScheme(themeManager.colorScheme)
 			} else {
 				errorView
-			}
-		}
-	}
-
-	private func checkTrackingRequest() {
-		// Only show tracking request once after onboarding
-		if trackingManager.shouldRequestTracking && userSettings.hasCompletedOnboarding {
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-				showingTrackingRequest = true
 			}
 		}
 	}
