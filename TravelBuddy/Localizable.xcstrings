@@ -1585,6 +1585,9 @@
         }
       }
     },
+    "edit_item" : {
+
+    },
     "Error: %@" : {
       "localizations" : {
         "de" : {
@@ -4311,6 +4314,9 @@
           }
         }
       }
+    },
+    "save" : {
+
     },
     "search_placeholder" : {
       "localizations" : {

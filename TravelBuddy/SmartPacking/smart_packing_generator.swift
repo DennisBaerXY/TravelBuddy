@@ -335,8 +335,6 @@ struct SmartPackingListGenerator {
 			
 		Analytics.logEvent("smart_packing_generated", parameters: [
 			"trip_duration": trip.numberOfDays,
-			"items_generated": generatedItems.count,
-			"essential_items": generatedItems.filter { $0.isEssential }.count,
 			"trip_type": trip.isBusinessTrip ? "business" : "leisure",
 			"destination": trip.destination,
 			"transport_types": trip.transportTypesEnum.map { $0.rawValue }.joined(separator: ","),
